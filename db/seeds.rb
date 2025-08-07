@@ -1,8 +1,8 @@
 Vat.create([
-    {name: "IVA general (21%)", rate: 0.21},
-    {name: "IVA reducido (10%)", rate: 0.10},
-    {name: "IVA superreducido (4%)", rate: 0.04},
-    {name: "Sin IVA (0%)", rate: 0.00}
+    { name: 'IVA general (21%)', rate: 0.21 },
+    { name: 'IVA reducido (10%)', rate: 0.10 },
+    { name: 'IVA superreducido (4%)', rate: 0.04 },
+    { name: 'Sin IVA (0%)', rate: 0.00 }
 ]) if Vat.count == 0
 
 ProductType.create([
@@ -14,8 +14,8 @@ ProductType.create([
 ]) if ProductType.count == 0
 
 PaymentType.create([
-    { name: 'Efectivo', cash: true},
-    { name: 'Tarjeta', cash: false},
+    { name: 'Efectivo', cash: true },
+    { name: 'Tarjeta', cash: false },
     { name: 'Transferencia', cash: false },
     { name: 'Domiciliacion', cash: false }
 ]) if PaymentType.count == 0
@@ -27,4 +27,3 @@ Supplier.create([
 Client.create([
     { name: 'Caja 1', code_id: 'N/A', discount: 0.00 }
 ]) if Client.count == 0
-
