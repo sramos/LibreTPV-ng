@@ -1,0 +1,11 @@
+one:
+  name: Cliente A
+  email: cliente1@example.com
+  phone: 123456789
+  address: Calle Principal 123
+
+two:
+  name: Cliente B
+  email: cliente2@example.com
+  phone: 987654321
+  address: Avenida Secundaria 456

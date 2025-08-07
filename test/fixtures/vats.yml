@@ -1,0 +1,7 @@
+one:
+  name: IVA 21%
+  rate: 0.21
+
+two:
+  name: IVA 10%
+  rate: 0.10

@@ -1,0 +1,11 @@
+one:
+  name: Alimentos
+  vat: one
+
+two:
+  name: Bebidas
+  vat: one
+
+three:
+  name: Utensilios
+  vat: two

@@ -1,0 +1,20 @@
+one:
+  name: Agua Mineral
+  code: AGU123
+  price: 1.5
+  stock: 100
+  product_type: two
+
+two:
+  name: Pan Integral
+  code: PAN456
+  price: 2.5
+  stock: 50
+  product_type: one
+
+three:
+  name: Tenedor
+  code: TEN789
+  price: 0.5
+  stock: 200
+  product_type: three
