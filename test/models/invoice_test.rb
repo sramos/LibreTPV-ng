@@ -12,13 +12,13 @@ class InvoiceTest < ActiveSupport::TestCase
     note_one = notes(:one)
     note_two = notes(:two)
 
-    Invoice.create!(code: 'INV001', date: Date.today, total: 100, note: note_one)
-    duplicate = Invoice.new(code: 'INV001', date: Date.today, total: 100, note: note_one)
+    Invoice.create!(code: 'INV001-01', date: Date.today, total: 100, note: note_one)
+    duplicate = Invoice.new(code: 'INV001-01', date: Date.today, total: 100, note: note_one)
     duplicate.valid?
     assert duplicate.errors[:code].any?
 
     # Verificar que el mismo código es válido para un proveedor diferente
-    other_invoice = Invoice.new(code: 'INV001', date: Date.today, total: 100, note: note_two)
+    other_invoice = Invoice.new(code: 'INV001-01', date: Date.today, total: 100, note: note_two)
     assert other_invoice.valid?
   end
 
