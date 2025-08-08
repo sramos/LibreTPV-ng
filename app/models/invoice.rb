@@ -1,18 +1,18 @@
 class Invoice < ApplicationRecord
-  belongs_to :note
+  belongs_to :note, optional: true
+
   has_many :payments
 
   validates :code, presence: true
   validates :date, presence: true
   validates :total, presence: true
-  validate :code_must_be_unique_for_supplier
+  validate :avoid_note_and_vat_and_taxes
 
   private
 
-  def code_must_be_unique_for_supplier
-    if Invoice.joins(:note).where(note: { supplier_id: note&.supplier_id })
-              .where(code: code).exists?
-      errors.add(:code, 'must be unique for supplier')
+  def avoid_note_and_vat_and_taxes
+    if note.present? && (vat.present? || tax.present?)
+      errors.add(:base, 'Note and vat/taxes cannot be present at the same time')
     end
   end
 end

@@ -4,8 +4,6 @@ one:
   active: true
   client: one
   type: ClientNote
-  client_id: <%= ActiveRecord::FixtureSet.identify(:one, 'Client') %>
-  id: <%= ActiveRecord::FixtureSet.identify(:one, 'Note') %>
 
 two:
   code: NOTE002
@@ -13,5 +11,4 @@ two:
   active: false
   supplier: two
   type: SupplierNote
-  supplier_id: <%= ActiveRecord::FixtureSet.identify(:two, 'Supplier') %>
-  id: <%= ActiveRecord::FixtureSet.identify(:two, 'Note') %>
+  

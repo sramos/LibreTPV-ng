@@ -3,9 +3,13 @@ one:
   date: 2025-08-01
   total: 100.0
   note: one
+  client: one
+  type: ClientInvoice
 
 two:
   code: INV002
   date: 2025-08-02
   total: 150.0
   note: two
+  supplier: two
+  type: SupplierInvoice

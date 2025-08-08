@@ -6,7 +6,7 @@ class CreateNotes < ActiveRecord::Migration[8.0]
       t.boolean :active, null: false, default: true
       t.references :client, foreign_key: true
       t.references :supplier, foreign_key: true
-      t.string :type
+      t.string :type, null: false
       t.timestamps
     end
   end

@@ -7,19 +7,38 @@ class InvoiceTest < ActiveSupport::TestCase
     assert invoice.errors[:code].any?
   end
 
-  test "should not save invoice with duplicate code for same supplier" do
-    # Usar fixtures directamente
-    note_one = notes(:one)
-    note_two = notes(:two)
+  test "should not save invoice with note and vat/tax" do
+    invoice = Invoice.new(
+      code: 'INV001-01',
+      date: Date.today,
+      total: 100,
+      note: notes(:one),
+      vat: 21.0,
+      tax: 10.0
+    )
+    invoice.valid?
+    assert invoice.errors[:base].any?
+  end
 
-    Invoice.create!(code: 'INV001-01', date: Date.today, total: 100, note: note_one)
-    duplicate = Invoice.new(code: 'INV001-01', date: Date.today, total: 100, note: note_one)
-    duplicate.valid?
-    assert duplicate.errors[:code].any?
+  test "should save invoice with note only" do
+    invoice = Invoice.new(
+      code: 'INV001-01',
+      date: Date.today,
+      total: 100,
+      note: notes(:one)
+    )
+    assert invoice.valid?
+  end
 
-    # Verificar que el mismo código es válido para un proveedor diferente
-    other_invoice = Invoice.new(code: 'INV001-01', date: Date.today, total: 100, note: note_two)
-    assert other_invoice.valid?
+  test "should save invoice with vat and tax only" do
+    invoice = Invoice.new(
+      code: 'INV001-01',
+      date: Date.today,
+      total: 100,
+      vat: 21.0,
+      tax: 10.0
+    )
+    assert invoice.valid?
   end
 
   test "should not save invoice without date" do
