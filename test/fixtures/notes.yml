@@ -1,0 +1,17 @@
+one:
+  code: NOTE001
+  date: 2025-08-01
+  active: true
+  client: one
+  type: ClientNote
+  client_id: <%= ActiveRecord::FixtureSet.identify(:one, 'Client') %>
+  id: <%= ActiveRecord::FixtureSet.identify(:one, 'Note') %>
+
+two:
+  code: NOTE002
+  date: 2025-08-02
+  active: false
+  supplier: two
+  type: SupplierNote
+  supplier_id: <%= ActiveRecord::FixtureSet.identify(:two, 'Supplier') %>
+  id: <%= ActiveRecord::FixtureSet.identify(:two, 'Note') %>

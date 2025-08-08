@@ -1,5 +1,6 @@
 class Product < ApplicationRecord
   belongs_to :product_type
+  belongs_to :product_subtype, optional: true
   has_one :vat, through: :product_type
   has_many :note_lines
   has_many :notes, through: :note_lines

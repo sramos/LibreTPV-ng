@@ -1,0 +1,23 @@
+one:
+  note: one
+  product: one
+  product_name: Agua Mineral
+  product_price: 1.5
+  product_vat: 0.21
+  quantity: 3
+
+two:
+  note: one
+  product: two
+  product_name: Pan Integral
+  product_price: 2.5
+  product_vat: 0.21
+  quantity: 2
+
+three:
+  note: two
+  product: three
+  product_name: Tenedor
+  product_price: 0.5
+  product_vat: 0.10
+  quantity: 5

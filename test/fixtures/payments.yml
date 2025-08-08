@@ -1,0 +1,11 @@
+#one:
+#  invoice: one
+#  payment_type: one
+#  amount: 100.0
+#  date: 2025-08-01
+
+#two:
+#  invoice: two
+#  payment_type: two
+#  amount: 150.0
+#  date: 2025-08-02
