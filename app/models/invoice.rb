@@ -10,7 +10,7 @@ class Invoice < ApplicationRecord
   private
 
   def code_must_be_unique_for_supplier
-    if Invoice.joins(:note).where(note: {supplier_id: note&.supplier_id})
+    if Invoice.joins(:note).where(note: { supplier_id: note&.supplier_id })
               .where(code: code).exists?
       errors.add(:code, 'must be unique for supplier')
     end
