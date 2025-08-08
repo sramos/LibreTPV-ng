@@ -57,3 +57,18 @@ if ProductSubtype.count == 0
     { name: 'Ensayo', product_type_id: product_type_id }
   ])
 end
+
+Config.create([
+  { name: 'COMPANY_SHORT_NAME', value: 'Librería de ejemplo' },
+  { name: 'COMPANY_FULL_NAME', value: 'Librería asociativa de ejemplo' },
+  { name: 'COMPANY_ADDRESS', value: 'Calle de ejemplo, 123' },
+  { name: 'COMPANY_POSTAL_CODE', value: '28053 Madrid' },
+  { name: 'COMPANY_PHONE', value: '+34 912 345 678' },
+  { name: 'COMPANY_EMAIL', value: 'contact@libreriaejemplo.com' },
+  { name: 'COMPANY_LOGO', value: 'logo.png' },
+  { name: 'COMPANY_FISCAL_CODE', value: '88554345J' },
+  { name: 'COMPANY_INVOICES_PREFIX', value: 'LIB/2025-' },
+  { name: 'COMPANY_INVOICES_COUNT', value: '0' },
+  { name: 'PAGINATE', value: '25' },
+  { name: 'PRINT_COMMAND', value: 'lpr -P TM-T70 -o cpi=20', editable: false }
+]) if Config.count == 0

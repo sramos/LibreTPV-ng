@@ -1,0 +1,11 @@
+one:
+  name: company_name
+  value: My Company
+
+two:
+  name: company_email
+  value: contact@mycompany.com
+
+three:
+  name: company_phone
+  value: +34 912 345 678
