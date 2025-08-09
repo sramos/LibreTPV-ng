@@ -1,5 +1,5 @@
 class Client < ApplicationRecord
-  has_one :contact_info, as: :contactable
+  has_one :contact_info, as: :contactable, required: false
 
   validates :name, presence: true
   validates :code_id, presence: true, uniqueness: true

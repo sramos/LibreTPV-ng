@@ -11,4 +11,4 @@ two:
   active: false
   supplier: two
   type: SupplierNote
-  
+  deposit: false

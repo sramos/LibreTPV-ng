@@ -7,13 +7,6 @@ class NoteTest < ActiveSupport::TestCase
     assert note.errors[:code].any?
   end
 
-  test "should not save note with duplicate code" do
-    note = Note.create!(code: 'NOTE001', date: Date.today, active: true, type: 'SupplierNote', supplier: suppliers(:one))
-    duplicate = Note.new(code: 'NOTE001', date: Date.today, active: true, type: 'SupplierNote', supplier: suppliers(:one))
-    duplicate.valid?
-    assert duplicate.errors[:code].any?
-  end
-
   test "should not save note without date" do
     note = Note.new
     note.valid?

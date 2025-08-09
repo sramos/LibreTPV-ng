@@ -7,6 +7,8 @@ class CreateNotes < ActiveRecord::Migration[8.0]
       t.references :client, foreign_key: true
       t.references :supplier, foreign_key: true
       t.string :type, null: false
+      t.boolean :deposit
+      t.date :devolution_date
       t.timestamps
     end
   end

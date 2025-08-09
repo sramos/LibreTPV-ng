@@ -5,7 +5,8 @@ class SupplierNoteTest < ActiveSupport::TestCase
     supplier_note = SupplierNote.new(
       code: 'SUP001',
       date: Date.today,
-      active: true
+      active: true,
+      deposit: false
     )
     supplier_note.valid?
     assert supplier_note.errors[:supplier].any?
@@ -16,7 +17,70 @@ class SupplierNoteTest < ActiveSupport::TestCase
       code: 'SUP001',
       date: Date.today,
       active: true,
-      supplier: suppliers(:one)
+      supplier: suppliers(:one),
+      deposit: false
+    )
+    assert supplier_note.valid?
+  end
+
+  test "should not save supplier_note with duplicate code for same supplier" do
+    supplier_note = SupplierNote.create!(
+      code: 'SUP001',
+      date: Date.today,
+      active: true,
+      supplier: suppliers(:one),
+      deposit: false
+    )
+    duplicate = SupplierNote.new(
+      code: 'SUP001',
+      date: Date.today,
+      active: true,
+      supplier: suppliers(:one),
+      deposit: false
+    )
+    duplicate.valid?
+    assert duplicate.errors[:code].any?
+  end
+
+  test "should save supplier_note with duplicate code for different supplier" do
+    supplier_note = SupplierNote.create!(
+      code: 'SUP001',
+      date: Date.today,
+      active: true,
+      supplier: suppliers(:one),
+      deposit: false
+    )
+    duplicate = SupplierNote.new(
+      code: 'SUP001',
+      date: Date.today,
+      active: true,
+      supplier: suppliers(:two),
+      deposit: false
+    )
+    duplicate.valid?
+    assert_not duplicate.errors[:code].any?
+  end
+
+  test "should not save supplier_note with deposit without devolution_date" do
+    supplier_note = SupplierNote.new(
+      code: 'SUP001',
+      date: Date.today,
+      active: true,
+      supplier: suppliers(:one),
+      deposit: true
+    )
+    supplier_note.valid?
+    assert supplier_note.errors[:devolution_date].any?
+  end
+
+  test "should save supplier_note with deposit and devolution_date" do
+    supplier_note = SupplierNote.new(
+      code: 'SUP001',
+      date: Date.today,
+      active: true,
+      supplier: suppliers(:one),
+      deposit: true,
+      devolution_date: Date.today + 30
     )
     assert supplier_note.valid?
   end
@@ -24,6 +88,7 @@ class SupplierNoteTest < ActiveSupport::TestCase
   test "should have valid associations" do
     supplier_note = notes(:two)
     assert_respond_to supplier_note, :supplier
+    assert_respond_to supplier_note, :note_lines
   end
 
   test "should have valid type" do
