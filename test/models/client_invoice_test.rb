@@ -14,14 +14,13 @@ class ClientInvoiceTest < ActiveSupport::TestCase
     assert client_invoice.errors[:client].any?
   end
 
-  test "should save client_invoice with valid client and note" do
+  test "should save client_invoice with valid client" do
     client_invoice = ClientInvoice.new(
       code: 'INV001-01',
       date: Date.today,
       base_amount: 100,
       total_amount: 121,
       client: clients(:one),
-      note: notes(:one)
     )
     assert client_invoice.valid?
   end

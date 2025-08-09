@@ -1,14 +1,30 @@
-one:
-  code: NOTE001
+client_note_one:
+  code: NOTE-C-001
   date: 2025-08-01
   active: true
   client: one
   type: ClientNote
 
-two:
-  code: NOTE002
+client_note_two:
+  code: NOTE-C-002
   date: 2025-08-02
   active: false
-  supplier: two
+  client: two
+  type: ClientNote
+
+supplier_note_one:
+  code: NOTE-S-002
+  date: 2025-08-02
+  active: true
+  supplier: one
   type: SupplierNote
   deposit: false
+
+supplier_note_two:
+  code: NOTE-S-002
+  date: 2025-08-02
+  active: true
+  supplier: two
+  type: SupplierNote
+  deposit: true
+  devolution_date: 2025-08-15

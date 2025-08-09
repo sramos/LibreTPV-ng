@@ -23,7 +23,6 @@ class SupplierInvoiceTest < ActiveSupport::TestCase
       total_amount: 121,
       supplier: supplier,
       expiration_date: Date.today + 30,
-      note: notes(:two)
     )
 
     duplicate = SupplierInvoice.new(
@@ -33,13 +32,12 @@ class SupplierInvoiceTest < ActiveSupport::TestCase
       total_amount: 121,
       supplier: supplier,
       expiration_date: Date.today + 30,
-      note: notes(:two)
     )
     duplicate.valid?
     assert duplicate.errors[:code].any?
   end
 
-  test "should save supplier_invoice with valid supplier and note" do
+  test "should save supplier_invoice with valid supplier" do
     supplier_invoice = SupplierInvoice.new(
       code: 'INV001-01',
       date: Date.today,
@@ -47,7 +45,6 @@ class SupplierInvoiceTest < ActiveSupport::TestCase
       total_amount: 121,
       expiration_date: Date.today + 30,
       supplier: suppliers(:one),
-      note: notes(:two)
     )
     assert supplier_invoice.valid?
   end

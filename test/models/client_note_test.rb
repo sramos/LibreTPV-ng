@@ -59,13 +59,13 @@ class ClientNoteTest < ActiveSupport::TestCase
   end
 
   test "should have valid associations" do
-    client_note = notes(:one)
+    client_note = notes(:client_note_one)
     assert_respond_to client_note, :client
     assert_respond_to client_note, :note_lines
   end
 
   test "should have valid type" do
-    client_note = notes(:one)
+    client_note = notes(:client_note_one)
     assert_equal 'ClientNote', client_note.type
   end
 end

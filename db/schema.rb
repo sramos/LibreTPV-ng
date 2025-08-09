@@ -63,7 +63,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_09_084411) do
     t.decimal "vat", precision: 3, scale: 3
     t.decimal "tax", precision: 3, scale: 3
     t.boolean "paid", default: false, null: false
-    t.integer "note_id"
     t.integer "client_id"
     t.integer "supplier_id"
     t.string "type", null: false
@@ -71,7 +70,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_09_084411) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["client_id"], name: "index_invoices_on_client_id"
-    t.index ["note_id"], name: "index_invoices_on_note_id"
     t.index ["supplier_id"], name: "index_invoices_on_supplier_id"
   end
 
@@ -94,12 +92,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_09_084411) do
     t.boolean "active", default: true, null: false
     t.integer "client_id"
     t.integer "supplier_id"
+    t.integer "invoice_id"
     t.string "type", null: false
     t.boolean "deposit"
     t.date "devolution_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["client_id"], name: "index_notes_on_client_id"
+    t.index ["invoice_id"], name: "index_notes_on_invoice_id"
     t.index ["supplier_id"], name: "index_notes_on_supplier_id"
   end
 

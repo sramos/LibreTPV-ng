@@ -14,17 +14,17 @@ class NoteTest < ActiveSupport::TestCase
   end
 
   test "should have many note_lines" do
-    note = notes(:one)
+    note = notes(:client_note_one)
     assert_respond_to note, :note_lines
   end
 
   test "should have one client" do
-    note = notes(:one)
+    note = notes(:client_note_one)
     assert_respond_to note, :client
   end
 
   test "should have one supplier" do
-    note = notes(:one)
+    note = notes(:supplier_note_one)
     assert_respond_to note, :supplier
   end
 

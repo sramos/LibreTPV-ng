@@ -86,13 +86,13 @@ class SupplierNoteTest < ActiveSupport::TestCase
   end
 
   test "should have valid associations" do
-    supplier_note = notes(:two)
+    supplier_note = notes(:supplier_note_one)
     assert_respond_to supplier_note, :supplier
     assert_respond_to supplier_note, :note_lines
   end
 
   test "should have valid type" do
-    supplier_note = notes(:two)
+    supplier_note = notes(:supplier_note_two)
     assert_equal 'SupplierNote', supplier_note.type
   end
 end

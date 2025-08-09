@@ -3,7 +3,6 @@ one:
   date: 2025-08-01
   base_amount: 100.0
   total_amount: 120.0
-  note: one
   client: one
   type: ClientInvoice
 
@@ -13,6 +12,5 @@ two:
   base_amount: 100.0
   total_amount: 120.0
   expiration_date: 2025-08-15
-  note: two
   supplier: two
   type: SupplierInvoice
