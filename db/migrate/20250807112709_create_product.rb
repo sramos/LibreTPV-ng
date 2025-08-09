@@ -6,7 +6,7 @@ class CreateProduct < ActiveRecord::Migration[8.0]
       t.string :author
       t.string :editor
       t.string :year
-      t.string :description
+      t.text :description
       t.string :image_url
       t.decimal :price, precision: 8, scale: 2, null: false
       t.integer :stock, null: false, default: 0
