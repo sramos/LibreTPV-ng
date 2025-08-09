@@ -5,7 +5,7 @@ class ClientNoteTest < ActiveSupport::TestCase
     client_note = ClientNote.new(
       code: 'CLI001',
       date: Date.today,
-      active: true
+      closed: false
     )
     client_note.valid?
     assert client_note.errors[:client].any?
@@ -15,7 +15,7 @@ class ClientNoteTest < ActiveSupport::TestCase
     client_note = ClientNote.new(
       code: 'CLI001',
       date: Date.today,
-      active: true,
+      closed: false,
       client: clients(:one)
     )
     assert client_note.valid?
@@ -25,13 +25,13 @@ class ClientNoteTest < ActiveSupport::TestCase
     client_note = ClientNote.create!(
       code: 'CLI001',
       date: Date.today,
-      active: true,
+      closed: false,
       client: clients(:one)
     )
     duplicate = ClientNote.new(
       code: 'CLI001',
       date: Date.today,
-      active: true,
+      closed: false,
       client: clients(:two)
     )
     duplicate.valid?
@@ -42,7 +42,7 @@ class ClientNoteTest < ActiveSupport::TestCase
     client_note = ClientNote.new(
       code: 'CLI001',
       date: Date.today,
-      active: true,
+      closed: false,
       client: clients(:one)
     )
     assert client_note.valid?
@@ -52,7 +52,7 @@ class ClientNoteTest < ActiveSupport::TestCase
     client_note = ClientNote.new(
       code: 'CLI001',
       date: Date.today,
-      active: true,
+      closed: false,
       client: clients(:one)
     )
     assert client_note.valid?

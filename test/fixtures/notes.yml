@@ -1,21 +1,21 @@
 client_note_one:
   code: NOTE-C-001
   date: 2025-08-01
-  active: true
+  closed: false
   client: one
   type: ClientNote
 
 client_note_two:
   code: NOTE-C-002
   date: 2025-08-02
-  active: false
+  closed: true
   client: two
   type: ClientNote
 
 supplier_note_one:
   code: NOTE-S-002
   date: 2025-08-02
-  active: true
+  closed: false
   supplier: one
   type: SupplierNote
   deposit: false
@@ -23,7 +23,7 @@ supplier_note_one:
 supplier_note_two:
   code: NOTE-S-002
   date: 2025-08-02
-  active: true
+  closed: true
   supplier: two
   type: SupplierNote
   deposit: true

@@ -32,7 +32,7 @@ class NoteLineTest < ActiveSupport::TestCase
 
   test "should not update line if note is disabled" do
     note_line = note_lines(:one)
-    note_line.note.update(active: false)
+    note_line.note.update(closed: true)
     note_line.update(quantity: 2)
     assert note_line.errors[:base].any?
   end

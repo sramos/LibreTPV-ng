@@ -20,8 +20,8 @@ class NoteLine < ApplicationRecord
   end
 
   def avoid_changes_on_disabled_note
-    unless note&.active == true
-      errors.add(:base, 'No se puede modificar una nota deshabilitada')
+    if note&.closed == true
+      errors.add(:base, 'No se puede modificar una nota cerrada')
     end
     throw :abort if errors.any?
   end

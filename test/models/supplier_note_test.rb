@@ -5,7 +5,7 @@ class SupplierNoteTest < ActiveSupport::TestCase
     supplier_note = SupplierNote.new(
       code: 'SUP001',
       date: Date.today,
-      active: true,
+      closed: false,
       deposit: false
     )
     supplier_note.valid?
@@ -16,7 +16,7 @@ class SupplierNoteTest < ActiveSupport::TestCase
     supplier_note = SupplierNote.new(
       code: 'SUP001',
       date: Date.today,
-      active: true,
+      closed: false,
       supplier: suppliers(:one),
       deposit: false
     )
@@ -27,14 +27,14 @@ class SupplierNoteTest < ActiveSupport::TestCase
     supplier_note = SupplierNote.create!(
       code: 'SUP001',
       date: Date.today,
-      active: true,
+      closed: false,
       supplier: suppliers(:one),
       deposit: false
     )
     duplicate = SupplierNote.new(
       code: 'SUP001',
       date: Date.today,
-      active: true,
+      closed: false,
       supplier: suppliers(:one),
       deposit: false
     )
@@ -46,14 +46,14 @@ class SupplierNoteTest < ActiveSupport::TestCase
     supplier_note = SupplierNote.create!(
       code: 'SUP001',
       date: Date.today,
-      active: true,
+      closed: false,
       supplier: suppliers(:one),
       deposit: false
     )
     duplicate = SupplierNote.new(
       code: 'SUP001',
       date: Date.today,
-      active: true,
+      closed: false,
       supplier: suppliers(:two),
       deposit: false
     )
@@ -65,7 +65,7 @@ class SupplierNoteTest < ActiveSupport::TestCase
     supplier_note = SupplierNote.new(
       code: 'SUP001',
       date: Date.today,
-      active: true,
+      closed: false,
       supplier: suppliers(:one),
       deposit: true
     )
@@ -77,7 +77,7 @@ class SupplierNoteTest < ActiveSupport::TestCase
     supplier_note = SupplierNote.new(
       code: 'SUP001',
       date: Date.today,
-      active: true,
+      closed: false,
       supplier: suppliers(:one),
       deposit: true,
       devolution_date: Date.today + 30

@@ -28,8 +28,8 @@ class NoteTest < ActiveSupport::TestCase
     assert_respond_to note, :supplier
   end
 
-  test "should have active field with default true" do
+  test "should have closed field with default false" do
     note = Note.new
-    assert_equal true, note.active
+    assert_equal false, note.closed
   end
 end
