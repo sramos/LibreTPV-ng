@@ -12,6 +12,7 @@ two:
   date: 2025-08-02
   base_amount: 100.0
   total_amount: 120.0
+  expiration_date: 2025-08-15
   note: two
   supplier: two
   type: SupplierInvoice

@@ -2,6 +2,7 @@ class SupplierInvoice < Invoice
   belongs_to :supplier
 
   validates :supplier, presence: true
+  validates :expiration_date, presence: true
   validate :code_must_be_unique_for_supplier
   validate :note_or_vat_and_taxes
 

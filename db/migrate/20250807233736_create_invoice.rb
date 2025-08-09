@@ -12,6 +12,8 @@ class CreateInvoice < ActiveRecord::Migration[8.0]
       t.references :client
       t.references :supplier
       t.string :type, null: false
+      t.date :expiration_date
+      
       t.timestamps
     end
   end

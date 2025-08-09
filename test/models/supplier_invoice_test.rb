@@ -6,7 +6,8 @@ class SupplierInvoiceTest < ActiveSupport::TestCase
       code: 'INV001-01',
       date: Date.today,
       base_amount: 100,
-      total_amount: 121
+      total_amount: 121,
+      expiration_date: Date.today + 30
     )
     supplier_invoice.valid?
     assert supplier_invoice.errors[:supplier].any?
@@ -21,6 +22,7 @@ class SupplierInvoiceTest < ActiveSupport::TestCase
       base_amount: 100,
       total_amount: 121,
       supplier: supplier,
+      expiration_date: Date.today + 30,
       note: notes(:two)
     )
 
@@ -30,6 +32,7 @@ class SupplierInvoiceTest < ActiveSupport::TestCase
       base_amount: 100,
       total_amount: 121,
       supplier: supplier,
+      expiration_date: Date.today + 30,
       note: notes(:two)
     )
     duplicate.valid?
@@ -42,6 +45,7 @@ class SupplierInvoiceTest < ActiveSupport::TestCase
       date: Date.today,
       base_amount: 100,
       total_amount: 121,
+      expiration_date: Date.today + 30,
       supplier: suppliers(:one),
       note: notes(:two)
     )
@@ -54,11 +58,23 @@ class SupplierInvoiceTest < ActiveSupport::TestCase
       date: Date.today,
       base_amount: 100,
       total_amount: 121,
+      expiration_date: Date.today + 30,
       supplier: suppliers(:one),
       vat: 21.0,
       tax: 10.0
     )
     assert supplier_invoice.valid?
+  end
+
+  test "should not save supplier_invoice without expiration_date" do
+    supplier_invoice = SupplierInvoice.new(
+      code: 'INV001-01',
+      date: Date.today,
+      base_amount: 100,
+      total_amount: 121
+    )
+    supplier_invoice.valid?
+    assert supplier_invoice.errors[:expiration_date].any?
   end
 
   test "should have valid associations" do
