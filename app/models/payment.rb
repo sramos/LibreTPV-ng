@@ -5,7 +5,7 @@ class Payment < ApplicationRecord
   validates :amount, presence: true
   validates :date, presence: true
 
-  after_commit :update_invoice_paid_status, on: [:create, :update]
+  after_commit :update_invoice_paid_status, on: [ :create, :update, :destroy ]
 
   private
 

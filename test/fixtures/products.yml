@@ -1,8 +1,9 @@
 one:
-  name: Agua Mineral
-  code: AGU123
-  price: 1.5
+  name: El Quijote
+  code: LIB123
+  price: 10.5
   stock: 100
+  editor: one
   product_type: two
 
 two:

@@ -32,14 +32,14 @@ class PaymentTest < ActiveSupport::TestCase
   test "should update invoice paid status after payment creation" do
     invoice = invoices(:one)
     invoice.update!(paid: false)
-    
+
     payment = Payment.create!(
       amount: invoice.total_amount,
       date: Date.today,
       invoice: invoice,
       payment_type: payment_types(:one)
     )
-    
+
     invoice.reload
     assert invoice.paid
   end
@@ -47,17 +47,17 @@ class PaymentTest < ActiveSupport::TestCase
   test "should update invoice paid status after payment update" do
     invoice = invoices(:one)
     invoice.update!(paid: false)
-    
+
     payment = Payment.create!(
       amount: invoice.total_amount/10.0,
       date: Date.today,
       invoice: invoice,
       payment_type: payment_types(:one)
     )
-    
+
     invoice.reload
     assert_not invoice.paid
-    
+
     payment.update!(amount: invoice.total_amount)
     invoice.reload
     assert invoice.paid
