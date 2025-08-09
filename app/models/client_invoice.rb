@@ -8,7 +8,7 @@ class ClientInvoice < Invoice
   private
 
   def code_must_be_unique
-    if ClientInvoice.where(code: code).exists?
+    if ClientInvoice.where(code: code).where.not(id: id).exists?
       errors.add(:code, 'must be unique')
     end
   end

@@ -9,7 +9,7 @@ class SupplierInvoice < Invoice
   private
 
   def code_must_be_unique_for_supplier
-    if SupplierInvoice.where(supplier_id: supplier_id, code: code).exists?
+    if SupplierInvoice.where(supplier_id: supplier_id, code: code).where.not(id: id).exists?
       errors.add(:code, 'must be unique for supplier')
     end
   end

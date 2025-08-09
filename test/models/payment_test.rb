@@ -29,6 +29,40 @@ class PaymentTest < ActiveSupport::TestCase
     assert_respond_to payment, :payment_type
   end
 
+  test "should update invoice paid status after payment creation" do
+    invoice = invoices(:one)
+    invoice.update!(paid: false)
+    
+    payment = Payment.create!(
+      amount: invoice.total_amount,
+      date: Date.today,
+      invoice: invoice,
+      payment_type: payment_types(:one)
+    )
+    
+    invoice.reload
+    assert invoice.paid
+  end
+
+  test "should update invoice paid status after payment update" do
+    invoice = invoices(:one)
+    invoice.update!(paid: false)
+    
+    payment = Payment.create!(
+      amount: invoice.total_amount/10.0,
+      date: Date.today,
+      invoice: invoice,
+      payment_type: payment_types(:one)
+    )
+    
+    invoice.reload
+    assert_not invoice.paid
+    
+    payment.update!(amount: invoice.total_amount)
+    invoice.reload
+    assert invoice.paid
+  end
+
   test "should have valid associations" do
     payment = payments(:one)
     assert_not_nil payment.invoice

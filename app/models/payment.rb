@@ -4,4 +4,12 @@ class Payment < ApplicationRecord
 
   validates :amount, presence: true
   validates :date, presence: true
+
+  after_commit :update_invoice_paid_status, on: [:create, :update]
+
+  private
+
+  def update_invoice_paid_status
+    invoice.update(paid: invoice.payments.sum(:amount) >= invoice.total_amount)
+  end
 end
