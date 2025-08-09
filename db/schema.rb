@@ -10,14 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_08_095255) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_09_084411) do
+  create_table "cashes", force: :cascade do |t|
+    t.decimal "amount", precision: 8, scale: 2, null: false
+    t.datetime "date"
+    t.boolean "cash_count", default: false, null: false
+    t.string "comments"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "clients", force: :cascade do |t|
     t.string "name", default: "", null: false
     t.string "code_id"
-    t.string "address"
-    t.string "email"
-    t.string "phone"
-    t.decimal "discount", precision: 8, scale: 2, default: "0.0", null: false
+    t.decimal "credit", precision: 8, scale: 2, default: "0.0", null: false
+    t.decimal "discount", precision: 3, scale: 3, default: "0.0", null: false
     t.boolean "active", default: true, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -32,10 +39,27 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_08_095255) do
     t.index ["name"], name: "index_configs_on_name", unique: true
   end
 
+  create_table "contact_infos", force: :cascade do |t|
+    t.string "address"
+    t.string "postal_code"
+    t.string "province"
+    t.string "country"
+    t.string "phone"
+    t.string "contact"
+    t.string "email"
+    t.string "web"
+    t.string "contactable_type"
+    t.integer "contactable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["contactable_type", "contactable_id"], name: "index_contact_infos_on_contactable"
+  end
+
   create_table "invoices", force: :cascade do |t|
     t.string "code", default: "", null: false
     t.datetime "date"
-    t.decimal "total", precision: 8, scale: 2, null: false
+    t.decimal "base_amount", precision: 8, scale: 2, null: false
+    t.decimal "total_amount", precision: 8, scale: 2, null: false
     t.decimal "vat", precision: 3, scale: 3
     t.decimal "tax", precision: 3, scale: 3
     t.boolean "paid", default: false, null: false
@@ -138,11 +162,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_08_095255) do
   create_table "suppliers", force: :cascade do |t|
     t.string "name", default: "", null: false
     t.string "code_id"
-    t.string "address"
-    t.string "email"
-    t.string "phone"
-    t.string "contact"
-    t.decimal "discount", precision: 8, scale: 2, default: "0.0", null: false
+    t.decimal "discount", precision: 3, scale: 3, default: "0.0", null: false
     t.boolean "active", default: true, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

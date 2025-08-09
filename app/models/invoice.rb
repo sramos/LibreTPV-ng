@@ -5,7 +5,8 @@ class Invoice < ApplicationRecord
 
   validates :code, presence: true
   validates :date, presence: true
-  validates :total, presence: true
+  validates :base_amount, presence: true
+  validates :total_amount, presence: true
   validate :avoid_note_and_vat_and_taxes
 
   private

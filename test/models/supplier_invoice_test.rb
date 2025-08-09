@@ -5,7 +5,8 @@ class SupplierInvoiceTest < ActiveSupport::TestCase
     supplier_invoice = SupplierInvoice.new(
       code: 'INV001-01',
       date: Date.today,
-      total: 100
+      base_amount: 100,
+      total_amount: 121
     )
     supplier_invoice.valid?
     assert supplier_invoice.errors[:supplier].any?
@@ -17,7 +18,8 @@ class SupplierInvoiceTest < ActiveSupport::TestCase
     SupplierInvoice.create!(
       code: 'INV001-01',
       date: Date.today,
-      total: 100,
+      base_amount: 100,
+      total_amount: 121,
       supplier: supplier,
       note: notes(:two)
     )
@@ -25,7 +27,8 @@ class SupplierInvoiceTest < ActiveSupport::TestCase
     duplicate = SupplierInvoice.new(
       code: 'INV001-01',
       date: Date.today,
-      total: 100,
+      base_amount: 100,
+      total_amount: 121,
       supplier: supplier,
       note: notes(:two)
     )
@@ -37,18 +40,20 @@ class SupplierInvoiceTest < ActiveSupport::TestCase
     supplier_invoice = SupplierInvoice.new(
       code: 'INV001-01',
       date: Date.today,
-      total: 100,
+      base_amount: 100,
+      total_amount: 121,
       supplier: suppliers(:one),
       note: notes(:two)
     )
     assert supplier_invoice.valid?
   end
 
-  test "should not save supplier_invoice with vat/tax" do
+  test "should save supplier_invoice with vat/tax" do
     supplier_invoice = SupplierInvoice.new(
       code: 'INV001-01',
       date: Date.today,
-      total: 100,
+      base_amount: 100,
+      total_amount: 121,
       supplier: suppliers(:one),
       vat: 21.0,
       tax: 10.0

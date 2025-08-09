@@ -11,7 +11,8 @@ class InvoiceTest < ActiveSupport::TestCase
     invoice = Invoice.new(
       code: 'INV001-01',
       date: Date.today,
-      total: 100,
+      base_amount: 100,
+      total_amount: 121,
       note: notes(:one),
       vat: 21.0,
       tax: 10.0
@@ -24,7 +25,8 @@ class InvoiceTest < ActiveSupport::TestCase
     invoice = Invoice.new(
       code: 'INV001-01',
       date: Date.today,
-      total: 100,
+      base_amount: 100,
+      total_amount: 121,
       note: notes(:one)
     )
     assert invoice.valid?
@@ -34,7 +36,8 @@ class InvoiceTest < ActiveSupport::TestCase
     invoice = Invoice.new(
       code: 'INV001-01',
       date: Date.today,
-      total: 100,
+      base_amount: 100,
+      total_amount: 121,
       vat: 21.0,
       tax: 10.0
     )
@@ -47,10 +50,16 @@ class InvoiceTest < ActiveSupport::TestCase
     assert invoice.errors[:date].any?
   end
 
-  test "should not save invoice without total" do
+  test "should not save invoice without total amount" do
     invoice = Invoice.new
     invoice.valid?
-    assert invoice.errors[:total].any?
+    assert invoice.errors[:total_amount].any?
+  end
+
+  test "should not save invoice without base amount" do
+    invoice = Invoice.new
+    invoice.valid?
+    assert invoice.errors[:base_amount].any?
   end
 
   test "should have one note" do

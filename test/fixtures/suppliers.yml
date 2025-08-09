@@ -1,11 +1,7 @@
 one:
   name: Proveedor A
-  email: proveedor1@example.com
-  phone: 111222333
-  address: Calle Proveedores 789
+  code_id: PRO001-NIF
 
 two:
   name: Proveedor B
-  email: proveedor2@example.com
-  phone: 444555666
-  address: Avenida Distribuidores 321
+  code_id: PRO002-NIF

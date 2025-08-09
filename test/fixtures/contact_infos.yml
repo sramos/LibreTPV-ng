@@ -1,0 +1,23 @@
+one:
+  address: Calle Ejemplo 123
+  postal_code: 28001
+  province: Madrid
+  country: España
+  phone: +34 912 345 678
+  contact: Juan Pérez
+  email: contact@example.com
+  web: www.example.com
+  contactable: one
+  contactable_type: Client
+
+two:
+  address: Calle Proveedor 456
+  postal_code: 28002
+  province: Madrid
+  country: España
+  phone: +34 912 345 679
+  contact: María García
+  email: supplier@example.com
+  web: www.supplier.com
+  contactable: one
+  contactable_type: Supplier

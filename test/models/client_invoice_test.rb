@@ -5,7 +5,8 @@ class ClientInvoiceTest < ActiveSupport::TestCase
     client_invoice = ClientInvoice.new(
       code: 'INV001-01',
       date: Date.today,
-      total: 100,
+      base_amount: 100,
+      total_amount: 121,
       vat: 21.0,
       tax: 10.0
     )
@@ -17,7 +18,8 @@ class ClientInvoiceTest < ActiveSupport::TestCase
     client_invoice = ClientInvoice.new(
       code: 'INV001-01',
       date: Date.today,
-      total: 100,
+      base_amount: 100,
+      total_amount: 121,
       client: clients(:one),
       note: notes(:one)
     )
