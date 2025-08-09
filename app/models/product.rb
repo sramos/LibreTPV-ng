@@ -13,4 +13,8 @@ class Product < ApplicationRecord
   validates :stock, presence: true
   validates :product_type, presence: true
   validates :code, presence: true, uniqueness: true
+
+  def price_without_vat
+    price / (1 + vat.rate)
+  end
 end

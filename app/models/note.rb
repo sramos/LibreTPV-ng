@@ -1,5 +1,5 @@
 class Note < ApplicationRecord
-  has_many :note_lines
+  has_many :note_lines, dependent: :destroy
   belongs_to :client, optional: true
   belongs_to :supplier, optional: true
   belongs_to :invoice, optional: true

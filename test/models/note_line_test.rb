@@ -25,18 +25,15 @@ class NoteLineTest < ActiveSupport::TestCase
     assert note_line.errors[:product_vat].any?
   end
 
-  test "should have one note" do
-    note_line = note_lines(:one)
-    assert_respond_to note_line, :note
-  end
-
-  test "should have one product" do
-    note_line = note_lines(:one)
-    assert_respond_to note_line, :product
-  end
-
   test "should have quantity field with default 1" do
     note_line = NoteLine.new
     assert_equal 1, note_line.quantity
+  end
+
+  test "should not update line if note is disabled" do
+    note_line = note_lines(:one)
+    note_line.note.update(active: false)
+    note_line.update(quantity: 2)
+    assert note_line.errors[:base].any?
   end
 end

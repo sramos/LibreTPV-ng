@@ -5,14 +5,6 @@ Vat.create([
   { name: 'Sin IVA (0%)', rate: 0.00 }
 ]) if Vat.count == 0
 
-ProductType.create([
-  { name: 'Libros', vat: Vat.find_by(rate: 0.04) },
-  { name: 'Entradas', vat: Vat.find_by(rate: 0.21) },
-  { name: 'Revistas/Periódicos', vat: Vat.find_by(rate: 0.04) },
-  { name: 'Material Escolar', vat: Vat.find_by(rate: 0.04) },
-  { name: 'Papelería', vat: Vat.find_by(rate: 0.21) }
-]) if ProductType.count == 0
-
 PaymentType.create([
   { name: 'Efectivo', cash: true },
   { name: 'Tarjeta', cash: false },
@@ -27,6 +19,14 @@ Supplier.create([
 Client.create([
   { name: 'Caja 1', code_id: 'N/A', discount: 0.00 }
 ]) if Client.count == 0
+
+ProductType.create([
+  { name: 'Libros', vat: Vat.find_by(rate: 0.04) },
+  { name: 'Entradas', vat: Vat.find_by(rate: 0.21) },
+  { name: 'Revistas/Periódicos', vat: Vat.find_by(rate: 0.04) },
+  { name: 'Material Escolar', vat: Vat.find_by(rate: 0.04) },
+  { name: 'Papelería', vat: Vat.find_by(rate: 0.21) }
+]) if ProductType.count == 0
 
 if ProductSubtype.count == 0
   product_type_id = ProductType.find_by(name: 'Libros').id
