@@ -8,7 +8,7 @@ class Note < ApplicationRecord
   validates :date, presence: true
   validate :validate_update, on: :update
 
-  after_commit :update_products_stock, if: :closed?
+  after_commit :update_products_stock
   before_destroy :validate_destroy, prepend: true
 
   def close!
@@ -23,9 +23,12 @@ class Note < ApplicationRecord
   end
 
   def update_products_stock
-    note_lines.each do |note_line|
-      if product = note_line.product
-        product.update(stock: product.stock + (note_line.quantity * product_increment))
+    if saved_change_to_closed?
+      multiplier = closed? ? 1 : -1
+      note_lines.each do |note_line|
+        if product = note_line.product
+          product.update(stock: product.stock + (note_line.quantity * product_increment * multiplier))
+        end
       end
     end
   end

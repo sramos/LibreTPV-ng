@@ -48,6 +48,43 @@ class ClientNoteTest < ActiveSupport::TestCase
     assert client_note.valid?
   end
 
+  test "should reduce stock when client note is closed" do
+    note = notes(:client_note_one)
+    note_line = note.note_lines.first
+    product = note_line.product
+    initial_stock = product.stock
+    note_line.update(product: product, quantity: 2)
+
+    # Verify stock doesn't change before closing
+    assert_equal initial_stock, product.reload.stock
+
+    # Close the note
+    note.close!
+
+    # Verify stock was updated
+    expected_stock = initial_stock - 2 # -1 * 2 since it's a sales note
+    assert_equal expected_stock, product.reload.stock
+  end
+
+  test "should increase stock when reopening client note" do
+    client_note = notes(:client_note_one)
+    note_line = client_note.note_lines.first
+    product = note_line.product
+    initial_stock = product.stock
+    quantity = note_line.quantity
+
+    # Close the note
+    client_note.close!
+    # Verify stock was reduced
+    assert_equal initial_stock - quantity, product.reload.stock
+
+    # Reopen the note
+    client_note.closed = false
+    assert client_note.save
+    # Verify stock was restored
+    assert_equal initial_stock, product.reload.stock
+  end
+
   test "should save client_note without devolution_date" do
     client_note = ClientNote.new(
       code: 'CLI001',
