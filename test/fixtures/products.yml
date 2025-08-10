@@ -1,7 +1,7 @@
 one:
   name: El Quijote
   code: LIB123
-  price: 10.5
+  price: 10
   stock: 100
   editor: one
   product_type: two

@@ -33,6 +33,21 @@ class NoteTest < ActiveSupport::TestCase
     assert_equal false, note.closed
   end
 
+  test "should calculate total amount" do
+    note = notes(:client_note_one)
+    assert_equal 30, note.total_amount
+  end
+
+  test "should calculate tax base" do
+    note = notes(:client_note_one)
+    assert_equal 24.79, note.tax_base.round(2)
+  end
+
+  test "should calculate total vat" do
+    note = notes(:client_note_one)
+    assert_equal 5.21, note.total_vat.round(2)
+  end
+
   test "should not change stock when note is changed" do
     note = notes(:client_note_one)
     note_line = note.note_lines.first

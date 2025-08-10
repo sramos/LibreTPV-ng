@@ -2,7 +2,7 @@ one:
   note: client_note_one
   product: one
   product_name: Agua Mineral
-  product_price: 1.5
+  product_price: 10
   product_vat: 0.21
   quantity: 3
 

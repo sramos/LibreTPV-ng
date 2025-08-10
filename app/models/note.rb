@@ -16,15 +16,15 @@ class Note < ApplicationRecord
   end
 
   def total_amount
-    note_lines.sum(:total_amount)
+    note_lines.map(&:total_amount).inject(0, &:+)
   end
 
   def tax_base
-    note_lines.sum(:tax_base)
+    note_lines.map(&:tax_base).inject(0, &:+)
   end
 
   def total_vat
-    note_lines.sum(:total_vat)
+    note_lines.map(&:total_vat).inject(0, &:+)
   end
 
   private

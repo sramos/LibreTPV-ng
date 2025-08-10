@@ -16,11 +16,11 @@ class NoteLine < ApplicationRecord
   end
 
   def tax_base
-    product_price * quantity / (1 + product_vat)
+    total_amount / (1 + product_vat)
   end
 
   def total_vat
-    product_price * quantity * product_vat
+    total_amount - tax_base
   end
 
   private
