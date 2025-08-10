@@ -15,6 +15,18 @@ class Note < ApplicationRecord
     update(closed: true)
   end
 
+  def total_amount
+    note_lines.sum(:total_amount)
+  end
+
+  def tax_base
+    note_lines.sum(:tax_base)
+  end
+
+  def total_vat
+    note_lines.sum(:total_vat)
+  end
+
   private
 
   # Returns -1 for sales notes and 1 for purchases notes

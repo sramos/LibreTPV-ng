@@ -11,6 +11,18 @@ class NoteLine < ApplicationRecord
 
   before_validation :set_product_values, if: :product
 
+  def total_amount
+    product_price * quantity
+  end
+
+  def tax_base
+    product_price * quantity / (1 + product_vat)
+  end
+
+  def total_vat
+    product_price * quantity * product_vat
+  end
+
   private
 
   def set_product_values
