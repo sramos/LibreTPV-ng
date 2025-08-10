@@ -49,7 +49,7 @@ class SupplierInvoiceTest < ActiveSupport::TestCase
     assert supplier_invoice.valid?
   end
 
-  test "should save supplier_invoice with vat/tax" do
+  test "should save supplier_invoice with vat/income_retention" do
     supplier_invoice = SupplierInvoice.new(
       code: 'INV001-01',
       date: Date.today,
@@ -58,7 +58,7 @@ class SupplierInvoiceTest < ActiveSupport::TestCase
       expiration_date: Date.today + 30,
       supplier: suppliers(:one),
       vat: 21.0,
-      tax: 10.0
+      income_retention: 10.0
     )
     assert supplier_invoice.valid?
   end

@@ -3,13 +3,13 @@ class ClientInvoice < Invoice
 
   validates :client, presence: true
   validate :code_must_be_unique
-  validate :avoid_vat_and_taxes
+  validate :avoid_vat_and_retentions
 
   private
 
-  def avoid_vat_and_taxes
-    if vat.present? || tax.present?
-      errors.add(:base, 'vat or taxes cannot be present at client invoice')
+  def avoid_vat_and_retentions
+    if vat.present? || income_retention.present?
+      errors.add(:base, 'vat or income_retention cannot be present at client invoice')
     end
   end
 

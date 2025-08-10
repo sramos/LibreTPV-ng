@@ -8,7 +8,7 @@ class ClientInvoiceTest < ActiveSupport::TestCase
       base_amount: 100,
       total_amount: 121,
       vat: 21.0,
-      tax: 10.0
+      income_retention: 10.0
     )
     client_invoice.valid?
     assert client_invoice.errors[:client].any?

@@ -75,7 +75,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_09_222002) do
     t.decimal "base_amount", precision: 8, scale: 2, null: false
     t.decimal "total_amount", precision: 8, scale: 2, null: false
     t.decimal "vat", precision: 3, scale: 3
-    t.decimal "tax", precision: 3, scale: 3
+    t.decimal "income_retention", precision: 3, scale: 3
     t.boolean "paid", default: false, null: false
     t.integer "client_id"
     t.integer "supplier_id"
