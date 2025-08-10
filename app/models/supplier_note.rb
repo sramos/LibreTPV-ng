@@ -9,6 +9,6 @@ class SupplierNote < Note
 
   # Returns 1 for purchases notes
   def product_increment
-    -1
+    1
   end
 end

@@ -30,10 +30,34 @@ class NoteLineTest < ActiveSupport::TestCase
     assert_equal 1, note_line.quantity
   end
 
-  test "should not update line if note is disabled" do
+  test "should prevent changes on closed note" do
     note_line = note_lines(:one)
     note_line.note.update(closed: true)
-    note_line.update(quantity: 2)
-    assert note_line.errors[:base].any?
+
+    # Attempt to change various fields
+    note_line.quantity = 22
+
+    assert_not note_line.save
+    assert_equal [ "No se puede modificar una nota cerrada" ], note_line.errors[:base]
+
+    # Verify no changes were actually made
+    note_line.reload
+    assert_not_equal 22, note_line.quantity
+  end
+
+  test "should allow changes on open note" do
+    note_line = note_lines(:one)
+
+    # Verify note is not closed
+    assert_not note_line.note.closed?
+
+    # Attempt to change fields
+    note_line.quantity = 22
+
+    assert note_line.save
+
+    # Verify changes were saved
+    note_line.reload
+    assert_equal 22, note_line.quantity
   end
 end
