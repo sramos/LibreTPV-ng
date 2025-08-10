@@ -23,6 +23,5 @@ class NoteLine < ApplicationRecord
     if note&.closed == true
       errors.add(:base, 'No se puede modificar una nota cerrada')
     end
-    throw :abort if errors.any?
   end
 end

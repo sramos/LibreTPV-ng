@@ -132,4 +132,50 @@ class NoteTest < ActiveSupport::TestCase
       note.reload
     end
   end
+
+  test "should prevent updating closed note" do
+    note = notes(:client_note_one)
+    note.close!
+    
+    # Attempt to update
+    note.code = "NEW-CODE"
+    assert_not note.save
+    assert_equal ["No se puede modificar un albarán cerrado"], note.errors[:base]
+  end
+
+  test "should allow updating note when reopening" do
+    note = notes(:client_note_one)
+    note.close!
+    
+    # Reopen note
+    note.closed = false
+    assert note.save
+    
+    # Now we can update
+    note.code = "NEW-CODE"
+    assert note.save
+  end
+
+  test "should prevent reopening note with invoice" do
+    note = notes(:client_note_one)
+    note.invoice = invoices(:one)
+    note.close!
+    
+    # Try to reopen
+    note.closed = false
+    assert_not note.save
+    assert_equal ["No se puede reabrir un albarán que tenga factura emitida"], note.errors[:base]
+  end
+
+  test "should prevent destroying closed note" do
+    note = notes(:client_note_one)
+    note.close!
+    assert_not note.destroy
+    assert_equal ["No se puede eliminar un albarán cerrado"], note.errors[:base]
+  end
+
+  test "should allow destroying open note" do
+    note = notes(:client_note_one)
+    assert note.destroy
+  end
 end
