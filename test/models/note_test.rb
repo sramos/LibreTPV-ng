@@ -136,7 +136,7 @@ class NoteTest < ActiveSupport::TestCase
   test "should prevent updating closed note" do
     note = notes(:client_note_one)
     note.close!
-    
+
     # Attempt to update
     note.code = "NEW-CODE"
     assert_not note.save
@@ -146,11 +146,11 @@ class NoteTest < ActiveSupport::TestCase
   test "should allow updating note when reopening" do
     note = notes(:client_note_one)
     note.close!
-    
+
     # Reopen note
     note.closed = false
     assert note.save
-    
+
     # Now we can update
     note.code = "NEW-CODE"
     assert note.save
@@ -160,7 +160,7 @@ class NoteTest < ActiveSupport::TestCase
     note = notes(:client_note_one)
     note.invoice = invoices(:one)
     note.close!
-    
+
     # Try to reopen
     note.closed = false
     assert_not note.save
