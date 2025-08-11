@@ -7,12 +7,6 @@ class NoteLineTest < ActiveSupport::TestCase
     assert note_line.errors[:note].any?
   end
 
-  test "should not save note_line without product_name" do
-    note_line = NoteLine.new
-    note_line.valid?
-    assert note_line.errors[:product_name].any?
-  end
-
   test "should not save note_line without product_price" do
     note_line = NoteLine.new
     note_line.valid?

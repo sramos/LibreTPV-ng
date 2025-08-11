@@ -9,7 +9,7 @@ class NoteLine < ApplicationRecord
   validates :note, presence: true
   validate :avoid_changes_on_disabled_note
 
-  before_validation :set_product_values, if: :product
+  before_validation :set_product_values
 
   def total_amount
     product_price * quantity
@@ -26,9 +26,13 @@ class NoteLine < ApplicationRecord
   private
 
   def set_product_values
-    self.product_name = product.name
-    self.product_price = product.price
-    self.product_vat = product.vat.rate
+    if product
+      self.product_name = product.name
+      self.product_price = product.price
+      self.product_vat = product.vat.rate
+    else
+      self.product_name = 'N/A' if product_name.blank?
+    end
   end
 
   def avoid_changes_on_disabled_note
