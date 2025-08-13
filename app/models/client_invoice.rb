@@ -5,6 +5,8 @@ class ClientInvoice < Invoice
   validate :code_must_be_unique
   validate :avoid_vat_and_retentions
 
+  before_commit :set_invoice_code, on: :create
+
   private
 
   def avoid_vat_and_retentions
@@ -17,5 +19,9 @@ class ClientInvoice < Invoice
     if ClientInvoice.where(code: code).where.not(id: id).exists?
       errors.add(:code, 'must be unique')
     end
+  end
+
+  def set_invoice_code
+    self.code = Config.next_invoice_code
   end
 end
