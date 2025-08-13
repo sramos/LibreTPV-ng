@@ -1,4 +1,7 @@
 class Note < ApplicationRecord
+  include ::Sanitizable
+  stripable :code
+
   has_many :note_lines, dependent: :destroy
   belongs_to :client, optional: true
   belongs_to :supplier, optional: true

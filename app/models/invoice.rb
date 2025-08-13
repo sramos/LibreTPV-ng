@@ -1,4 +1,7 @@
 class Invoice < ApplicationRecord
+  include ::Sanitizable
+  stripable :code
+
   has_many :payments
   has_many :notes
 

@@ -1,14 +1,17 @@
 class Author < ApplicationRecord
+  include ::Sanitizable
+  stripable :name
+  upcaseable :name
+
   has_many :product_authors
   has_many :products, through: :product_authors
 
   validates :name, presence: true, uniqueness: true
-  before_validation :prepare_clean_up_name
   before_destroy :validate_destroy, prepend: true
 
   # Rename an author and move products if there is any with same name.
   def rename(new_name = nil, reasign_products = false)
-    new_name = clean_up_name(new_name)
+    new_name = new_name.strip.upcase if new_name
     if new_name.present? && name != new_name
       existing_author = Author.find_by(name: new_name)
       if existing_author && reasign_products
@@ -27,17 +30,5 @@ class Author < ApplicationRecord
       errors.add(:base, 'No se puede eliminar un autor que tenga productos')
       throw :abort
     end
-  end
-
-  def prepare_clean_up_name
-    self.name = clean_up_name(name)
-  end
-
-  def clean_up_name(the_name)
-    if the_name.present?
-      the_name.strip!
-      the_name.upcase!
-    end
-    the_name
   end
 end

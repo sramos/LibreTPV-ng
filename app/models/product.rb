@@ -1,4 +1,7 @@
 class Product < ApplicationRecord
+  include ::Sanitizable
+  stripable :name
+
   has_many :product_authors, dependent: :destroy
   has_many :authors, through: :product_authors
   has_many :note_lines

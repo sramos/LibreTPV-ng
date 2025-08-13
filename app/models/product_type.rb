@@ -1,4 +1,7 @@
 class ProductType < ApplicationRecord
+  include ::Sanitizable
+  stripable :name
+
   belongs_to :vat
   has_many :products
   has_many :product_subtypes, dependent: :destroy

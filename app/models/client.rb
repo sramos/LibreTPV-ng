@@ -1,4 +1,7 @@
 class Client < ApplicationRecord
+  include ::Sanitizable
+  stripable :name
+
   has_one :contact_info, as: :contactable, required: false
   has_many :notes
 
