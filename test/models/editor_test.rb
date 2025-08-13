@@ -15,12 +15,12 @@ class EditorTest < ActiveSupport::TestCase
   end
 
   test "should have many products" do
-    editor = editors(:one)
+    editor = editors(:editor_one)
     assert_respond_to editor, :products
   end
 
   test "should have valid associations" do
-    editor = editors(:one)
+    editor = editors(:editor_one)
     assert editor.products.any?
   end
 
@@ -37,7 +37,7 @@ class EditorTest < ActiveSupport::TestCase
   end
 
   test "should prevent destroying editor with products" do
-    editor = editors(:one)
+    editor = editors(:editor_one)
     assert editor.products.any?
 
     assert_not editor.destroy
@@ -46,7 +46,7 @@ class EditorTest < ActiveSupport::TestCase
   end
 
   test "should allow destroying editor without products" do
-    editor = editors(:one)
+    editor = editors(:editor_two)
 
     # Remove all products from the editor
     editor.products.destroy_all

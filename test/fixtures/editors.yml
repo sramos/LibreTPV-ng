@@ -1,7 +1,7 @@
-one:
+editor_one:
   name: Editorial Ejemplo
   active: true
 
-two:
+editor_two:
   name: Editorial Moderna
   active: true

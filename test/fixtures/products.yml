@@ -3,7 +3,7 @@ one:
   code: LIB123
   price: 10
   stock: 100
-  editor: one
+  editor: editor_one
   product_type: two
 
 two:
@@ -14,8 +14,9 @@ two:
   product_type: one
 
 three:
-  name: Tenedor
+  name: El capital
   code: TEN789
   price: 0.5
   stock: 200
-  product_type: three
+  editor: editor_three
+  product_type: one

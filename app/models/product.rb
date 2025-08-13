@@ -15,7 +15,21 @@ class Product < ApplicationRecord
   validates :product_type, presence: true
   validates :code, presence: true, uniqueness: true
 
+  before_destroy :validate_destroy, prepend: true
+
   def tax_base
     price / (1 + vat.rate)
+  end
+
+  private
+
+  def validate_destroy
+    if note_lines.any?
+      errors.add :base, 'No se puede eliminar un producto que tenga líneas de albarán'
+    end
+    if stock != 0
+      errors.add :base, 'No se puede eliminar un producto cuyo stock no sea cero'
+    end
+    throw :abort unless errors.empty?
   end
 end
