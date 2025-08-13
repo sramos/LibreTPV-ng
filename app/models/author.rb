@@ -4,7 +4,7 @@ class Author < ApplicationRecord
 
   validates :name, presence: true, uniqueness: true
   before_validation :prepare_clean_up_name
-  before_destroy :validate_destroy
+  before_destroy :validate_destroy, prepend: true
 
   # Rename an author and move products if there is any with same name.
   def rename new_name=nil, reasign_products=false

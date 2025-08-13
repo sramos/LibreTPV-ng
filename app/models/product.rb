@@ -1,5 +1,5 @@
 class Product < ApplicationRecord
-  has_many :product_authors
+  has_many :product_authors, dependent: :destroy
   has_many :authors, through: :product_authors
   has_many :note_lines
   has_many :notes, through: :note_lines

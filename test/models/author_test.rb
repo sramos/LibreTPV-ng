@@ -29,6 +29,26 @@ class AuthorTest < ActiveSupport::TestCase
     assert author.product_authors.any?
   end
 
+  test "should prevent destroying author with products" do
+    author = authors(:one)
+    assert author.products.any?
+    
+    assert_not author.destroy
+    assert_equal ["No se puede eliminar un autor que tenga productos"], author.errors[:base]
+    assert Author.exists?(author.id)
+  end
+
+  test "should allow destroying author without products" do
+    author = authors(:one)
+    
+    # Remove all products from the author
+    author.product_authors.destroy_all
+    assert_equal 0, author.products.count
+    
+    assert author.destroy
+    assert_not Author.exists?(author.id)
+  end
+
   test "should clean up name before validation" do
     author = Author.new(name: "  autor001 ")
     assert author.valid?
