@@ -34,4 +34,24 @@ class InvoiceTest < ActiveSupport::TestCase
     )
     assert invoice.valid?
   end
+
+  test "should prevent destroying invoice with payments" do
+    invoice = invoices(:one)
+    assert invoice.payments.any?
+
+    assert_not invoice.destroy
+    assert_equal ["No se puede eliminar una factura que tenga pagos realizados"], invoice.errors[:base]
+    assert Invoice.exists?(invoice.id)
+  end
+
+  test "should allow destroying invoice without payments" do
+    invoice = invoices(:one)
+    
+    # Remove all payments from the invoice
+    invoice.payments.destroy_all
+    assert_equal 0, invoice.payments.count
+    
+    assert invoice.destroy
+    assert_not Invoice.exists?(invoice.id)
+  end
 end
