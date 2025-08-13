@@ -60,7 +60,7 @@ class ConfigTest < ActiveSupport::TestCase
   test "should handle nil invoice count" do
     # Delete existing config if any
     Config.find_by(name: 'COMPANY_INVOICES_COUNT')&.destroy
-    
+
     # First number should be 1
     number = Config.next_invoice_number
     assert_equal "1", number
@@ -73,7 +73,7 @@ class ConfigTest < ActiveSupport::TestCase
     # First call should create the record and start from 1
     number = Config.next_invoice_number
     assert_equal "1", number
-    
+
     # Verify the record was created
     config = Config.find_by(name: 'COMPANY_INVOICES_COUNT')
     assert config.present?
