@@ -1,11 +1,11 @@
-one:
+payment_one:
   invoice_id: <%= ActiveRecord::FixtureSet.identify(:one, 'Invoice') %>
-  payment_type_id: <%= ActiveRecord::FixtureSet.identify(:one, 'PaymentType') %>
+  payment_type: card
   amount: 100.0
   date: 2025-08-01
 
-two:
+payment_two:
   invoice_id: <%= ActiveRecord::FixtureSet.identify(:two, 'Invoice') %>
-  payment_type_id: <%= ActiveRecord::FixtureSet.identify(:two, 'PaymentType') %>
+  payment_type: cash
   amount: 150.0
   date: 2025-08-02

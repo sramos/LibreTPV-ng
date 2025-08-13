@@ -20,17 +20,17 @@ class PaymentTypeTest < ActiveSupport::TestCase
   end
 
   test "should have valid associations" do
-    payment_type = payment_types(:one)
+    payment_type = payment_types(:card)
     assert_respond_to payment_type, :payments
   end
 
   test "should have many payments" do
-    payment_type = payment_types(:one)
+    payment_type = payment_types(:card)
     assert_equal 1, payment_type.payments.count
   end
 
   test "should prevent destroying payment_type with payments" do
-    payment_type = payment_types(:one)
+    payment_type = payment_types(:card)
     assert payment_type.payments.any?
 
     assert_not payment_type.destroy
@@ -39,7 +39,7 @@ class PaymentTypeTest < ActiveSupport::TestCase
   end
 
   test "should allow destroying payment_type without payments" do
-    payment_type = payment_types(:one)
+    payment_type = payment_types(:cash)
 
     # Remove all payments from the payment_type
     payment_type.payments.destroy_all

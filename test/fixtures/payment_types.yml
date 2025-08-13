@@ -1,5 +1,7 @@
-one:
+card:
   name: Tarjeta
+  cash: false
 
-two:
+cash:
   name: Efectivo
+  cash: true
