@@ -63,7 +63,7 @@ class AuthorTest < ActiveSupport::TestCase
     
     author.rename(existing_author.name, true)
 
-    assert_equal nil, Author.find_by(name: a1_name)
+    assert_nil Author.find_by(name: a1_name)
     assert_equal (a1+a2), ProductAuthor.where(author_id: existing_author.id).count
   end
 end
