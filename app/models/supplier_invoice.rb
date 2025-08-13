@@ -1,4 +1,8 @@
 class SupplierInvoice < Invoice
+  include ::Sanitizable
+  stripable :code
+  upcaseable :code
+
   belongs_to :supplier
 
   validates :supplier, presence: true

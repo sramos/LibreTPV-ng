@@ -13,7 +13,7 @@ class Product < ApplicationRecord
   has_one_attached :image
 
   validates :name, presence: true
-  validates :price, presence: true, numericality: { greater_than_or_equal_to: 0 }
+  validates :price, presence: true, numericality: { greater_than: 0 }
   validates :stock, presence: true
   validates :product_type, presence: true
   validates :code, presence: true, uniqueness: true
@@ -28,7 +28,7 @@ class Product < ApplicationRecord
 
   def validate_destroy
     if note_lines.any?
-      errors.add :base, 'No se puede eliminar un producto que tenga líneas de albarán'
+      errors.add :base, 'No se puede eliminar un producto incluído en albaranes'
     end
     if stock != 0
       errors.add :base, 'No se puede eliminar un producto cuyo stock no sea cero'
