@@ -26,7 +26,7 @@ class ProductTest < ActiveSupport::TestCase
   end
 
   test "should not save product without unique code" do
-    product = Product.create!(name: 'Test', price: 10, stock: 5, code: 'TEST123', product_type: product_types(:one))
+    product = Product.create!(name: 'Test', price: 10, stock: 5, code: 'TEST123', product_type: product_types(:product_type_one))
     duplicate = Product.new(code: 'TEST123')
     duplicate.valid?
     assert duplicate.errors[:code].any?

@@ -28,4 +28,24 @@ class PaymentTypeTest < ActiveSupport::TestCase
     payment_type = payment_types(:one)
     assert_equal 1, payment_type.payments.count
   end
+
+  test "should prevent destroying payment_type with payments" do
+    payment_type = payment_types(:one)
+    assert payment_type.payments.any?
+
+    assert_not payment_type.destroy
+    assert_equal ["No se puede eliminar una forma de pago que tenga pagos asociados"], payment_type.errors[:base]
+    assert PaymentType.exists?(payment_type.id)
+  end
+
+  test "should allow destroying payment_type without payments" do
+    payment_type = payment_types(:one)
+
+    # Remove all payments from the payment_type
+    payment_type.payments.destroy_all
+    assert_equal 0, payment_type.payments.count
+
+    assert payment_type.destroy
+    assert_not PaymentType.exists?(payment_type.id)
+  end
 end

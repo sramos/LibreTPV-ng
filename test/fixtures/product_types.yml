@@ -1,11 +1,11 @@
-one:
-  name: Alimentos
+product_type_one:
+  name: Libros
   vat: one
 
-two:
-  name: Bebidas
+product_type_two:
+  name: Revistas
   vat: one
 
-three:
+product_type_three:
   name: Utensilios
   vat: two

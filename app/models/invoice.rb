@@ -7,7 +7,7 @@ class Invoice < ApplicationRecord
   validates :base_amount, presence: true
   validates :total_amount, presence: true
 
-  before_destroy :validate_destroy
+  before_destroy :validate_destroy, prepend: true
 
   private
 

@@ -4,14 +4,14 @@ one:
   price: 10
   stock: 100
   editor: editor_one
-  product_type: two
+  product_type: product_type_two
 
 two:
   name: Pan Integral
   code: PAN456
   price: 2.5
   stock: 50
-  product_type: one
+  product_type: product_type_one
 
 three:
   name: El capital
@@ -19,4 +19,4 @@ three:
   price: 0.5
   stock: 200
   editor: editor_three
-  product_type: one
+  product_type: product_type_one

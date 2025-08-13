@@ -1,0 +1,7 @@
+product_subtype_one:
+  name: Filosofía
+  product_type: product_type_one
+
+product_subtype_two:
+  name: Economía
+  product_type: product_type_three

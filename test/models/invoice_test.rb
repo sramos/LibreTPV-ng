@@ -46,11 +46,11 @@ class InvoiceTest < ActiveSupport::TestCase
 
   test "should allow destroying invoice without payments" do
     invoice = invoices(:one)
-    
+
     # Remove all payments from the invoice
     invoice.payments.destroy_all
     assert_equal 0, invoice.payments.count
-    
+
     assert invoice.destroy
     assert_not Invoice.exists?(invoice.id)
   end
