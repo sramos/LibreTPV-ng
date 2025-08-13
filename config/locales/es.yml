@@ -1,2 +1,28 @@
 es:
   hello: "Hola mundo"
+  errors:
+    authors:
+      removal_with_existing_products: No se puede eliminar un autor que tenga productos en el catálogo
+    client_invoices:
+      vat_or_income_retention: Una factura de cliente no puede tener campos de IVA o de retención de IRPF
+    clients:
+      removal_with_existing_notes: No se puede eliminar un cliente que tenga creados albaranes
+    editors:
+      removal_with_existing_products: No se puede eliminar un editor que tenga productos en el catálogo
+    global:
+      must_be_unique: debe ser único
+    invoices:
+      removal_with_payments: No se puede eliminar una factura que tenga pagos realizados
+    notes:
+      closed_note: No se puede modificar un albarán cerrado
+      removal_closed_note: No se puede eliminar un albarán cerrado
+      reopen_with_invoice: No se puede reabrir un albarán que tenga factura emitida
+    products:
+      removal_with_existing_notes: No se puede eliminar un producto incluído en albaranes
+      removal_with_non_zero_stock: No se puede eliminar un producto cuyo stock no sea cero
+    supplier_invoices:
+      unique_for_supplier: debe ser único para el proveedor
+    suppliers:
+      removal_with_existing_notes: No se puede eliminar un proveedor que tenga creados albaranes
+    vats:
+      removal_with_existing_product_types: No se puede eliminar un IVA que tenga tipos de productos asociados

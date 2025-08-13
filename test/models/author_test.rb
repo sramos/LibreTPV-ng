@@ -34,7 +34,7 @@ class AuthorTest < ActiveSupport::TestCase
     assert author.products.any?
 
     assert_not author.destroy
-    assert_equal ["No se puede eliminar un autor que tenga productos"], author.errors[:base]
+    assert_equal [I18n.t('errors.authors.removal_with_existing_products')], author.errors[:base]
     assert Author.exists?(author.id)
   end
 

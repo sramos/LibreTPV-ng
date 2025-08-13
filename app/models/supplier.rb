@@ -15,7 +15,7 @@ class Supplier < ApplicationRecord
 
   def validate_destroy
     if notes.any?
-      errors.add(:base, 'No se puede eliminar un proveedor que tenga creados albaranes.')
+      errors.add(:base, I18n.t('errors.suppliers.removal_with_existing_notes'))
       throw :abort
     end
   end

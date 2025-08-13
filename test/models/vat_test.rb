@@ -44,7 +44,7 @@ class VatTest < ActiveSupport::TestCase
     assert vat.product_types.any?
 
     assert_not vat.destroy
-    assert_equal ["No se puede eliminar un IVA que tenga tipos de productos asociados"], vat.errors[:base]
+    assert_equal [I18n.t('errors.vats.removal_with_existing_product_types')], vat.errors[:base]
     assert Vat.exists?(vat.id)
   end
 

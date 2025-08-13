@@ -37,7 +37,7 @@ class NoteLine < ApplicationRecord
 
   def avoid_changes_on_disabled_note
     if note&.closed == true
-      errors.add(:base, 'No se puede modificar una nota cerrada')
+      errors.add(:base, I18n.t('errors.notes.closed_note'))
     end
   end
 end

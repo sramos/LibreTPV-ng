@@ -28,10 +28,10 @@ class Product < ApplicationRecord
 
   def validate_destroy
     if note_lines.any?
-      errors.add :base, 'No se puede eliminar un producto incluído en albaranes'
+      errors.add :base, I18n.t('errors.products.removal_with_existing_notes')
     end
     if stock != 0
-      errors.add :base, 'No se puede eliminar un producto cuyo stock no sea cero'
+      errors.add :base, I18n.t('errors.products.removal_with_non_zero_stock')
     end
     throw :abort unless errors.empty?
   end

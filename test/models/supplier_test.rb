@@ -5,7 +5,7 @@ class SupplierTest < ActiveSupport::TestCase
     supplier = suppliers(:one)
 
     assert_not supplier.destroy
-    assert_equal ["No se puede eliminar un proveedor que tenga creados albaranes."], supplier.errors[:base]
+    assert_equal [I18n.t('errors.suppliers.removal_with_existing_notes')], supplier.errors[:base]
     assert Supplier.exists?(supplier.id)
   end
 

@@ -15,7 +15,7 @@ class Client < ApplicationRecord
 
   def validate_destroy
     if notes.any?
-      errors.add(:base, 'No se puede eliminar un cliente que tenga creados albaranes.')
+      errors.add(:base, I18n.t('errors.clients.removal_with_existing_notes'))
       throw :abort
     end
   end

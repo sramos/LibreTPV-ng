@@ -32,7 +32,7 @@ class NoteLineTest < ActiveSupport::TestCase
     note_line.quantity = 22
 
     assert_not note_line.save
-    assert_equal [ "No se puede modificar una nota cerrada" ], note_line.errors[:base]
+    assert_equal [I18n.t('errors.notes.closed_note')], note_line.errors[:base]
 
     # Verify no changes were actually made
     note_line.reload

@@ -51,16 +51,16 @@ class Note < ApplicationRecord
   def validate_update
     # If the note is closed, it cannot be modified
     if closed && !closed_changed?
-      errors.add(:base, 'No se puede modificar un albarán cerrado')
+      errors.add(:base, I18n.t('errors.notes.closed_note'))
     # A note can be opened again only if there is no invoice or it is open
     elsif closed_changed? && !closed && invoice.present?
-      errors.add(:base, 'No se puede reabrir un albarán que tenga factura emitida')
+      errors.add(:base, I18n.t('errors.notes.reopen_with_invoice'))
     end
   end
 
   def validate_destroy
     if closed?
-      errors.add(:base, 'No se puede eliminar un albarán cerrado')
+      errors.add(:base, I18n.t('errors.notes.removal_closed_note'))
       throw :abort
     end
   end

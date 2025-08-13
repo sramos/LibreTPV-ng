@@ -16,7 +16,7 @@ class Invoice < ApplicationRecord
 
   def validate_destroy
     if payments.any?
-      errors.add(:base, 'No se puede eliminar una factura que tenga pagos realizados')
+      errors.add(:base, I18n.t('errors.invoices.removal_with_payments'))
       throw :abort
     end
   end

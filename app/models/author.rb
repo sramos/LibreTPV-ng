@@ -27,7 +27,7 @@ class Author < ApplicationRecord
 
   def validate_destroy
     if products.any?
-      errors.add(:base, 'No se puede eliminar un autor que tenga productos')
+      errors.add :base, I18n.t('errors.authors.removal_with_existing_products')
       throw :abort
     end
   end

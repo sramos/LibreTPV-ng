@@ -41,7 +41,7 @@ class EditorTest < ActiveSupport::TestCase
     assert editor.products.any?
 
     assert_not editor.destroy
-    assert_equal ["No se puede eliminar un editor que tenga productos"], editor.errors[:base]
+    assert_equal [I18n.t('errors.editors.removal_with_existing_products')], editor.errors[:base]
     assert Editor.exists?(editor.id)
   end
 

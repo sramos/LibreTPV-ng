@@ -5,7 +5,7 @@ class ClientTest < ActiveSupport::TestCase
     client = clients(:one)
 
     assert_not client.destroy
-    assert_equal ["No se puede eliminar un cliente que tenga creados albaranes."], client.errors[:base]
+    assert_equal [I18n.t('errors.clients.removal_with_existing_notes')], client.errors[:base]
     assert Client.exists?(client.id)
   end
 

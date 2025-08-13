@@ -40,7 +40,7 @@ class InvoiceTest < ActiveSupport::TestCase
     assert invoice.payments.any?
 
     assert_not invoice.destroy
-    assert_equal ["No se puede eliminar una factura que tenga pagos realizados"], invoice.errors[:base]
+    assert_equal [I18n.t('errors.invoices.removal_with_payments')], invoice.errors[:base]
     assert Invoice.exists?(invoice.id)
   end
 

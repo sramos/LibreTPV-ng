@@ -11,13 +11,13 @@ class ClientInvoice < Invoice
 
   def avoid_vat_and_retentions
     if vat.present? || income_retention.present?
-      errors.add(:base, 'vat or income_retention cannot be present at client invoice')
+      errors.add(:base, I18n.t('errors.client_invoices.vat_or_income_retention'))
     end
   end
 
   def code_must_be_unique
     if ClientInvoice.where(code: code).where.not(id: id).exists?
-      errors.add(:code, 'must be unique')
+      errors.add(:code, I18n.t('errors.global.must_be_unique'))
     end
   end
 

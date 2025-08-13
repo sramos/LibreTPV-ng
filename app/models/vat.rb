@@ -14,7 +14,7 @@ class Vat < ApplicationRecord
 
   def validate_destroy
     if product_types.any?
-      errors.add(:base, 'No se puede eliminar un IVA que tenga tipos de productos asociados')
+      errors.add(:base, I18n.t('errors.vats.removal_with_existing_product_types'))
       throw :abort
     end
   end
