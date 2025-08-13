@@ -30,12 +30,32 @@ class VatTest < ActiveSupport::TestCase
   end
 
   test "should have many product_types" do
-    vat = vats(:one)
+    vat = vats(:vat_one)
     assert_respond_to vat, :product_types
   end
 
   test "should have many products through product_types" do
-    vat = vats(:one)
+    vat = vats(:vat_one)
     assert_respond_to vat, :products
+  end
+
+  test "should prevent destroying vat with product_types" do
+    vat = vats(:vat_one)
+    assert vat.product_types.any?
+
+    assert_not vat.destroy
+    assert_equal ["No se puede eliminar un IVA que tenga tipos de productos asociados"], vat.errors[:base]
+    assert Vat.exists?(vat.id)
+  end
+
+  test "should allow destroying vat without product_types" do
+    vat = vats(:vat_three)
+
+    # Remove all product_types from the vat
+    vat.product_types.destroy_all
+    assert_equal 0, vat.product_types.count
+
+    assert vat.destroy
+    assert_not Vat.exists?(vat.id)
   end
 end

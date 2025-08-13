@@ -1,11 +1,11 @@
 product_type_one:
   name: Libros
-  vat: one
+  vat: vat_one
 
 product_type_two:
   name: Revistas
-  vat: one
+  vat: vat_one
 
 product_type_three:
   name: Utensilios
-  vat: two
+  vat: vat_two

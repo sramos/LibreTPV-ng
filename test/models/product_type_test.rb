@@ -8,7 +8,7 @@ class ProductTypeTest < ActiveSupport::TestCase
   end
 
   test "should not save product_type with duplicate name" do
-    product_type = ProductType.create!(name: 'Test', vat: vats(:one))
+    product_type = ProductType.create!(name: 'Test', vat: vats(:vat_one))
     duplicate = ProductType.new(name: 'Test')
     duplicate.valid?
     assert duplicate.errors[:name].any?
@@ -31,7 +31,7 @@ class ProductTypeTest < ActiveSupport::TestCase
   end
 
   test "should have vat association" do
-    product_type = ProductType.create!(name: 'Test', vat: vats(:one))
+    product_type = ProductType.create!(name: 'Test', vat: vats(:vat_one))
     assert_not_nil product_type.vat
   end
 
