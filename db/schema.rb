@@ -11,7 +11,7 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[8.0].define(version: 2025_08_10_215520) do
-  create_table "active_storage_attachments", force: :cascade do |t|
+  create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
     t.bigint "record_id", null: false
@@ -21,7 +21,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_10_215520) do
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
 
-  create_table "active_storage_blobs", force: :cascade do |t|
+  create_table "active_storage_blobs", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "key", null: false
     t.string "filename", null: false
     t.string "content_type"
@@ -33,20 +33,20 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_10_215520) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "active_storage_variant_records", force: :cascade do |t|
+  create_table "active_storage_variant_records", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "authors", force: :cascade do |t|
+  create_table "authors", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "name", default: "", null: false
     t.boolean "active", default: true, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "cashes", force: :cascade do |t|
+  create_table "cashes", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.decimal "amount", precision: 8, scale: 2, null: false
     t.datetime "date"
     t.boolean "cash_count", default: false, null: false
@@ -55,7 +55,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_10_215520) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "clients", force: :cascade do |t|
+  create_table "clients", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "name", default: "", null: false
     t.string "code_id"
     t.decimal "credit", precision: 8, scale: 2, default: "0.0", null: false
@@ -65,7 +65,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_10_215520) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "configs", force: :cascade do |t|
+  create_table "configs", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "name", default: "", null: false
     t.string "value", default: "", null: false
     t.boolean "editable", default: true, null: false
@@ -74,7 +74,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_10_215520) do
     t.index ["name"], name: "index_configs_on_name", unique: true
   end
 
-  create_table "contact_infos", force: :cascade do |t|
+  create_table "contact_infos", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "address"
     t.string "postal_code"
     t.string "province"
@@ -84,20 +84,20 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_10_215520) do
     t.string "email"
     t.string "web"
     t.string "contactable_type"
-    t.integer "contactable_id"
+    t.bigint "contactable_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["contactable_type", "contactable_id"], name: "index_contact_infos_on_contactable"
   end
 
-  create_table "editors", force: :cascade do |t|
+  create_table "editors", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "name", default: "", null: false
     t.boolean "active", default: true, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "invoices", force: :cascade do |t|
+  create_table "invoices", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "code", default: "", null: false
     t.datetime "date"
     t.decimal "base_amount", precision: 8, scale: 2, null: false
@@ -105,8 +105,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_10_215520) do
     t.decimal "vat", precision: 3, scale: 3
     t.decimal "income_retention", precision: 3, scale: 3
     t.boolean "paid", default: false, null: false
-    t.integer "client_id"
-    t.integer "supplier_id"
+    t.bigint "client_id"
+    t.bigint "supplier_id"
     t.string "type", null: false
     t.date "expiration_date"
     t.datetime "created_at", null: false
@@ -115,26 +115,26 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_10_215520) do
     t.index ["supplier_id"], name: "index_invoices_on_supplier_id"
   end
 
-  create_table "note_lines", force: :cascade do |t|
+  create_table "note_lines", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "product_name", default: "", null: false
     t.decimal "product_price", precision: 8, scale: 2, null: false
     t.decimal "product_vat", precision: 3, scale: 3, null: false
     t.integer "quantity", default: 1, null: false
-    t.integer "note_id", null: false
-    t.integer "product_id", null: false
+    t.bigint "note_id", null: false
+    t.bigint "product_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["note_id"], name: "index_note_lines_on_note_id"
     t.index ["product_id"], name: "index_note_lines_on_product_id"
   end
 
-  create_table "notes", force: :cascade do |t|
+  create_table "notes", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "code", default: "", null: false
     t.datetime "date"
     t.boolean "closed", default: false, null: false
-    t.integer "client_id"
-    t.integer "supplier_id"
-    t.integer "invoice_id"
+    t.bigint "client_id"
+    t.bigint "supplier_id"
+    t.bigint "invoice_id"
     t.string "type", null: false
     t.boolean "deposit"
     t.date "devolution_date"
@@ -145,7 +145,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_10_215520) do
     t.index ["supplier_id"], name: "index_notes_on_supplier_id"
   end
 
-  create_table "payment_types", force: :cascade do |t|
+  create_table "payment_types", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "name", default: "", null: false
     t.string "description"
     t.boolean "cash", default: false, null: false
@@ -154,10 +154,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_10_215520) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "payments", force: :cascade do |t|
+  create_table "payments", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.datetime "date"
-    t.integer "invoice_id", null: false
-    t.integer "payment_type_id", null: false
+    t.bigint "invoice_id", null: false
+    t.bigint "payment_type_id", null: false
     t.decimal "amount", precision: 8, scale: 2, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -165,36 +165,36 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_10_215520) do
     t.index ["payment_type_id"], name: "index_payments_on_payment_type_id"
   end
 
-  create_table "product_authors", force: :cascade do |t|
-    t.integer "product_id", null: false
-    t.integer "author_id", null: false
+  create_table "product_authors", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+    t.bigint "product_id", null: false
+    t.bigint "author_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["author_id"], name: "index_product_authors_on_author_id"
     t.index ["product_id"], name: "index_product_authors_on_product_id"
   end
 
-  create_table "product_subtypes", force: :cascade do |t|
+  create_table "product_subtypes", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "name", default: "", null: false
     t.string "description"
     t.boolean "active", default: true, null: false
-    t.integer "product_type_id", null: false
+    t.bigint "product_type_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["product_type_id"], name: "index_product_subtypes_on_product_type_id"
   end
 
-  create_table "product_types", force: :cascade do |t|
+  create_table "product_types", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "name", default: "", null: false
     t.string "description"
     t.boolean "active", default: true, null: false
-    t.integer "vat_id", null: false
+    t.bigint "vat_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["vat_id"], name: "index_product_types_on_vat_id"
   end
 
-  create_table "products", force: :cascade do |t|
+  create_table "products", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "code", default: "", null: false
     t.string "name", default: "", null: false
     t.string "year"
@@ -202,9 +202,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_10_215520) do
     t.string "image_url"
     t.decimal "price", precision: 8, scale: 2, null: false
     t.integer "stock", default: 0, null: false
-    t.integer "product_type_id", null: false
-    t.integer "product_subtype_id"
-    t.integer "editor_id"
+    t.bigint "product_type_id", null: false
+    t.bigint "product_subtype_id"
+    t.bigint "editor_id"
     t.boolean "active", default: true, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -213,7 +213,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_10_215520) do
     t.index ["product_type_id"], name: "index_products_on_product_type_id"
   end
 
-  create_table "suppliers", force: :cascade do |t|
+  create_table "suppliers", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "name", default: "", null: false
     t.string "code_id"
     t.decimal "discount", precision: 3, scale: 3, default: "0.0", null: false
@@ -222,7 +222,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_10_215520) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "vats", force: :cascade do |t|
+  create_table "vats", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "name", default: "", null: false
     t.decimal "rate", precision: 3, scale: 3, default: "0.0", null: false
     t.boolean "active", default: true, null: false

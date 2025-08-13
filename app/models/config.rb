@@ -10,6 +10,6 @@ class Config < ApplicationRecord
     config = Config.find_or_create_by(name: 'COMPANY_INVOICES_COUNT')
     value = config.value.blank? ? 0 : config.value.to_i
     config.update value: value + 1
-    return config.value
+    config.value
   end
 end

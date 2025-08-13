@@ -59,7 +59,7 @@ class SupplierNoteTest < ActiveSupport::TestCase
     expected_stock = initial_stock + 2 # +1 * 2 since it's a purchase note
     assert_equal expected_stock, product.reload.stock
   end
-  
+
   test "should reduce stock when reopening supplier note" do
     supplier_note = notes(:supplier_note_one)
     note_line = supplier_note.note_lines.first

@@ -3,7 +3,7 @@ require 'test_helper'
 class SupplierTest < ActiveSupport::TestCase
   test "should prevent destroying supplier with notes" do
     supplier = suppliers(:one)
-    
+
     assert_not supplier.destroy
     assert_equal ["No se puede eliminar un proveedor que tenga creados albaranes."], supplier.errors[:base]
     assert Supplier.exists?(supplier.id)
@@ -11,11 +11,11 @@ class SupplierTest < ActiveSupport::TestCase
 
   test "should allow destroying supplier without notes" do
     supplier = suppliers(:one)
-    
+
     # Ensure supplier has no notes
     supplier.notes.destroy_all
     assert_equal 0, supplier.notes.count
-    
+
     assert supplier.destroy
     assert_not Supplier.exists?(supplier.id)
   end
@@ -49,11 +49,11 @@ class SupplierTest < ActiveSupport::TestCase
       discount: 0.5
     )
     assert supplier.valid?
-    
+
     supplier.discount = -0.1
     assert_not supplier.valid?
     assert supplier.errors[:discount].any?
-    
+
     supplier.discount = 1.1
     assert_not supplier.valid?
     assert supplier.errors[:discount].any?

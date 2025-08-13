@@ -32,7 +32,7 @@ class AuthorTest < ActiveSupport::TestCase
   test "should prevent destroying author with products" do
     author = authors(:one)
     assert author.products.any?
-    
+
     assert_not author.destroy
     assert_equal ["No se puede eliminar un autor que tenga productos"], author.errors[:base]
     assert Author.exists?(author.id)
@@ -40,11 +40,11 @@ class AuthorTest < ActiveSupport::TestCase
 
   test "should allow destroying author without products" do
     author = authors(:one)
-    
+
     # Remove all products from the author
     author.product_authors.destroy_all
     assert_equal 0, author.products.count
-    
+
     assert author.destroy
     assert_not Author.exists?(author.id)
   end
@@ -65,11 +65,11 @@ class AuthorTest < ActiveSupport::TestCase
     author = authors(:one)
     new_name = "NEW AUTHOR"
     product_authors = author.product_authors.count
-    
+
     assert_no_difference 'Author.count' do
       author.rename(new_name)
     end
-    
+
     assert_equal new_name.upcase, author.reload.name
     assert_equal product_authors, ProductAuthor.where(author_id: author.id).count
   end
@@ -80,7 +80,7 @@ class AuthorTest < ActiveSupport::TestCase
     a1 = ProductAuthor.where(author_id: author.id).count
     existing_author = authors(:two)
     a2 = ProductAuthor.where(author_id: existing_author.id).count
-    
+
     author.rename(existing_author.name, true)
 
     assert_nil Author.find_by(name: a1_name)
