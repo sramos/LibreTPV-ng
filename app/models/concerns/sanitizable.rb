@@ -7,13 +7,11 @@ module Sanitizable
 
     private
 
-    def stripable(fields = [])
-      fields = [fields] unless fields.class == Array
+    def stripable(*fields)
       @stripable_fields = fields
     end
 
-    def upcaseable(fields = [])
-      fields = [fields] unless fields.class == Array
+    def upcaseable(*fields)
       @upcaseable_fields = fields
     end
   end

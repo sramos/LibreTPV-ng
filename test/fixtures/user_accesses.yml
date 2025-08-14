@@ -1,0 +1,19 @@
+access_sales:
+  user: user_one
+  section: sales
+
+access_products:
+  user: user_one
+  section: products
+
+access_reports:
+  user: user_one
+  section: reports
+
+access_config:
+  user: user_one
+  section: config
+
+access_users:
+  user: user_one
+  section: users

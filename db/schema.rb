@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_10_215520) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_14_073450) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -222,6 +222,37 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_10_215520) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "user_accesses", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+    t.string "section", default: "", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_user_accesses_on_user_id"
+  end
+
+  create_table "users", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "name", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.boolean "active", default: true, null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer "sign_in_count", default: 0, null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string "current_sign_in_ip"
+    t.string "last_sign_in_ip"
+    t.integer "failed_attempts", default: 0, null: false
+    t.string "unlock_token"
+    t.datetime "locked_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
+  end
+
   create_table "vats", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "name", default: "", null: false
     t.decimal "rate", precision: 3, scale: 3, default: "0.0", null: false
@@ -243,4 +274,5 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_10_215520) do
   add_foreign_key "product_subtypes", "product_types"
   add_foreign_key "product_types", "vats"
   add_foreign_key "products", "product_types"
+  add_foreign_key "user_accesses", "users"
 end

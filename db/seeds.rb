@@ -1,3 +1,19 @@
+User.create([
+  { name: 'Admin', email: 'admin@libreriaejemplo.com',
+    password: 'password', password_confirmation: 'password',
+    active: true }
+]) if User.count == 0
+
+if UserAccess.count == 0 && (user = User.find_by(email: 'admin@libreriaejemplo.com'))
+  UserAccess.create([
+    { section: 'sales', user: user },
+    { section: 'products', user: user },
+    { section: 'reports', user: user },
+    { section: 'config', user: user },
+    { section: 'users', user: user }
+  ])
+end
+
 Vat.create([
   { name: 'IVA general (21%)', rate: 0.21 },
   { name: 'IVA reducido (10%)', rate: 0.10 },

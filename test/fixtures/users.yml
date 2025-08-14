@@ -1,0 +1,10 @@
+
+user_one:
+  email: admin@libreriaejemplo.com
+  name: Admin
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
+
+user_two:
+  email: user@example.com
+  name: Regular User
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
