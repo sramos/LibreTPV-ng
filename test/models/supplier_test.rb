@@ -50,6 +50,12 @@ class SupplierTest < ActiveSupport::TestCase
     )
     assert supplier.valid?
 
+    supplier.discount = 0.0
+    assert supplier.valid?
+
+    supplier.discount = 1.0
+    assert supplier.valid?
+
     supplier.discount = -0.1
     assert_not supplier.valid?
     assert supplier.errors[:discount].any?

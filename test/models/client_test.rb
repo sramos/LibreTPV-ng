@@ -50,6 +50,12 @@ class ClientTest < ActiveSupport::TestCase
     )
     assert client.valid?
 
+    client.discount = 0.0
+    assert client.valid?
+
+    client.discount = 1.0
+    assert client.valid?
+
     client.discount = -0.1
     assert_not client.valid?
     assert client.errors[:discount].any?
