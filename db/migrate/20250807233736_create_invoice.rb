@@ -5,8 +5,8 @@ class CreateInvoice < ActiveRecord::Migration[8.0]
       t.datetime :date
       t.decimal :base_amount, precision: 8, scale: 2, null: false
       t.decimal :total_amount, precision: 8, scale: 2, null: false
-      t.decimal :vat, precision: 3, scale: 3
-      t.decimal :income_retention, precision: 3, scale: 3
+      t.decimal :vat, precision: 4, scale: 3
+      t.decimal :income_retention, precision: 4, scale: 3
       t.boolean :paid, null: false, default: false
       t.references :client
       t.references :supplier
