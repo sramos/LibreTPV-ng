@@ -21,23 +21,6 @@ class ClientNoteTest < ActiveSupport::TestCase
     assert client_note.valid?
   end
 
-  test "should not save client_note with duplicate code" do
-    client_note = ClientNote.create!(
-      code: 'CLI001',
-      date: Date.today,
-      closed: false,
-      client: clients(:one)
-    )
-    duplicate = ClientNote.new(
-      code: 'CLI001',
-      date: Date.today,
-      closed: false,
-      client: clients(:two)
-    )
-    duplicate.valid?
-    assert duplicate.errors[:code].any?
-  end
-
   test "should save client_note without deposit" do
     client_note = ClientNote.new(
       code: 'CLI001',

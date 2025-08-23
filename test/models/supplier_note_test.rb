@@ -23,25 +23,6 @@ class SupplierNoteTest < ActiveSupport::TestCase
     assert supplier_note.valid?
   end
 
-  test "should not save supplier_note with duplicate code for same supplier" do
-    supplier_note = SupplierNote.create!(
-      code: 'SUP001',
-      date: Date.today,
-      closed: false,
-      supplier: suppliers(:one),
-      deposit: false
-    )
-    duplicate = SupplierNote.new(
-      code: 'SUP001',
-      date: Date.today,
-      closed: false,
-      supplier: suppliers(:one),
-      deposit: false
-    )
-    duplicate.valid?
-    assert duplicate.errors[:code].any?
-  end
-
   test "should increase products stock when supplier note is closed" do
     note = notes(:supplier_note_one)
     note_line = note.note_lines.first

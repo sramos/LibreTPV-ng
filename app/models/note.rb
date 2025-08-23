@@ -7,7 +7,6 @@ class Note < ApplicationRecord
   belongs_to :supplier, optional: true
   belongs_to :invoice, optional: true
 
-  validates :code, presence: true, uniqueness: { scope: :supplier_id }
   validates :date, presence: true
   validate :validate_update, on: :update
 

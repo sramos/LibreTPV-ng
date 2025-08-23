@@ -1,12 +1,6 @@
 require 'test_helper'
 
 class NoteTest < ActiveSupport::TestCase
-  test "should not save note without code" do
-    note = Note.new
-    note.valid?
-    assert note.errors[:code].any?
-  end
-
   test "should not save note without date" do
     note = Note.new
     note.valid?
