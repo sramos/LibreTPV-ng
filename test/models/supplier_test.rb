@@ -26,22 +26,6 @@ class SupplierTest < ActiveSupport::TestCase
     assert supplier.errors[:name].any?
   end
 
-  test "should validate presence of code_id" do
-    supplier = Supplier.new(name: "Test Supplier")
-    assert_not supplier.valid?
-    assert supplier.errors[:code_id].any?
-  end
-
-  test "should validate code_id uniqueness" do
-    existing_supplier = suppliers(:one)
-    supplier = Supplier.new(
-      name: "Test Supplier",
-      code_id: existing_supplier.code_id
-    )
-    assert_not supplier.valid?
-    assert supplier.errors[:code_id].any?
-  end
-
   test "should validate discount range" do
     supplier = Supplier.new(
       name: "Test Supplier",

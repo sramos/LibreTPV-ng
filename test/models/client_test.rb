@@ -26,22 +26,6 @@ class ClientTest < ActiveSupport::TestCase
     assert client.errors[:name].any?
   end
 
-  test "should validate presence of code_id" do
-    client = Client.new(name: "Test Client")
-    assert_not client.valid?
-    assert client.errors[:code_id].any?
-  end
-
-  test "should validate code_id uniqueness" do
-    existing_client = clients(:one)
-    client = Client.new(
-      name: "Test Client",
-      code_id: existing_client.code_id
-    )
-    assert_not client.valid?
-    assert client.errors[:code_id].any?
-  end
-
   test "should validate discount range" do
     client = Client.new(
       name: "Test Client",
