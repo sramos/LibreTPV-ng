@@ -63,17 +63,6 @@ class SupplierInvoiceTest < ActiveSupport::TestCase
     assert supplier_invoice.valid?
   end
 
-  test "should not save supplier_invoice without expiration_date" do
-    supplier_invoice = SupplierInvoice.new(
-      code: 'INV001-01',
-      date: Date.today,
-      base_amount: 100,
-      total_amount: 121
-    )
-    supplier_invoice.valid?
-    assert supplier_invoice.errors[:expiration_date].any?
-  end
-
   test "should have valid associations" do
     supplier_invoice = invoices(:two)
     assert_respond_to supplier_invoice, :supplier

@@ -24,6 +24,10 @@ class Product < ApplicationRecord
     price / (1 + vat.rate)
   end
 
+  def existing_product
+    id.present? ? self : Product.find_by(name: name, code: code, price: price)
+  end
+
   private
 
   def validate_destroy

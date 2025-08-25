@@ -19,12 +19,6 @@ class InvoiceTest < ActiveSupport::TestCase
     assert invoice.errors[:total_amount].any?
   end
 
-  test "should not save invoice without base amount" do
-    invoice = Invoice.new
-    invoice.valid?
-    assert invoice.errors[:base_amount].any?
-  end
-
   test "should save invoice" do
     invoice = Invoice.new(
       code: 'INV001-01',

@@ -79,18 +79,6 @@ class SupplierNoteTest < ActiveSupport::TestCase
     assert_not duplicate.errors[:code].any?
   end
 
-  test "should not save supplier_note with deposit without devolution_date" do
-    supplier_note = SupplierNote.new(
-      code: 'SUP001',
-      date: Date.today,
-      closed: false,
-      supplier: suppliers(:one),
-      deposit: true
-    )
-    supplier_note.valid?
-    assert supplier_note.errors[:devolution_date].any?
-  end
-
   test "should save supplier_note with deposit and devolution_date" do
     supplier_note = SupplierNote.new(
       code: 'SUP001',

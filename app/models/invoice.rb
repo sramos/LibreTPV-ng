@@ -7,7 +7,6 @@ class Invoice < ApplicationRecord
 
   validates :code, presence: true
   validates :date, presence: true
-  validates :base_amount, presence: true
   validates :total_amount, presence: true
 
   before_destroy :validate_destroy, prepend: true

@@ -14,6 +14,29 @@ class ClientInvoiceTest < ActiveSupport::TestCase
     assert client_invoice.errors[:client].any?
   end
 
+  test "should not save client_invoice with duplicate code" do
+    client_one = clients(:one)
+    client_two = clients(:two)
+
+    ClientInvoice.create!(
+      code: 'INV001-01',
+      date: Date.today,
+      total_amount: 121,
+      client: client_one,
+      expiration_date: Date.today + 30,
+    )
+
+    duplicate = ClientInvoice.new(
+      code: 'INV001-01',
+      date: Date.today,
+      total_amount: 121,
+      client: client_two,
+      expiration_date: Date.today + 30,
+    )
+    duplicate.valid?
+    assert duplicate.errors[:code].any?
+  end
+
   test "should save client_invoice with valid client" do
     client_invoice = ClientInvoice.new(
       code: 'INV001-01',
