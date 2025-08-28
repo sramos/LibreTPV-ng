@@ -121,7 +121,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_14_073450) do
     t.decimal "product_vat", precision: 4, scale: 3, null: false
     t.integer "quantity", default: 1, null: false
     t.bigint "note_id", null: false
-    t.bigint "product_id", null: false
+    t.bigint "product_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["note_id"], name: "index_note_lines_on_note_id"
@@ -264,7 +264,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_14_073450) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "note_lines", "notes"
-  add_foreign_key "note_lines", "products"
   add_foreign_key "notes", "clients"
   add_foreign_key "notes", "suppliers"
   add_foreign_key "payments", "invoices"

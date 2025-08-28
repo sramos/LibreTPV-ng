@@ -22,6 +22,6 @@ class ClientInvoice < Invoice
   end
 
   def set_invoice_code
-    self.code = Config.next_invoice_code
+    self.code = Config.next_invoice_code if code.blank?
   end
 end

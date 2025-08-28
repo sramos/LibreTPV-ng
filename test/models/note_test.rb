@@ -106,7 +106,7 @@ class NoteTest < ActiveSupport::TestCase
   test "should not update stock for note lines without products" do
     note = notes(:client_note_one)
     note_line = note.note_lines.first
-    note_line.update(product: nil, quantity: 2)
+    note_line.update(product_id: nil, quantity: 2)
 
     # Close the note
     note.close!

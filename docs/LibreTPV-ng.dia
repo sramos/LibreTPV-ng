@@ -95,6 +95,7 @@
   <dia:layer name="Fondo" visible="true" connectable="false"/>
   <dia:layer name="Fondo" visible="true" connectable="false"/>
   <dia:layer name="Fondo" visible="true" connectable="false"/>
+  <dia:layer name="Fondo" visible="true" connectable="false"/>
   <dia:layer name="Fondo" visible="true" connectable="true" active="true">
     <dia:object type="UML - Class" version="0" id="O0">
       <dia:attribute name="obj_pos">
@@ -1257,16 +1258,16 @@
     </dia:object>
     <dia:object type="UML - Class" version="0" id="O7">
       <dia:attribute name="obj_pos">
-        <dia:point val="18.8,15.05"/>
+        <dia:point val="17.45,14.95"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="18.75,15;27.82,19.1"/>
+        <dia:rectangle val="17.4,14.9;29.165,19"/>
       </dia:attribute>
       <dia:attribute name="elem_corner">
-        <dia:point val="18.8,15.05"/>
+        <dia:point val="17.45,14.95"/>
       </dia:attribute>
       <dia:attribute name="elem_width">
-        <dia:real val="8.9700000000000006"/>
+        <dia:real val="11.665000000000001"/>
       </dia:attribute>
       <dia:attribute name="elem_height">
         <dia:real val="4"/>
@@ -1413,7 +1414,7 @@
             <dia:string>#devolution_date#</dia:string>
           </dia:attribute>
           <dia:attribute name="type">
-            <dia:string>#Date#</dia:string>
+            <dia:string>#Date [0..1]#</dia:string>
           </dia:attribute>
           <dia:attribute name="value">
             <dia:string>##</dia:string>
@@ -1553,18 +1554,18 @@
     </dia:object>
     <dia:object type="UML - Association" version="2" id="O9">
       <dia:attribute name="obj_pos">
-        <dia:point val="23.285,19.1003"/>
+        <dia:point val="23.2825,19.0003"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="22.5475,19.0503;24.0475,22.5997"/>
+        <dia:rectangle val="22.5475,18.9503;24.0475,22.5997"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
       </dia:attribute>
       <dia:attribute name="orth_points">
-        <dia:point val="23.285,19.1003"/>
-        <dia:point val="23.285,20.1"/>
-        <dia:point val="23.2975,20.1"/>
+        <dia:point val="23.2825,19.0003"/>
+        <dia:point val="23.2825,20.05"/>
+        <dia:point val="23.2975,20.05"/>
         <dia:point val="23.2975,21.7997"/>
       </dia:attribute>
       <dia:attribute name="orth_orient">
@@ -3753,7 +3754,7 @@
             <dia:string>#expiration_date#</dia:string>
           </dia:attribute>
           <dia:attribute name="type">
-            <dia:string>#Date#</dia:string>
+            <dia:string>#Date [0..1]#</dia:string>
           </dia:attribute>
           <dia:attribute name="value">
             <dia:string>##</dia:string>
@@ -4043,7 +4044,7 @@
         <dia:point val="37.33,9.14755"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="23.235,9.09755;38.18,15.1"/>
+        <dia:rectangle val="23.2325,9.09755;38.18,15"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
@@ -4051,8 +4052,8 @@
       <dia:attribute name="orth_points">
         <dia:point val="37.33,9.14755"/>
         <dia:point val="37.33,12.9687"/>
-        <dia:point val="23.285,12.9687"/>
-        <dia:point val="23.285,15.05"/>
+        <dia:point val="23.2825,12.9687"/>
+        <dia:point val="23.2825,14.95"/>
       </dia:attribute>
       <dia:attribute name="orth_orient">
         <dia:enum val="1"/>

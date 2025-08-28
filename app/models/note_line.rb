@@ -1,13 +1,13 @@
 class NoteLine < ApplicationRecord
   belongs_to :note
-  belongs_to :product
+  belongs_to :product, optional: true
 
   validates :product_name, presence: true
   validates :product_price, presence: true
   validates :product_vat, presence: true, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 1 }
   validates :quantity, presence: true
   validates :note, presence: true
-  validate :avoid_changes_on_disabled_note
+  #validate :avoid_changes_on_disabled_note
 
   before_validation :set_product_values
 
