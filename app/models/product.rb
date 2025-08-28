@@ -13,7 +13,7 @@ class Product < ApplicationRecord
   has_one_attached :image
 
   validates :name, presence: true
-  validates :price, presence: true, numericality: { greater_than: 0 }
+  validates :price, presence: true, numericality: { greater_or_equal_than: 0 }
   validates :stock, presence: true
   validates :product_type, presence: true
   validates :code, presence: true, uniqueness: true
