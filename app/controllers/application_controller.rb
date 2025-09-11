@@ -4,12 +4,12 @@ class ApplicationController < ActionController::Base
   # Authentication
   before_action :authenticate_user!
   # Locales
-  around_action :set_locale
+  #around_action :set_locale
 
   private
 
-  def set_locale
-    I18n.locale = params[:locale] || I18n.default_locale
-    I18n.with_locale(locale, &action)
+  def set_locale(&action)
+    #I18n.locale = params[:locale] || I18n.default_locale
+    #I18n.with_locale(locale, &action)
   end
 end
