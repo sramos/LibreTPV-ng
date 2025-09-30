@@ -30,68 +30,8 @@
   </head>
 
   <body>
-
-    <div id="cabecera">
-      <div id="avisos" style="display:none;">Esto es un aviso</div>
-
-      <!-- BARRA SUPERIOR DE SECCIONES -->
-      <div id="barrasuperior">
-        <div id="secciones">
-          <% if params[:seccion] %>
-            <ul id="listado-secciones">
-              <% secciones(current_user).each do |seccion| %>
-                <li><a id="section_<%= seccion[:seccion] %>" title="<%= seccion[:title] %>" href="<%= seccion[:url] %>">
-                  <div class="<%= params[:seccion] == seccion[:seccion] ? 'seleccionado' : ''%>" >
-                    <%= seccion[:title] %>
-                  </div>
-                </a></li>
-              <% end %>
-            </ul>
-          <% end %>
-        </div>
-        <div id="estado"><p>
-          <% if params[:seccion] %>
-            <%= params[:seccion].capitalize + " - " + controlador_rotulo(params[:controller]) %>
-          <% else %>
-            <%= t("Acceso Restringido") %>
-          <% end %>
-        </p></div>
-        <div id="opciones-usuario">
-          <div id="logo"></div>
-          <% if user_signed_in? %>
-            <div id="signed_user">
-              <%= current_user.name %> | <%= link_to "Salir", destroy_user_session_path %>
-            </div>
-          <% end %>
-        </div>
-      </div>
-
-      <!-- BARRA SUPERIOR DE ACCIONES -->
-      <% unless controladores.empty? %>
-        <div id="menucontroladores" >
-           <div id="centromenucontroladores">
-            <% for controlador in controladores %>
-              <div id="controlador_<%= controlador[:controlador] %>" class="<%= (controlador[:controlador] == params[:controller]) ? "destacado"  : "fondo" %>" >
-                <%= link_to controlador[:rotulo], :controller => controlador[:controlador] %>
-              </div>
-              <% unless controladores.last == controlador %>
-                <div class='separador'></div>
-              <% end %>
-            <% end %>
-           </div>
-        </div>
-      <% end %>
-    </div>
-
-    <!-- CONTENIDO DE LAS ACCIONES -->
-    <div id="centro" class="centro <%= 'unsigned-user' unless user_signed_in? %>">
-      <!-- Mensajes de informacion -->
-      <%= mensaje_ok flash[:mensaje_ok] if flash[:mensaje_ok] %>
-      <%= mensaje_error(flash[:error]) if flash[:error]%>
-      <!-- Contenido de cada accion -->
-      <%= yield %>
-      <br/><br/>
-    </div>
+    <%= render partial: 'layouts/header' %>
+    <%= render partial: 'layouts/body' %>
 
     <!-- Mensajes de aviso -->
     <%= mensaje flash[:mensaje] if flash[:mensaje] %>
