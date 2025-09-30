@@ -1,0 +1,20 @@
+
+    <!-- CONTENIDO DE LAS ACCIONES -->
+    <div id="centro" class="centro <%= 'unsigned-user' unless user_signed_in? %>">
+      <!-- Mensajes de informacion -->
+      <%= mensaje_ok flash[:mensaje_ok] if flash[:mensaje_ok] %>
+      <%= mensaje_error(flash[:error]) if flash[:error]%>
+      <!-- Contenido de cada accion -->
+      <%= yield %>
+      <br/><br/>
+    </div>
+
+    <!-- Mensajes de aviso -->
+    <%= mensaje flash[:mensaje] if flash[:mensaje] %>
+    <script type="text/javascript" charset="utf-8">
+      // Activa los selectores chosen tras cargar la pagina
+      activaSelectoresChosen();
+      // Cambia el logo del TPV pasados 5 segundos
+      changeBackground.delay(5);
+    </script>
+

@@ -8,8 +8,8 @@ if UserAccess.count == 0 && (user = User.find_by(email: 'admin@libreriaejemplo.c
   UserAccess.create([
     { section: 'sales', user: user },
     { section: 'products', user: user },
+    { section: 'distributor', user: user},
     { section: 'accounting', user: user },
-    { section: 'distribution', user: user },
     { section: 'config', user: user },
     { section: 'users', user: user }
   ])

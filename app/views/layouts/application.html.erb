@@ -1,28 +1,99 @@
-<!DOCTYPE html>
 <html>
+
   <head>
-    <title><%= content_for(:title) || "Libretpv Ng" %></title>
+    <title>TPV: Terminal Punto de Venta - <%= content_for(:title) || 'TPV' %></title>
+    <%= stylesheet_link_tag 'application', :media => "all" %>
+    <%= javascript_include_tag 'application' %>
+
+    <!--<link rel="icon" type="image/ico" href="/images/favicon.ico" />-->
+
+    <META NAME="copyright" CONTENT="Copyright (C) 2011-2020 Santiago Ramos">
+    <META NAME="generator" CONTENT="LibreTPV - Version <%= ENV['TPV_VERSION'] ? "Version #{ENV['TPV_VERSION']}" : '' %> >
+
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
+ 
     <%= yield :head %>
-
+ 
     <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
     <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
-
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
-
+ 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
   <body>
-    <%= yield %>
+
+    <div id="cabecera">
+      <div id="avisos" style="display:none;">Esto es un aviso</div>
+
+      <!-- BARRA SUPERIOR DE SECCIONES -->
+      <div id="barrasuperior">
+        <div id="secciones">
+          <% if params[:seccion] %>
+            <ul id="listado-secciones">
+              <% secciones(current_user).each do |seccion| %>
+                <li><a id="section_<%= seccion[:seccion] %>" title="<%= seccion[:title] %>" href="<%= seccion[:url] %>">
+                  <div class="<%= params[:seccion] == seccion[:seccion] ? 'seleccionado' : ''%>" >
+                    <%= seccion[:title] %>
+                  </div>
+                </a></li>
+              <% end %>
+            </ul>
+          <% end %>
+        </div>
+        <div id="estado"><p>
+          <% if params[:seccion] %>
+            <%= params[:seccion].capitalize + " - " + controlador_rotulo(params[:controller]) %>
+          <% else %>
+            <%= t("Acceso Restringido") %>
+          <% end %>
+        </p></div>
+        <div id="opciones-usuario">
+          <div id="logo"></div>
+          <% if user_signed_in? %>
+            <div id="signed_user">
+              <%= current_user.name %> | <%= link_to "Salir", destroy_user_session_path %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <!-- BARRA SUPERIOR DE ACCIONES -->
+      <% unless controladores.empty? %>
+        <div id="menucontroladores" >
+           <div id="centromenucontroladores">
+            <% for controlador in controladores %>
+              <div id="controlador_<%= controlador[:controlador] %>" class="<%= (controlador[:controlador] == params[:controller]) ? "destacado"  : "fondo" %>" >
+                <%= link_to controlador[:rotulo], :controller => controlador[:controlador] %>
+              </div>
+              <% unless controladores.last == controlador %>
+                <div class='separador'></div>
+              <% end %>
+            <% end %>
+           </div>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- CONTENIDO DE LAS ACCIONES -->
+    <div id="centro" class="centro <%= 'unsigned-user' unless user_signed_in? %>">
+      <!-- Mensajes de informacion -->
+      <%= mensaje_ok flash[:mensaje_ok] if flash[:mensaje_ok] %>
+      <%= mensaje_error(flash[:error]) if flash[:error]%>
+      <!-- Contenido de cada accion -->
+      <%= yield %>
+      <br/><br/>
+    </div>
+
+    <!-- Mensajes de aviso -->
+    <%= mensaje flash[:mensaje] if flash[:mensaje] %>
   </body>
 </html>
