@@ -315,16 +315,19 @@ module OldApplicationHelper
 
   # Devuelve las secciones disponibles para el usuario
   def secciones user=nil
-     secciones = [ { seccion: "sales",          url: "/caja/albarans",            title: "Caja"},
-                   { seccion: "products",     url: "/productos/productos/",     title: "Productos"},
-                   { seccion: "accounting",     url: "/tesoreria/caja/",          title: "Tesorería"},
-#                   { seccion: "distribution", url: "/distribuidora/productos_editorial/", title: "Distribuidora"},
-                   { seccion: "admin",         url: "/admin/avisos/",            title: "Administración"} ]
-     if user && user.class.name == "User"
-       return secciones.select{|sec| user.granted?(sec[:seccion]) }
-     else
-       return [] 
-     end
+    sections = {
+    sales: {url: '/sales/notes', title: 'Caja'},
+    products: {url: '/products/products', title: 'Productos'},
+    accounting: {url: '/accounting/caja', title: 'Tesorería'},
+    #distribution: {url: '/editor/products', title: 'Distribuidora'},
+    admin: {url: '/admin/avisos', title: 'Administración'}
+    }
+    if user && user.class.name == "User"
+      sections = sections.select{|k, v| user.granted?(k) }
+    else
+      {}
+    end
+    sections
   end
 
   def controladores controlador={}

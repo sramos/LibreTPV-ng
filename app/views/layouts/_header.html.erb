@@ -5,13 +5,14 @@
   <!-- BARRA SUPERIOR DE SECCIONES -->
   <div id="barrasuperior">
     <div id="secciones">
-      <% if params[:seccion] %>
+      <% if params[:section] %>
+        <% all_sections = secciones(current_user) %>
         <ul id="listado-secciones">
-          <% secciones(current_user).each do |seccion| %>
+          <% all_sections.each_pair do |s_key, section| %>
             <li>
-              <a id="section_<%= seccion[:seccion] %>" title="<%= seccion[:title] %>" href="<%= seccion[:url] %>">
-                <div class="<%= params[:seccion] == seccion[:seccion] ? 'seleccionado' : ''%>">
-                  <%= seccion[:title] %>
+              <a id="section_<%= s_key %>" title="<%= section[:title] %>" href="<%= section[:url] %>">
+                <div class="<%= params[:section] == s_key ? 'seleccionado' : ''%>">
+                  <%= section[:title] %>
                 </div>
               </a>
             </li>
@@ -22,8 +23,8 @@
 
     <div id="estado">
       <p>
-        <% if params[:seccion] %>
-          <%= params[:seccion].capitalize + " - " + controlador_rotulo(params[:controller]) %>
+        <% if params[:section] %>
+          <%= params[:section].to_s.capitalize + " - " + controlador_rotulo(params[:controller]) %>
         <% end %>
       </p>
     </div>

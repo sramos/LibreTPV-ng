@@ -11,4 +11,10 @@ class ClientNote < Note
   def product_increment
     -1
   end
+
+  def self.clear_empty_notes
+    ClientNote.where(closed: false).each do |note|
+      note.destroy if note.note_lines.empty?
+    end
+  end
 end
