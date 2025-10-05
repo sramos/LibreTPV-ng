@@ -282,7 +282,7 @@ module OldApplicationHelper
 
 
   # Ventana modal que pide confirmacion para el borrado de un elemento
-  def borrrado rotulo, url, titulo, texto, otros={}
+  def borrado rotulo, url, titulo, texto, otros={}
     texto_confirmacion = 'Va a eliminar:<br><b>' + texto + '</b><br><br>'
     cadena = link_to(url, method: :delete, confirm: texto_confirmacion, class: 'link-delete', 'data-message' => '¿Está seguro?', 'data-severity' => 'danger', :remote => true) do
       rotulo
@@ -291,7 +291,7 @@ module OldApplicationHelper
   end
 
   # Ventana modal que pide confirmacion para el borrado de un elemento
-  def borrado rotulo, url, titulo, texto, otros={}
+  def old_borrado rotulo, url, titulo, texto, otros={}
   
     # Falta añadir al titulo de la ventana modal el mismo texto superior que llevan las modales sobre la variable de session.
     cadena = '<div style="display:none;" id="'+ (otros[:id] || url[:id].to_s ) +'_borrar" class="elemento_c">'

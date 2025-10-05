@@ -2,6 +2,6 @@
   <%= hidden_field 'note', 'code' %>
   <%= fecha 'Fecha', 'note', 'date' %>
   <div class="elemento_x01">&nbsp;</div>
-  <%= selector 'Cliente', 'note', 'client_id', @clients.map {|c| [c.name,c.id]}, valor: (@note.nil? ? 1 : @note.client_id), enriquecido: true %>
+  <%= selector 'Cliente', 'note', 'client_id', @clients.map {|c| [c.name,c.id]}, enriquecido: true %>
   <br/>
 <%= final_formulario({etiqueta: 'Nueva Venta'})%>

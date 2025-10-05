@@ -3,7 +3,7 @@ class ClientNotesController < ApplicationController
   before_action :load_clients, only: [:index, :new, :edit, :create, :update]
 
   def index
-    @note = ClientNote.new(date: Date.today)
+    @note = ClientNote.new(date: Date.today, client_id: 1)
     @notes = ClientNote.open
   end
 
