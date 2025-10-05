@@ -24,9 +24,10 @@
 
     <div id="estado">
       <p>
-        <% if params[:section] %>
+        <% current_section = all_sections[params[:section].to_sym] %>
+        <% if current_section %>
           <%#= params[:section].to_s.capitalize + " - " + controlador_rotulo(params[:controller]) %>
-          <%= all_sections[params[:section]][:label].capitalize + " - " + controlador_rotulo(params[:controller]) %>
+          <%= current_section[:label].capitalize + " - " + controlador_rotulo(params[:controller]) %>
           <% end %>
       </p>
     </div>
