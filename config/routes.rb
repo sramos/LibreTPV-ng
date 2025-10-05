@@ -16,9 +16,9 @@ Rails.application.routes.draw do
   #root 'home#index'
 
   root to: 'home#index', section: "inicio", controller: "home", action: "index"
-  #root to: 'albarans#index', seccion: "caja", controller: "albarans", action: "index"
-  match ':section/:controller(/:action(/:id))', via: [:get, :post, :put, :delete, :patch]
   scope :sales, section: :sales do
-    match 'notes', to: 'client_note#index', via: :get
+    resources :client_notes, path: :notes
   end
+  match ':section/:controller(/:action(/:id))', via: [:get, :post, :put, :delete, :patch]
+
 end

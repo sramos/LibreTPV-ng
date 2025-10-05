@@ -1,0 +1,45 @@
+<h1>Notas de cliente (<%= @notes.count %>)</h1>
+
+<p>
+  <%= link_to 'Nueva nota', new_client_note_path, class: 'button' %>
+  |
+  <%= link_to 'Ir al inicio', root_path %>
+</p>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Fecha</th>
+      <th>Código</th>
+      <th>Cliente</th>
+      <th>Cerrada</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @notes.each do |note| %>
+      <tr>
+        <td><%= note.id %></td>
+        <td><%= note.date %></td>
+        <td><%= note.code %></td>
+        <td><%= note.client&.name || '-' %></td>
+        <td><%= note.closed? ? 'Sí' : 'No' %></td>
+        <td>
+          <%= link_to 'Ver', client_note_path(note) %>
+          |
+          <%= link_to 'Editar', client_note_path(note) %>
+          |
+          <%= button_to 'Eliminar', client_note_path(note), method: :delete, data: { confirm: '¿Eliminar esta nota?' } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+  <% if @notes.empty? %>
+    <tfoot>
+      <tr>
+        <td colspan="6">No hay notas abiertas.</td>
+      </tr>
+    </tfoot>
+  <% end %>
+</table>

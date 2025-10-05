@@ -316,7 +316,7 @@ module OldApplicationHelper
   # Devuelve las secciones disponibles para el usuario
   def secciones user=nil
     sections = {
-    sales: {url: '/sales/notes', title: 'Caja'},
+    sales: {url: client_notes_path, title: 'Caja'},
     products: {url: '/products/products', title: 'Productos'},
     accounting: {url: '/accounting/caja', title: 'Tesorería'},
     #distribution: {url: '/editor/products', title: 'Distribuidora'},
