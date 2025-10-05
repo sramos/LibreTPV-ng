@@ -11,9 +11,9 @@
         <ul id="listado-secciones">
           <% all_sections.each_pair do |s_key, section| %>
             <li>
-              <a id="section_<%= s_key %>" title="<%= section[:title] %>" href="<%= section[:url] %>">
+              <a id="section_<%= s_key %>" title="<%= section[:label] %>" href="<%= section[:url] %>">
                 <div class="<%= params[:section] == s_key ? 'seleccionado' : ''%>">
-                  <%= section[:title] %>
+                  <%= section[:label] %>
                 </div>
               </a>
             </li>
@@ -25,8 +25,9 @@
     <div id="estado">
       <p>
         <% if params[:section] %>
-          <%= params[:section].to_s.capitalize + " - " + controlador_rotulo(params[:controller]) %>
-        <% end %>
+          <%#= params[:section].to_s.capitalize + " - " + controlador_rotulo(params[:controller]) %>
+          <%= all_sections[params[:section]][:label].capitalize + " - " + controlador_rotulo(params[:controller]) %>
+          <% end %>
       </p>
     </div>
 

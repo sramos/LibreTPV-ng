@@ -310,11 +310,11 @@ module OldApplicationHelper
   # Devuelve las secciones disponibles para el usuario
   def menu_secciones user=nil
     sections = {
-    sales: {url: client_notes_path, title: 'Caja'},
-    products: {url: '/products/products', title: 'Productos'},
-    accounting: {url: '/accounting/caja', title: 'Tesorería'},
-    #distribution: {url: '/editor/products', title: 'Distribuidora'},
-    admin: {url: '/admin/avisos', title: 'Administración'}
+    sales: {url: client_notes_path, label: 'Caja'},
+    products: {url: '/products/products', label: 'Productos'},
+    accounting: {url: '/accounting/caja', label: 'Tesorería'},
+    #distribution: {url: '/editor/products', label: 'Distribuidora'},
+    admin: {url: '/admin/avisos', label: 'Administración'}
     }
     if user && user.class.name == "User"
       sections = sections.select{|k, v| user.granted?(k) }
