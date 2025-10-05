@@ -1,12 +1,13 @@
 
 <div id="cabecera">
   <div id="avisos" style="display:none;">Esto es un aviso</div>
+  <% all_sections = menu_secciones(current_user) %>
+  <% section_menu = menu_controladores %>
 
   <!-- BARRA SUPERIOR DE SECCIONES -->
   <div id="barrasuperior">
     <div id="secciones">
       <% if params[:section] %>
-        <% all_sections = secciones(current_user) %>
         <ul id="listado-secciones">
           <% all_sections.each_pair do |s_key, section| %>
             <li>
@@ -40,14 +41,14 @@
   </div>
 
   <!-- BARRA SUPERIOR DE ACCIONES -->
-  <% unless controladores.empty? %>
+  <% unless section_menu.empty? %>
     <div id="menucontroladores">
       <div id="centromenucontroladores">
-        <% for controlador in controladores %>
-          <div id="controlador_<%= controlador[:controlador] %>" class="<%= (controlador[:controlador] == params[:controller]) ? "destacado"  : "fondo" %>">
-            <%= link_to controlador[:rotulo], :controller => controlador[:controlador] %>
+        <% section_menu.each do |option| %>
+          <div id="controlador_<%= option[:controlador] %>" class="<%= (option[:controlador] == params[:controller]) ? "destacado"  : "fondo" %>">
+            <%= link_to option[:label], controller: option[:controlador], action: :index %>
           </div>
-          <% unless controladores.last == controlador %>
+          <% unless section_menu.last == option %>
             <div class='separador'></div>
           <% end %>
         <% end %>

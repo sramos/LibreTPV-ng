@@ -36,7 +36,7 @@
 <br />
 
 <div class="ph-container ph-clear">
-  <% secciones(current_user).each do |s_key,seccion| %>
+  <% menu_secciones(current_user).each do |s_key,seccion| %>
     <div class="ph-float">
       <a href='<%= seccion[:url] %>' class='ph-button ph-btn-grey'><%= seccion[:title] %></a>
     </div>

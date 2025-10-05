@@ -307,14 +307,8 @@ module OldApplicationHelper
     javascript_tag("$('#{id}').focus()");
   end
 
-  def controlador_rotulo controlador={}
-    rotulo="LibreTPV"
-    controladores.each{|elemento| rotulo = elemento[:rotulo] if elemento[:controlador] == controlador}
-    return rotulo
-  end
-
   # Devuelve las secciones disponibles para el usuario
-  def secciones user=nil
+  def menu_secciones user=nil
     sections = {
     sales: {url: client_notes_path, title: 'Caja'},
     products: {url: '/products/products', title: 'Productos'},
@@ -330,52 +324,57 @@ module OldApplicationHelper
     sections
   end
 
-  def controladores controlador={}
+  def menu_controladores controlador={}
     controladores = []
-    case params[:seccion]
-      when "caja"
-        controladores = [ #{ :rotulo => "Pedidos", :controlador => "pedidos" },
-                          { :rotulo => "Facturas Clientes" , :controlador => "factura"},
-                          { :rotulo => "Clientes" , :controlador => "cliente"},
-                          { :rotulo => "Entradas/Salidas de Caja" , :controlador => "caja"},
-                          { :rotulo => "Ventas/Devoluciones", :controlador => "albarans" } ]
-      when "productos"
-        controladores = [ { :rotulo => "Facturas Proveedores", :controlador => "factura"},
-                          { :rotulo => "Depósitos", :controlador => "deposito"},
-                          { :rotulo => "Albaranes aceptados", :controlador => "albaranes_cerrados"},
-                          { :rotulo => "Albaranes de entrada", :controlador => "albarans"},
-                          { :rotulo => "Proveedores" , :controlador => "proveedor"},
-                          { :rotulo => "Inventario", :controlador => "productos"} ]
-      when "tesoreria"
-        controladores = [ { :rotulo => "Informes", :controlador => "informe"},
-                          { :rotulo => "Libro diario", :controlador => "libro_diario"},
-                          { :rotulo => "Posicion global", :controlador => "posicion_global"},
-                          { :rotulo => "Arqueo/Cierre de Caja", :controlador => "caja"},
-                          { :rotulo => "Facturas de Servicios", :controlador => "factura"}  ]
+    case params[:section]&.to_sym
+      when :sales
+        controladores = [ { label: 'Pedidos', controlador: 'pedidos' },
+                          { label: 'Facturas Clientes', controlador: 'factura' },
+                          { label: 'Clientes', controlador: 'cliente' },
+                          { label: 'Entradas/Salidas de Caja', controlador: 'caja' },
+                          { label: 'Ventas/Devoluciones', controlador: 'client_notes' } ]
+      when :products
+        controladores = [ { label: 'Facturas Proveedores', controlador: 'factura' },
+                          { label: 'Depósitos', controlador: 'deposito' },
+                          { label: 'Albaranes aceptados', controlador: 'albaranes_cerrados' },
+                          { label: 'Albaranes de entrada', controlador: 'albarans' },
+                          { label: 'Proveedores', controlador: 'proveedor' },
+                          { label: 'Inventario', controlador: 'productos' } ]
+      when :accounting
+        controladores = [ { label: 'Informes', controlador: 'informe' },
+                          { label: 'Libro diario', controlador: 'libro_diario' },
+                          { label: 'Posicion global', controlador: 'posicion_global' },
+                          { label: 'Arqueo/Cierre de Caja', controlador: 'caja' },
+                          { label: 'Facturas de Servicios', controlador: 'factura' }  ]
       when "trueke"
-        controladores = [ { :rotulo => "Cambios", :controlador => "cambio"} ]
-      when "distribuidora"
-        controladores = [ { rotulo: "Facturas librerías", controlador: "factura" },
-                          { rotulo: "Albaranes de envío", controlador: "albarans" },
-                          { rotulo: "Almacenes", controlador: "almacenes" },
-                          { rotulo: "Inventario", controlador: "productos_editorial" }
+        controladores = [ { label: 'Cambios', controlador: 'cambio' } ]
+      when :distributor
+        controladores = [ { label: 'Facturas librerías', controlador: 'factura' },
+                          { label: 'Albaranes de envío', controlador: 'albarans' },
+                          { label: 'Almacenes', controlador: 'almacenes' },
+                          { label: 'Inventario', controlador: 'productos_editorial' }
                         ]
-      when "admin"
-        controladores = [ #{ :rotulo => "Usuarios", :controlador => "usuarios"},
-                          { rotulo: "Backup", controlador: "backup"},
-                          { rotulo: "Recuperar Objetos", controlador: "perdidos" },
-			                    { rotulo: "Parámetros", controlador: "configuracion"},
-                          { rotulo: "Usuarios", controlador: "users"},
-                          { rotulo: "Formas de Pago", controlador: "forma_pago"},
-                          { rotulo: "Tipos de IVA", controlador: "iva"},
-                          { rotulo: "Familias de Productos", controlador: "familia"},
-                          { rotulo: "Materias", controlador: "materia"},
-                          { rotulo: "Editoriales", controlador: "editorial"},
-                          { rotulo: "Autores", controlador: "autor"},
-                          { rotulo: "Avisos", controlador: "avisos"} ]
+      when :admin
+        controladores = [ { label: 'Usuarios', controlador: 'usuarios' },
+                          { label: 'Backup', controlador: 'backup' },
+                          { label: 'Recuperar Objetos', controlador: 'perdidos' },
+			                    { label: 'Parámetros', controlador: 'configuracion' },
+                          { label: 'Usuarios', controlador: 'users' },
+                          { label: 'Formas de Pago', controlador: 'forma_pago' },
+                          { label: 'Tipos de IVA', controlador: 'iva' },
+                          { label: 'Familias de Productos', controlador: 'familia' },
+                          { label: 'Materias', controlador: 'materia' },
+                          { label: 'Editoriales', controlador: 'editorial' },
+                          { label: 'Autores', controlador: 'autor' },
+                          { label: 'Avisos', controlador: 'avisos' } ]
 
     end
     return controladores
   end
 
+  def controlador_rotulo controlador={}
+    rotulo="LibreTPV"
+    menu_controladores.each{|elemento| rotulo = elemento[:label] if elemento[:controlador] == controlador}
+    return rotulo
+  end
 end

@@ -589,7 +589,7 @@ legend{
 /*BARRA DE MENU DE CONTROLADORES*/
 
 #menucontroladores {
-  background:url(/submenu_fondo.jpg) repeat-x left top;
+  background:url(sections_menu/submenu_fondo.jpg) repeat-x left top;
   margin:0px auto 0px auto;
   width:1030px;
   height:36px;
@@ -621,13 +621,13 @@ legend{
 }
 
 #menucontroladores div.iz{
-  background:url(menucontroladores_iz.png) no-repeat right top;
+  background:url(sections_menu/menucontroladores_iz.png) no-repeat right top;
   width:7px;
   height:30px;
 }
 
 #menucontroladores div.dc{
-  background:url(menucontroladores_dc.png) no-repeat left top;
+  background:url(sections_menu/menucontroladores_dc.png) no-repeat left top;
   width:7px;
   height:30px;
 }
@@ -645,7 +645,7 @@ legend{
 }
 
 #menucontroladores div.separador{
-  background: url(menucontroladores_separador.png) no-repeat center center;
+  background: url(sections_menu/menucontroladores_separador.png) no-repeat center center;
   padding:0;
   margin:0;
   height:34px;
