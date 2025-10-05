@@ -146,9 +146,14 @@ module OldApplicationHelper
       return "</fieldset>".html_safe
   end
 
-  def icono tipo, propiedades={}
-    size = propiedades[:size] == 'grande'? 32 : 16
-    image_tag("/images/iconos/" + size.to_s + "/" + tipo + ".png", :border => 0, :class => (propiedades[:size] == "grande" ? "" : "icono"), :title => propiedades[:title] || "", :style => propiedades[:style] || '', :alt => propiedades[:title], :onmouseover => "this.src='/images/iconos/" + size.to_s + "/" + tipo + ".png';", :onmouseout => "this.src='/images/iconos/" + size.to_s + "/" + tipo + ".png';" )
+  def icono tipo, props={}
+    size = props[:size] == 'grande'? 32 : 16
+    image_tag("icons/" + size.to_s + "/" + tipo + ".png", border: 0,
+                class: (props[:size] == "grande" ? "" : "icono"),
+                title: props[:title] || '', style: props[:style] || '',
+                alt: props[:title],
+                onmouseover: "this.src=url('icons/" + size.to_s + "/" + tipo + ".png');",
+                onmouseout: "this.src=url('icons/" + size.to_s + "/" + tipo + ".png');" )
   end
 
   def inicio_formulario url, ajax, otros={}
@@ -275,8 +280,19 @@ module OldApplicationHelper
             id: (otros[:id]||""), class: (otros[:class]||"")
   end
 
+
   # Ventana modal que pide confirmacion para el borrado de un elemento
-  def borrado ( rotulo, url, titulo, texto, otros={} )
+  def borrrado rotulo, url, titulo, texto, otros={}
+    texto_confirmacion = 'Va a eliminar:<br><b>' + texto + '</b><br><br>'
+    cadena = link_to(url, method: :delete, confirm: texto_confirmacion, class: 'link-delete', 'data-message' => '¿Está seguro?', 'data-severity' => 'danger', :remote => true) do
+      rotulo
+    end
+    return cadena
+  end
+
+  # Ventana modal que pide confirmacion para el borrado de un elemento
+  def borrado rotulo, url, titulo, texto, otros={}
+  
     # Falta añadir al titulo de la ventana modal el mismo texto superior que llevan las modales sobre la variable de session.
     cadena = '<div style="display:none;" id="'+ (otros[:id] || url[:id].to_s ) +'_borrar" class="elemento_c">'
     cadena << 'Va a eliminar:<br>' unless otros[:no_borrado]

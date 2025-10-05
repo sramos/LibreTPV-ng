@@ -10,6 +10,8 @@ class Client < ApplicationRecord
 
   before_destroy :validate_destroy, prepend: true
 
+  scope :active, -> { where(active: true).order(:name) }
+
   private
 
   def validate_destroy

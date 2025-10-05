@@ -1,9 +1,10 @@
 class ClientNotesController < ApplicationController
   before_action :set_note, only: [:show, :edit, :update, :destroy]
-  before_action :load_clients, only: [:new, :edit, :create, :update]
+  before_action :load_clients, only: [:index, :new, :edit, :create, :update]
 
   def index
-    @notes = ClientNote.where(closed: false)
+    @note = ClientNote.new(date: Date.today)
+    @notes = ClientNote.open
   end
 
   def show
@@ -55,6 +56,6 @@ class ClientNotesController < ApplicationController
   end
 
   def load_clients
-    @clients = Client.order(:name)
+    @clients = Client.active
   end
 end

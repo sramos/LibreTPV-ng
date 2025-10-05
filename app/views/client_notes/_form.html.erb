@@ -1,48 +1,7 @@
-<%# app/views/client_notes/_form.html.erb %>
-<% if @note.errors.any? %>
-  <div class="alert alert-danger">
-    <h2><%= pluralize(@note.errors.count, "error") %> prohibited this note from being saved:</h2>
-    <ul>
-      <% @note.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-    </ul>
-  </div>
-<% end %>
-
-<%= form_with(model: @note, url: (@note.persisted? ? client_note_path(@note) : client_notes_path), local: true) do |f| %>
-  <div class="field">
-    <%= f.label :date %>
-    <%= f.date_field :date %>
-  </div>
-
-  <div class="field">
-    <%= f.label :code %>
-    <%= f.text_field :code %>
-  </div>
-
-  <div class="field">
-    <%= f.label :client_id, 'Cliente' %>
-    <%= f.collection_select :client_id, @clients, :id, :name, { include_blank: 'Seleccione cliente' } %>
-  </div>
-
-  <div class="field">
-    <%= f.label :deposit %>
-    <%= f.number_field :deposit, step: 0.01 %>
-  </div>
-
-  <div class="field">
-    <%= f.label :devolution_date %>
-    <%= f.date_field :devolution_date %>
-  </div>
-
-  <div class="field">
-    <%= f.label :closed %>
-    <%= f.check_box :closed %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit %>
-    <%= link_to "Back", client_notes_path, class: "button" %>
-  </div>
-<% end %>
+<%= inicio_formulario( { action: :update, id: @note }, false ) %>
+  <%= hidden_field 'note', 'code' %>
+  <%= fecha 'Fecha', 'note', 'date' %>
+  <div class="elemento_x01">&nbsp;</div>
+  <%= selector 'Cliente', 'note', 'client_id', @clients.map {|c| [c.name,c.id]}, valor: (@note.nil? ? 1 : @note.client_id), enriquecido: true %>
+  <br/>
+<%= final_formulario({etiqueta: 'Nueva Venta'})%>

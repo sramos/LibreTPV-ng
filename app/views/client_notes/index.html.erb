@@ -1,45 +1,25 @@
-<h1>Notas de cliente (<%= @notes.count %>)</h1>
+<fieldset id='filtros' class='filtrado'>
+  <%= render partial: 'form' %>
+</fieldset>
 
-<p>
-  <%= link_to 'Nueva nota', new_client_note_path, class: 'button' %>
-  |
-  <%= link_to 'Ir al inicio', root_path %>
-</p>
-
-<table class="table">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Fecha</th>
-      <th>Código</th>
-      <th>Cliente</th>
-      <th>Cerrada</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @notes.each do |note| %>
-      <tr>
-        <td><%= note.id %></td>
-        <td><%= note.date %></td>
-        <td><%= note.code %></td>
-        <td><%= note.client&.name || '-' %></td>
-        <td><%= note.closed? ? 'Sí' : 'No' %></td>
-        <td>
-          <%= link_to 'Ver', client_note_path(note) %>
-          |
-          <%= link_to 'Editar', client_note_path(note) %>
-          |
-          <%= button_to 'Eliminar', client_note_path(note), method: :delete, data: { confirm: '¿Eliminar esta nota?' } %>
-        </td>
-      </tr>
+<% if @notes.size > 0 %>
+  <!--- Listado de albaranes --->
+  <div class='caja_completa'>
+    <%= cabecera_listado 'client_notes' %>
+    <% i = 0 %>
+    <% for objeto in @notes%>
+      <div id="albaran_<%= i +=1 %>" class="listadofila">
+        <%= fila_listado objeto %>
+        <div class="listado_derecha">
+          <%#= link_to_remote icono('Cart', title: 'Ver Productos'), url: { controller: :client_note_lines, action: :index, note_id: objeto.id, update: "albaran_sub_" + i.to_s }, :loading => "Element.show('spinner_#{i.to_s }')", :complete => "Element.hide('spinner_#{i.to_s}')" %>
+          <%= link_to icono('Write', title: 'Editar'), action: :edit, id: objeto %>
+          <%= borrrado icono('Trash', title: 'Borrar'), { action: 'delete', id: objeto.id } , 'Eliminar compra', "Compra pendiente de " + objeto.client.name, :ajax => false %>
+        </div>
+      </div>
+      <div id="spinner_<%= i.to_s %>" class="spinner" style="display:none" ></div>
+      <div id="albaran_sub_<%= i.to_s %>">
+      </div>
     <% end %>
-  </tbody>
-  <% if @notes.empty? %>
-    <tfoot>
-      <tr>
-        <td colspan="6">No hay notas abiertas.</td>
-      </tr>
-    </tfoot>
-  <% end %>
-</table>
+    <%= final_listado %>
+  </div>
+<% end %>

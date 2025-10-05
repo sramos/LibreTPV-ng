@@ -5,6 +5,9 @@ class ClientNote < Note
   validates :deposit, presence: false
   validates :devolution_date, presence: false
 
+  scope :open, -> { where(closed: false) }
+  scope :closed, -> { where(closed: true) }
+
   private
 
   # Returns -1 for sales notes
