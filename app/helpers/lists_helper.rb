@@ -128,7 +128,11 @@ module ListsHelper
   end
 
   def etiqueta campo
-    etiqueta = {	"albaran.cliente.nombre"	=> ["Cliente", "1", 36],
+    etiqueta = {
+      'client.name' => ['Cliente', '1', 36],
+      'date' => ['Fecha', '1_2', 15],
+
+      "albaran.cliente.nombre"	=> ["Cliente", "1", 36],
 			"albaran.proveedor.nombre"	=> ["Proveedor", "2_3", 20],
 			"albarans.first.cliente.nombre"	=> ["Cliente", "1", 36],
 			"albarans.first.proveedor.nombre" => ["Proveedor", "2_3", 20],

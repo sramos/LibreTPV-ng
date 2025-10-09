@@ -3,7 +3,6 @@
   <head>
     <title>TPV: Terminal Punto de Venta - <%= content_for(:title) || 'TPV' %></title>
     <%= stylesheet_link_tag 'application', :media => "all" %>
-    <%= javascript_include_tag 'application' %>
 
     <!--<link rel="icon" type="image/ico" href="/images/favicon.ico" />-->
 
@@ -23,7 +22,7 @@
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
- 
+
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
@@ -36,4 +35,16 @@
     <!-- Mensajes de aviso -->
     <%= mensaje flash[:mensaje] if flash[:mensaje] %>
   </body>
+
+  <% if user_signed_in? %>
+    <script type="text/javascript" charset="utf-8">
+      // Activa los selectores chosen tras cargar la pagina
+      document.addEventListener("turbo:load", function() {
+        if (window.activaSelectoresChosen) {
+          window.activaSelectoresChosen();
+        }
+      });
+    </script>
+  <% end %>
+
 </html>
