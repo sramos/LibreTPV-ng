@@ -238,7 +238,22 @@ module OldApplicationHelper
     cadena += "</div></div>".html_safe
     cadena += "<div class='fila' id='spinner' style='display:none'></div>".html_safe
     cadena += "</form>".html_safe
-    cadena += javascript_tag("activaSelectoresChosen();")
+    cadena += javascript_tag("
+      (function() {
+        var tryActivate = function() {
+          if (window.activaSelectoresChosen) {
+            window.activaSelectoresChosen();
+          } else {
+            setTimeout(tryActivate, 50);
+          }
+        };
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', tryActivate);
+        } else {
+          tryActivate();
+        }
+      })();
+    ")
     return cadena
   end
 

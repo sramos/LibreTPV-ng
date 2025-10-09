@@ -19,12 +19,16 @@
  
     <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
     <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
-    <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <!-- jQuery + Select2 (CSS/JS) for enhanced selects -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/css/select2.min.css" rel="stylesheet"  crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/js/select2.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/js/i18n/es.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <%= javascript_importmap_tags %>
   </head>
 
@@ -38,7 +42,6 @@
 
   <% if user_signed_in? %>
     <script type="text/javascript" charset="utf-8">
-      // Activa los selectores chosen tras cargar la pagina
       document.addEventListener("turbo:load", function() {
         if (window.activaSelectoresChosen) {
           window.activaSelectoresChosen();
