@@ -8,17 +8,19 @@
     <%= cabecera_listado 'client_notes' %>
     <% i = 0 %>
     <% for objeto in @notes%>
-      <div id="albaran_<%= i +=1 %>" class="listadofila">
+      <div id="note_<%= i +=1 %>" class="listadofila">
         <%= fila_listado objeto %>
         <div class="listado_derecha">
-          <%= link_to icono('Cart', title: 'Ver Productos'), url: { controller: :client_note_lines, action: :index, note_id: objeto.id, update: "albaran_sub_" + i.to_s }, :loading => "Element.show('spinner_#{i.to_s }')", :complete => "Element.hide('spinner_#{i.to_s}')" %>
+          <%= link_to icono('Cart', title: 'Ver Productos'),
+                      show_lines_client_note_path(objeto, turbo_frame: "note_sub_#{i}"),
+                      data: { turbo_frame: "note_sub_#{i}" } %>
           <%= link_to icono('Write', title: 'Editar'), action: :edit, id: objeto %>
           <%= borrado icono('Trash', title: 'Borrar'), client_note_path(objeto.id), 'Eliminar compra', "Compra pendiente de " + objeto.client.name %>
         </div>
       </div>
-      <div id="spinner_<%= i.to_s %>" class="spinner" style="display:none" ></div>
-      <div id="albaran_sub_<%= i.to_s %>">
-      </div>
+      <%= turbo_frame_tag "note_sub_#{i}" do %>
+        <div class="note-lines-container"></div>
+      <% end %>
     <% end %>
     <%= final_listado %>
   </div>

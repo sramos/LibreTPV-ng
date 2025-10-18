@@ -1,0 +1,3 @@
+<%= turbo_frame_tag @turbo_frame_id || "note_lines" do %>
+  <%= render partial: 'note_lines/lines', locals: {edicion: false} %>
+<% end %>

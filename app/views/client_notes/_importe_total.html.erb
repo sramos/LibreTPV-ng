@@ -1,0 +1,12 @@
+
+<div id="importe_total" class="importe_grande">
+Total<br/><%= format('%0.2f',@note.total_amount) %> €
+</div>
+<div class='elemento_derecha'>
+  <% unless @note.closed %>
+    <%#= modal icono('Currency Euro', {title: 'Efectuar cobro', size: 'grande'}), { controller: 'factura', action: 'new', note_id: @note_id, importe: format("%0.2f",@total_amount)}, 'Efectuar Cobro' %>
+  <% end %>
+  <br/>
+  <%= link_to icono('Trash', {title: 'Eliminar compra', size: 'grande'}), :controller => 'albarans', :action => 'borrar', :id => params[:albaran_id] %>
+</div>
+

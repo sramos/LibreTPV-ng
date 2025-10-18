@@ -1,0 +1,28 @@
+<!--- Entrada de linea de albaran por codigo --->
+
+<div id="div_formulario_codigo" class="formulario_izqda">
+  <%= inicio_formulario( { controller: :note_lines, action: :create, note_id: @note.id, update: params[:update] }, false, id: 'formulario_codigo' ) %>
+    <div id="formulario_seleccion_codigo" class="elemento" data-visibility-target="hideable">
+      <%= link_to 'Código/ISBN', '#', onclick: "visibilityController.toggleTargets(); return false" %>
+      <br>
+      <%= text_field("producto", "codigo", {:class => "texto", :id => "formulario_campo_producto_codigo", :type => "d" }) %>
+        <%#= observe_field( "formulario_campo_producto_codigo", :frequency => 2, :update => "propiedades_producto", :with => :codigo, :url => {:controller => 'productos', :action => :producto_x_codigo, :template => 'listado_propiedades'}, :before => "Element.show('spinner')", :success => "Element.hide('spinner')") %>
+    </div>
+    <div id="formulario_seleccion_titulo" class="elemento" style="display:none;" data-visibility-target="hideable">
+      <%= link_to 'Título/Nombre', '#', onclick: "visibilityController.toggleTargets(); return false" %>
+      <br>
+      <%#= text_field_with_auto_complete( "libro", "titulo", {:class => "texto"}, {:method => :get, :with => "'search=' + element.value", :after_update_element => "function(element,value){" + remote_function(:url => { :controller => 'productos', :action => :producto_x_titulo }, :with =>"'titulo='+element.value") + "}" } ) %>
+    </div>
+    <div class="linea"><br></div>
+    <%= texto "Cantidad", 'note_line', 'quantity', '1' %>
+    <div class="linea"></div>
+    <%= texto "% Descuento", 'note_line', 'discount', params[:discount] %>
+    <div class='linea'><br>
+      <%#= link_to_function("Cambiar a entrada por Concepto", nil, :id => "cambio_a_concepto") { |page| page.show 'div_formulario_concepto'; page.hide 'div_formulario_codigo'} %>
+    </div>
+    <div id="propiedades_producto" class="formulario_izqda"></div>
+  <%= final_formulario submit_disabled: true %>
+</div>
+
+<%= set_focus_to_id 'formulario_campo_producto_codigo' %>
+

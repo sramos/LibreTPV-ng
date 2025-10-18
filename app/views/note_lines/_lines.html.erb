@@ -1,0 +1,19 @@
+  <!--- Note lines sublist --->
+  <%= cabecera_sublistado "Productos", "client_note_lines", params[:update], {}, "sublistado" + (defined?(edicion).nil? ? "" : "_entradas") %>
+
+  <% for line in @note.note_lines %>
+    <div id="<%= params[:update] %>_line_<%= line.id %>" class="fila" >
+      <%= fila_sublistado line %>
+      <div class="listado_derecha" id="botones_<%= line.id %>">
+        <% unless @note.closed %>
+          <%#= link_to icono('Star',{title: 'Aplicar Acumulado'}), controller: 'note_lines', action: 'usar_acumulado', update: params[:update], id: line.id, note_id: @note.id if line.cliente && line.producto && line.cliente.credito_acumulado > 0 && line.linea_descuento.nil? %>
+          <%#= modal(icono("Write",{title: 'Editar'}), { :controller => 'albaran_lineas', :action => 'editar', :id => line.id, :albaran_id => params[:albaran_id] }, "Editar línea") if line.producto %>
+          <%#= link_to icono('Trash',{title: 'Borrar'}), :controller => 'albaran_lineas', :action => 'borrar', :update => params[:update], :id => line.id, :albaran_id => params[:albaran_id] %>
+        <% end %>
+      </div>
+    </div>
+    <div class="<%= params[:update] %>_editar_linea_<%= line.id.to_s %>" class="fila"></div>
+  <% end %>
+  <%= final_sublistado %>
+  <br/>
+

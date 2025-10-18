@@ -120,6 +120,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_14_073450) do
     t.decimal "product_price", precision: 8, scale: 2, null: false
     t.decimal "product_vat", precision: 4, scale: 3, null: false
     t.integer "quantity", default: 1, null: false
+    t.decimal "discount", precision: 4, scale: 3, default: "0.0", null: false
     t.bigint "note_id", null: false
     t.bigint "product_id"
     t.datetime "created_at", null: false

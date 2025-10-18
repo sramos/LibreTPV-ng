@@ -1,4 +1,18 @@
-<%# app/views/client_notes/edit.html.erb %>
-<h1>Editar nota de cliente</h1>
+<fieldset id='filtros' class='filtrado'>
+  <%= render partial: 'form' %>
+</fieldset>
 
-<%= render 'form' %>
+<div id='lineas_albaran' class='linea'>
+  <div class='lateral'>
+    <div class='caja_lateral'><%= render partial: 'importe_total' %></div>
+    <% unless @note.closed %>
+      <div class='caja_lateral'>
+        <%= render partial: 'note_lines/form_product' %>
+        <%= render partial: 'note_lines/form_concept' %>
+      </div>
+    <% end %>
+  </div>
+  <div class='contenido'>
+    <%= render partial: 'note_lines/lines', locals: {edicion: true} %>
+  <div>
+</div>

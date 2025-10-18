@@ -298,8 +298,13 @@ module OldApplicationHelper
 
   # Ventana modal que pide confirmacion para el borrado de un elemento
   def borrado rotulo, url, titulo, texto, otros={}
-    texto_confirmacion = 'Va a eliminar:<br><b>' + texto + '</b><br><br>'
-    cadena = link_to(url, method: :delete, confirm: texto_confirmacion, class: 'link-delete', 'data-message' => '¿Está seguro?', 'data-severity' => 'danger', :remote => true) do
+    texto_confirmacion = "Va a eliminar:\n#{texto}\n\n¿Está seguro?"
+    cadena = link_to(url, 
+                     data: { 
+                       turbo_method: :delete, 
+                       turbo_confirm: texto_confirmacion 
+                     }, 
+                     class: 'link-delete') do
       rotulo
     end
     return cadena

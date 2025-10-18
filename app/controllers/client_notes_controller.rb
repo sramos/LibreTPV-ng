@@ -1,6 +1,6 @@
 class ClientNotesController < ApplicationController
-  before_action :set_note, only: [:show, :edit, :update, :destroy]
-  before_action :load_clients, only: [:index, :new, :edit, :create, :update]
+  before_action :set_note, only: [:show, :show_lines, :edit, :update, :destroy]
+  before_action :load_clients, only: [:index, :edit, :update]
 
   def index
     @note = ClientNote.new(date: Date.today, client_id: 1)
@@ -10,29 +10,22 @@ class ClientNotesController < ApplicationController
   def show
   end
 
-  def new
-    @note = ClientNote.new(date: Date.today)
-  end
-
-  def create
-    @note = ClientNote.new(note_params)
-    if @note.save
-      redirect_to edit_client_note_path(@note), notice: t('notices.created', default: 'Client note was successfully created.')
-    else
-      flash.now[:alert] = @note.errors.full_messages.to_sentence
-      render :new, status: :unprocessable_entity
-    end
+  def show_lines
+    @note_lines = @note.note_lines
+    @turbo_frame_id = params[:turbo_frame]
+    render layout: false
   end
 
   def edit
   end
 
   def update
+    @note ||= ClientNote.new
     if @note.update(note_params)
       redirect_to edit_client_note_path(@note), notice: t('notices.updated', default: 'Client note was successfully updated.')
     else
       flash.now[:alert] = @note.errors.full_messages.to_sentence
-      render :edit, status: :unprocessable_entity
+      render :index, status: :unprocessable_entity
     end
   end
 
@@ -40,19 +33,21 @@ class ClientNotesController < ApplicationController
     if @note.destroy
       redirect_to client_notes_path, notice: t('notices.destroyed', default: 'Client note was successfully deleted.')
     else
-      redirect_to edit_client_note_path(@note), alert: @note.errors.full_messages.to_sentence
+      puts @note.errors.full_messages
+      redirect_to client_notes_path, alert: @note.errors.full_messages.to_sentence
     end
   end
 
   private
 
   def set_note
-    @note = ClientNote.find(params[:id])
+    @note = ClientNote.find_by(id: params[:id])
+    puts "**** Tenemos @note: #{@note.inspect}"
   end
 
   # Strong parameters for ClientNote
   def note_params
-    params.require(:client_note).permit(:date, :client_id, :code, :closed, :deposit, :devolution_date)
+    params.require(:note).permit(:date, :client_id)
   end
 
   def load_clients

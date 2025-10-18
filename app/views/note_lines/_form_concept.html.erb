@@ -1,0 +1,18 @@
+<!--- Entrada de linea de albaran por concepto --->
+<div id="div_formulario_concepto" class="formulario_izqda" style="display:none;">
+  <%= inicio_formulario( { controller: :albaran_lineas, action: :asignar_linea, albaran_id: params[:albaran_id], update: params[:update] }, false, id: 'formulario_concepto' ) %>
+    <%= texto 'Concepto', 'note_line', 'product_name' %>
+    <div class="linea"></div>
+    <%= selector 'IVA', 'note_line', 'vat', Vat.order(:rate).collect{|o| [o.name, o.rate]}, tipo: 'texto' %>
+    <div class="linea"></div>
+    <%= texto('PVP', 'note_line', 'product_price') unless params[:seccion] == 'productos' %>
+    <div class="linea"></div>
+    <%= hidden_field 'note_line', 'cantidad', value: '1' %>
+    <%= hidden_field 'note_line', 'descuento', value: '0' %>
+    <%= hidden_field 'note_line', 'note_id', value: @note.id %>
+    <br>
+  <%= final_formulario %>
+  <div class='linea'><br>
+    <%#= link_to_function('Cambiar a entrada por Código', nil, id: 'cambio_a_concepto') { |page| page.hide 'div_formulario_concepto'; page.show 'div_formulario_codigo'} %>
+  </div>
+</div>

@@ -17,7 +17,10 @@ Rails.application.routes.draw do
 
   root to: 'home#index', section: "inicio", controller: "home", action: "index"
   scope :sales, section: :sales do
-    resources :client_notes, path: :notes
+    resources :client_notes, path: :notes do
+      get :show_lines, on: :member
+      resources :note_lines, path: :lines
+    end
   end
   match ':section/:controller(/:action(/:id))', via: [:get, :post, :put, :delete, :patch]
 

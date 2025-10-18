@@ -31,6 +31,9 @@ module ListsHelper
     case tipo.to_s
     when "client_notes"
       ["date", "client.name"]
+    when "client_note_lines"
+      ["quantity", "product.code", "product.name", "product.price", "discount", "tax_base", "total_vat", "total_amount"]
+  
       when "inventario"
         ["codigo", "familia.nombre", "nombre", "autores", "cantidad", "precio"]
       when "inventario_deposito"
@@ -131,6 +134,14 @@ module ListsHelper
     etiqueta = {
       'client.name' => ['Cliente', '1', 36],
       'date' => ['Fecha', '1_2', 15],
+      'quantity' => ['Cant.', '1_5', 8, 'd'],
+      'product.code' => ['Código/ISBN', '1_2', 15],
+      'product.name' => ['Nombre/Título', '1', 36],
+      'product.price' => ['PVP', '1_4', 14, 'f'],
+      'discount' => ['% Dto.', '1_5', 8, 'd'],
+      'tax_base' => ['Base imponible', '1_4', 14, 'f'],
+      'total_vat' => ['IVA', '1_4', 14, 'f'],
+      'total_amount' => ['Total', '1_4', 14, 'f'],
 
       "albaran.cliente.nombre"	=> ["Cliente", "1", 36],
 			"albaran.proveedor.nombre"	=> ["Proveedor", "2_3", 20],

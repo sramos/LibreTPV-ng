@@ -5,6 +5,7 @@ class CreateNoteLines < ActiveRecord::Migration[8.0]
       t.decimal :product_price, precision: 8, scale: 2, null: false
       t.decimal :product_vat, precision: 4, scale: 3, null: false
       t.integer :quantity, null: false, default: 1
+      t.decimal :discount, precision: 4, scale: 3, null: false, default: 0
       t.references :note, null: false, foreign_key: true
       t.references :product
       t.timestamps

@@ -1,5 +1,4 @@
-<%= inicio_formulario( { action: :update, id: @note }, false ) %>
-  <%= hidden_field 'note', 'code' %>
+<%= inicio_formulario( { action: :update }, false ) %>
   <%= fecha 'Fecha', 'note', 'date' %>
   <div class="elemento_x01">&nbsp;</div>
   <%= selector 'Cliente', 'note', 'client_id', @clients.map {|c| [c.name,c.id]}, enriquecido: true %>
