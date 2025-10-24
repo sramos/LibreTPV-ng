@@ -12,15 +12,15 @@
         <%= fila_listado objeto %>
         <div class="listado_derecha">
           <%= link_to icono('Cart', title: 'Ver Productos'),
-                      show_lines_client_note_path(objeto, turbo_frame: "note_sub_#{i}"),
+                      show_lines_client_note_path(objeto, turbo_frame: "note_sub_#{i}", update: "note_sub_#{i}"),
                       data: { turbo_frame: "note_sub_#{i}" } %>
           <%= link_to icono('Write', title: 'Editar'), action: :edit, id: objeto %>
           <%= borrado icono('Trash', title: 'Borrar'), client_note_path(objeto.id), 'Eliminar compra', "Compra pendiente de " + objeto.client.name %>
         </div>
+        <%= turbo_frame_tag "note_sub_#{i}" do %>
+          <div class="note-lines-container"></div>
+        <% end %>
       </div>
-      <%= turbo_frame_tag "note_sub_#{i}" do %>
-        <div class="note-lines-container"></div>
-      <% end %>
     <% end %>
     <%= final_listado %>
   </div>

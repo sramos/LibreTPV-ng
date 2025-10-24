@@ -27,8 +27,19 @@ class NoteLinesController < ApplicationController
   end
 
   def destroy
+    line_id = @note_line.id
     @note_line.destroy
-    redirect_to note_url(@note), notice: "Nota de cliente eliminada exitosamente."
+    @note.reload
+    
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: [
+          turbo_stream.remove("#{params[:update]}_line_#{line_id}"),
+          turbo_stream.replace('importe_total', partial: 'client_notes/importe_total')
+        ]
+      end
+      format.html { redirect_to client_note_path(@note), notice: 'Línea eliminada exitosamente.' }
+    end
   end
 
 private

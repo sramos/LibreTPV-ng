@@ -110,11 +110,12 @@ module OldApplicationHelper
   def cabecera_sublistado rotulo, tipo, sub_id, nuevo={}, clase="sublistado"
     #@campos_sublistado = campos
     @campos_sublistado = tipo.is_a?(Array) ? tipo : campos_listado(tipo)
-    script = "document.getElementById('" +  sub_id + "').innerHTML=\"\";" if sub_id
     cadena = '<br><fieldset class="' + clase + '"> <legend>'+ rotulo +'</legend>'
     cadena += '<div class="listado_derecha" id="cerrarsublistado">'
     cadena += link_to( icono( "Download", {:title => "Exportar a XLS"}), request.parameters.merge({:format => :xls}) ) if @formato_xls
-    cadena += link_to_function( icono('Cancel',{:Title => "Ocultar"}), script, {:id => sub_id + "_ocultar_sublistado"} ) if sub_id
+    cadena += link_to(icono('Cancel', {title: "Ocultar"}), "#",
+                      id: sub_id + "_ocultar_sublistado",
+                      onclick: "document.getElementById('#{sub_id}').innerHTML=''; return false;") if sub_id
     cadena += "</div><br/><br/><div class='listadocabecera'>"
     for campo in @campos_sublistado
       cadena += "<div class='listado_campo_" + etiqueta(campo)[1] + (etiqueta(campo)[3]||"") + "' id='sublistado_campo_valor_" + campo + "' >" + etiqueta(campo)[0] + "</div>"
