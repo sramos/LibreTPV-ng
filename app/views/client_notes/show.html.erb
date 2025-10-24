@@ -1,32 +1,18 @@
-<%# app/views/client_notes/show.html.erb %>
-<h1>Nota de cliente</h1>
+<fieldset id='filtros' class='filtrado'>
+  <%= render partial: 'form' %>
+</fieldset>
 
-<p>
-  <strong>Fecha:</strong>
-  <%= @note.date %>
-</p>
-<p>
-  <strong>Código:</strong>
-  <%= @note.code %>
-</p>
-<p>
-  <strong>Cliente:</strong>
-  <%= @note.client&.name || '-' %>
-</p>
-<p>
-  <strong>Depósito:</strong>
-  <%= number_to_currency(@note.deposit || 0) %>
-</p>
-<p>
-  <strong>Fecha devolución:</strong>
-  <%= @note.devolution_date %>
-</p>
-<p>
-  <strong>Cerrada:</strong>
-  <%= @note.closed? ? 'Sí' : 'No' %>
-</p>
-
-<p>
-  <%= link_to 'Editar', edit_client_note_path(@note) %> |
-  <%= link_to 'Volver', client_notes_path %>
-</p>
+<div id='lineas_albaran' class='linea'>
+  <div class='lateral'>
+    <div class='caja_lateral'><%= render partial: 'importe_total' %></div>
+    <% unless @note.closed %>
+      <div class='caja_lateral'>
+        <%= render partial: 'note_lines/form_product' %>
+        <%= render partial: 'note_lines/form_concept' %>
+      </div>
+    <% end %>
+  </div>
+  <div class='contenido'>
+    <%= render partial: 'note_lines/lines', locals: {allow_modify: true} %>
+  <div>
+</div>

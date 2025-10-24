@@ -3,19 +3,8 @@
 <% allow_modify = false unless defined?(allow_modify) %>
 <% sublist_class = 'sublistado' + (allow_modify ? '_entradas' : '') %>
 <%= cabecera_sublistado "Productos", "client_note_lines", params[:update], {}, sublist_class %>
-
 <% for line in @note.note_lines %>
-  <div id="<%= params[:update] %>_line_<%= line.id %>" class="fila" >
-    <%= fila_sublistado line %>
-    <div class="listado_derecha" id="botones_<%= line.id %>">
-      <% if allow_modify && !@note.closed %>
-        <%#= link_to icono('Star', {title: 'Aplicar Acumulado'}), controller: 'note_lines', action: 'usar_acumulado', update: params[:update], id: line.id, note_id: line.note_id if line.note.client && line.product && linea.note.client.credit > 0 && line.discount_line.nil? %>
-        <%= modal( icono('Write', {title: 'Editar'}), edit_client_note_note_line_path(line.note_id, line.id), "Editar línea") if line.product %>
-        <%= link_to icono('Trash',{title: 'Borrar'}), client_note_note_line_path(line.note_id, line.id), data: { turbo_method: :delete, turbo_confirm: '¿Estás seguro?' }, update: params[:update] %>
-      <% end %>
-    </div>
-  </div>
-  <div class="<%= params[:update] %>_editar_linea_<%= line.id %>" class="fila"></div>
+  <%= render partial: 'note_lines/line', locals: { line: line, allow_modify: allow_modify } %>
 <% end %>
 <%= final_sublistado %>
 <br/>

@@ -7,6 +7,10 @@
       <%#= modal icono('Currency Euro', {title: 'Efectuar cobro', size: 'grande'}), { controller: 'factura', action: 'new', note_id: @note_id, importe: format("%0.2f",@total_amount)}, 'Efectuar Cobro' %>
     <% end %>
     <br/>
-    <%= link_to icono('Trash', {title: 'Eliminar compra', size: 'grande'}), :controller => 'albarans', :action => 'borrar', :id => params[:albaran_id] %>
+    <% confirmation_text = "¿Estás seguro de eliminar la cesta?" %>
+    <%= link_to icono('Trash',{title: 'Eliminar compra', size: 'grande'}), client_note_path(@note.id), method: :delete, data: { method: :delete, confirm: confirmation_text } %>
+    <%#= button_to client_note_path(@note.id), method: :delete, form: { on_submit: "return confirm('#{confirmation_text}')" } do %>
+      <%#= icono('Trash',{title: 'Eliminar compra', size: 'grande'}) %>
+    <%# end %>
   </div>
 </div>

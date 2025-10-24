@@ -12,7 +12,8 @@ class NoteLine < ApplicationRecord
   before_validation :set_product_values
 
   def total_amount
-    product_price * quantity
+    base = product_price * quantity
+    base * (1 - discount)
   end
 
   def tax_base

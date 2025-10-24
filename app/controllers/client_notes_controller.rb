@@ -1,13 +1,10 @@
 class ClientNotesController < ApplicationController
-  before_action :set_note, only: [:show, :show_lines, :edit, :update, :destroy]
-  before_action :load_clients, only: [:index, :edit, :update]
+  before_action :set_note, only: [:show, :show_lines, :update, :destroy]
+  before_action :load_clients, only: [:index, :show, :update]
 
   def index
     @note = ClientNote.new(date: Date.today, client_id: 1)
     @notes = ClientNote.open
-  end
-
-  def show
   end
 
   def show_lines
@@ -30,7 +27,7 @@ class ClientNotesController < ApplicationController
   end
 
   def destroy
-    if @note.destroy
+    if false && @note.destroy
       redirect_to client_notes_path, notice: t('notices.destroyed', default: 'Client note was successfully deleted.')
     else
       puts @note.errors.full_messages
