@@ -27,12 +27,13 @@ class ClientNotesController < ApplicationController
   end
 
   def destroy
-    if false && @note.destroy
-      redirect_to client_notes_path, notice: t('notices.destroyed', default: 'Client note was successfully deleted.')
-    else
-      puts @note.errors.full_messages
-      redirect_to client_notes_path, alert: @note.errors.full_messages.to_sentence
+    @note.destroy
+    respond_to do |format|
+      format.html { redirect_to client_notes_path, notice: 'Cesta eliminada correctamente' }
+      format.turbo_stream { redirect_to client_notes_path, status: :see_other }
     end
+  rescue => e
+    redirect_to client_notes_path, alert: "Error al eliminar la cesta: #{e.message}"
   end
 
   private

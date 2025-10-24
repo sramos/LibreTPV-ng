@@ -8,9 +8,12 @@
     <% end %>
     <br/>
     <% confirmation_text = "¿Estás seguro de eliminar la cesta?" %>
-    <%= link_to icono('Trash',{title: 'Eliminar compra', size: 'grande'}), client_note_path(@note.id), method: :delete, data: { method: :delete, confirm: confirmation_text } %>
-    <%#= button_to client_note_path(@note.id), method: :delete, form: { on_submit: "return confirm('#{confirmation_text}')" } do %>
-      <%#= icono('Trash',{title: 'Eliminar compra', size: 'grande'}) %>
-    <%# end %>
+    <%= link_to icono('Trash', {title: 'Eliminar compra', size: 'grande'}), 
+      client_note_path(@note.id), 
+      data: { 
+        turbo_method: :delete,
+        turbo_confirm: confirmation_text,
+        turbo_frame: '_top'  # Esto fuerza a recargar toda la página
+      } %>
   </div>
 </div>
