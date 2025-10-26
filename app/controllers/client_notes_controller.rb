@@ -9,8 +9,25 @@ class ClientNotesController < ApplicationController
 
   def show_lines
     @note_lines = @note.note_lines
-    @turbo_frame_id = params[:turbo_frame]
-    render layout: false
+    @formato_xls = true
+    respond_to do |format|
+      format.xls do
+        code   = @note.invoice.code if @note.invoice&.code && @note.invoice.code != 'N/A'
+        code ||= @note.code
+        code  += " (*)" if @note.invoice&.code == 'N/A'
+        date = @note.invoice&.date || @note.date
+        tipo = "client_notes"
+        @xls_head = "Venta #{code} / Cliente: #{@note.client.name} / Fecha: #{date.to_s}"
+        @xls_head += "  / ALBARAN ABIERTO" unless @note.closed
+        @objetos = @note.note_lines 
+        @xls_title = "Albaran #{@note.code}"
+        render 'common_xls/index', layout: false
+      end 
+      format.html do
+        @turbo_frame_id = params[:turbo_frame]
+        render layout: false
+      end
+    end
   end
 
   def edit
@@ -40,7 +57,6 @@ class ClientNotesController < ApplicationController
 
   def set_note
     @note = ClientNote.find_by(id: params[:id])
-    puts "**** Tenemos @note: #{@note.inspect}"
   end
 
   # Strong parameters for ClientNote

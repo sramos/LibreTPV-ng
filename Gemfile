@@ -49,6 +49,9 @@ gem "rails-i18n"
 gem "devise", "~> 4.9.4"
 gem 'devise-i18n'
 
+# Export to XLS
+gem 'spreadsheet'
+gem 'spreadsheet_on_rails'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
