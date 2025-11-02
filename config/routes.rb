@@ -22,6 +22,20 @@ Rails.application.routes.draw do
       resources :note_lines, path: :lines
     end
   end
+  scope :products, section: :products do
+    resources :products
+  end
+  namespace :admin, section: :admin do
+    resources :users, path: :users
+    resources :vats, path: :vats
+    resources :payment_types, path: :payment_types
+    resources :suppliers, path: :suppliers
+    resources :clients, path: :clients
+    resources :product_types, path: :product_types
+    resources :product_subtypes, path: :product_subtypes
+    resources :products, path: :products
+    resources :product_authors, path: :product_authors
+  end
   match ':section/:controller(/:action(/:id))', via: [:get, :post, :put, :delete, :patch]
 
 end

@@ -1,0 +1,18 @@
+<!--- Listado de productos --->
+
+<%= render :partial => "common/index_filters" %>
+
+<div class="caja_completa" id="listado_productos">
+<%= cabecera_listado "inventario", { title: "Nuevo", url: { action: :edit } } %>
+<% i = 0 %>
+<% for obj in @products %>
+  <div id="product_<% obj.id %>" class="listadofila">
+    <%= fila_listado obj %>
+    <div class="listado_derecha">
+      <%= link_to icono('Write', title: 'Editar'), action: :show, id: obj %>
+      <%= borrado icono('Trash', title: 'Borrar'), product_path(obj.id), 'Borrar producto', obj.name %>
+    </div>
+  </div>
+<% end %>
+<%= final_listado @products %>
+</div>

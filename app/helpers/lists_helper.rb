@@ -24,6 +24,13 @@
 
 module ListsHelper
 
+  def index_fields object_type
+    case object_type.to_s
+    when 'vats'
+      [['Nombre', 'name', '1'], ['% IVA', 'rate_value', '1_3d']]
+    end
+  end
+
   #--
   # METODOS GENERALES
   #++
@@ -33,7 +40,9 @@ module ListsHelper
       ["date", "client.name"]
     when "client_note_lines"
       ["quantity", "product.code", "product.name", "product.price", "discount", "tax_base", "total_vat", "total_amount"]
-  
+    when "vats" 
+      ["name", "value"]
+
       when "inventario"
         ["codigo", "familia.nombre", "nombre", "autores", "cantidad", "precio"]
       when "inventario_deposito"
