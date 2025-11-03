@@ -72,9 +72,14 @@ module ApplicationHelper
   end
 
   # Form helpers
-  def form_beginning object
-    # <%= form_with model: [:admin, vat], local: false, data: { turbo_frame: "vat_#{vat.id}_sub" } do |form| %>
-    output += "<div class='fila'></div>"
+  # Generic beginning of a form, wrapping form_with and yielding the builder
+  def form_beginning attrs={}
+    attrs[:model] ||= '#'
+    attrs[:turbo_frame] ||= '#'
+    attrs[:html_class] ||= 'formulario'
+    output  = "<div class='linea'></div>"
+    output += form_with model: attrs[:model], local: false,
+                        data: { turbo_frame: attrs[:turbo_frame] }, html_class: attrs[:html_class] 
     return output.html_safe
   end
   def form_errors object
@@ -89,13 +94,14 @@ module ApplicationHelper
     end
     return output.html_safe
   end
-  def form_actions form, attrs={}
+  def form_end attrs={}
     attrs[:send_label] ||= 'Guardar'
     attrs[:cancel_label] ||= 'Cancelar'
-    output  = '<div class="linea actions">'
-    output += form.submit attrs[:send_label] 
+    output  = '<div class="actions">'
+    output += submit_tag attrs[:send_label]
     output += link_to attrs[:cancel_label], "#", onclick: "this.closest('turbo-frame').innerHTML = '<div class=\\'object-container\\'></div>'; return false;"
     output += '</div>'
+    output += '</form>'
     return output.html_safe
   end
 end
