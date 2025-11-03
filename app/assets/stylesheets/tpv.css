@@ -149,7 +149,7 @@ margin-top:15px;
     min-height: 20px;
  }
 
-.sublistado, .sublistado_entradas {
+.sublistado, .sublistado_entradas, .formulario {
   border:dotted 0px #ccc;
   /*margin-bottom: 10px;
   -moz-border-radius-bottomleft: 7px;
@@ -166,7 +166,7 @@ margin-top:15px;
   margin: 10 auto 10 auto;
 }
 
-.sublistado {
+.sublistado, .formulario {
   width: 995px;
 }
 

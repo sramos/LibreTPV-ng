@@ -11,7 +11,11 @@ class Vat < ApplicationRecord
   before_destroy :validate_destroy, prepend: true
 
   def rate_value
-    100.0 * (rate||0.0).to_f
+    100.0 * rate.to_f
+  end
+
+  def rate_value=new_value
+    self.rate = new_value.to_f / 100.0
   end
 
   private

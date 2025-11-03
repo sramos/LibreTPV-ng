@@ -1,0 +1,3 @@
+<%= turbo_frame_tag "vat_#{@vat.id}_sub" do %>
+  <%= render partial: 'form', locals: { vat: @vat } %>
+<% end %>

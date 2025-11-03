@@ -1,19 +1,8 @@
 <!--- Vat types --->
 <div class='caja_completa'>
-  <%= index_header 'vats' %>
-  <% for obj in @vats %>
-    <div id="vat_<%= obj.id %>" class="listadofila">
-      <%= index_line obj, 'vats' %>
-      <div class="listado_derecha">
-        <%#= link_to icono('Write', title: 'Editar'), action: :show, id: objeto %>
-        <%= destroy_object url: admin_vat_path(obj.id),
-                           title: 'Eliminar tipo de IVA',
-                           confirmation: "¿Está seguro de querer eliminar el tipo de IVA '#{obj.name}'?" %>
-      </div>
-      <%= turbo_frame_tag "vat_sub_#{obj.id}" do %>
-        <div class="vats-container"></div>
-      <% end %>
-    </div>
-  <% end %>
-  <%= final_listado %>
+  <%= index_header 'vats', {url: new_admin_vat_path, title: 'Crear nuevo tipo de IVA' } %>
+    <% for vat in @vats %>
+      <%= render partial: 'vat', locals: {vat: vat} %>
+    <% end %>
+  <%= index_footer %>
 </div>

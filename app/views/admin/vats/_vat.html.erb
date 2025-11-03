@@ -1,0 +1,13 @@
+<% turbo_frame = "vat_#{vat.id}_sub" %>
+<div id="vat_<%= vat.id %>" class="listadofila">
+  <%= index_line vat, 'vats' %>
+  <div class="listado_derecha">
+    <%= object_edition url: edit_admin_vat_path(vat.id), turbo_frame: turbo_frame %>
+    <%= object_destroy url: admin_vat_path(vat.id),
+                       title: 'Eliminar tipo de IVA',
+                       confirmation: "¿Está seguro de querer eliminar el tipo de IVA '#{vat.name}'?" %>
+  </div>
+  <%= turbo_frame_tag turbo_frame do %>
+    <div class="object-container"></div>
+  <% end %>
+</div>

@@ -7,9 +7,32 @@ module Admin
     end
 
     def edit
+      respond_to do |format|
+        format.html { render layout: false }
+        format.turbo_stream
+      end
     end
 
     def update
+      if @vat.update(vat_params)
+        respond_to do |format|
+          format.turbo_stream do
+            render turbo_stream: [
+              turbo_stream.replace("vat_#{@vat.id}", partial: 'vat', locals: { vat: @vat }),
+            ]
+          end
+          format.html { redirect_to admin_vats_path, notice: 'Tipo de IVA actualizado correctamente' }
+        end
+      else
+        respond_to do |format|
+          format.turbo_stream do
+            render turbo_stream: [
+              turbo_stream.replace("vat_#{@vat.id}_sub", partial: 'form', locals: { vat: @vat })
+            ]
+          end
+          format.html { render :edit, status: :unprocessable_entity, layout: false }
+        end
+      end
     end
 
     def destroy
@@ -37,7 +60,7 @@ module Admin
     end
 
     def vat_params
-      params.require(:vat).permit(:name, :rate)
+      params.require(:vat).permit(:name, :rate_value)
     end
   end
 end

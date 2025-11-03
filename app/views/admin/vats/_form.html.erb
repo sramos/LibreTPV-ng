@@ -1,0 +1,9 @@
+<div class='linea'></div>
+<%= form_with model: [:admin, @vat], local: false, data: { turbo_frame: "vat_#{@vat.id}_sub" }, class: 'formulario' do |form| %>
+  <%= form_errors vat %>
+
+  <%= texto 'Nombre', 'vat', 'name' %>
+  <%= texto 'Valor', 'vat', 'rate_value' %>
+
+  <%= form_actions form %>
+<% end %>
