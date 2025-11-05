@@ -49,8 +49,33 @@ module ApplicationHelper
     end
     return value
   end
-  def index_footer
-    return '</div>'.html_safe
+  def index_footer objects=nil
+    output = '</div>'
+    output += index_paginator objects
+    return output.html_safe
+  end
+  def index_paginator objects
+    output = ''
+    if objects.present?
+      output  = "<div class='listadofila' id='paginado'>" + (paginate(objects, class: "listado_campo_2") || " ")
+      output += "<div class='listado_derecha'> "+ index_pagination_info(objects)  + "</div>"
+      output += "<div class='linea'></div></div>"
+    end
+    return output
+  end
+  def index_pagination_info objects
+    if objects.total_pages < 2
+      case objects.size
+      when 0; "<b>" + "No tiene elementos" + "</b>"
+      when 1; "<b>" + "Mostrando 1 elemento" + "</b>"
+      else;   "<b>" + "Mostrando todos los elementos: " + (objects.size).to_s + "</b>"
+      end
+    else
+      start_item = (objects.current_page - 1) * session[:per_page].to_i
+      end_item = start_item + objects.length
+      
+      "Mostrando elementos <b>#{start_item + 1} - #{end_item}</b> de <b> #{objects.total_count}</b> en total"
+    end
   end
 
   # Action buttons 

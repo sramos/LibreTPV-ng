@@ -26,3 +26,10 @@ es:
       removal_with_existing_notes: No se puede eliminar un proveedor que tenga creados albaranes
     vats:
       removal_with_existing_product_types: No se puede eliminar un IVA que tenga tipos de productos asociados
+  views:
+    pagination:
+      first: '<<'
+      last: '>>'
+      next: '>'
+      previous: '<'
+      truncate: '...'

@@ -4,5 +4,5 @@
     <% for author in @authors %>
       <%= render partial: 'author', locals: {author: author} %>
     <% end %>
-  <%= index_footer %>
+  <%= index_footer @authors %>
 </div>

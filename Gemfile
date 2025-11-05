@@ -45,6 +45,9 @@ gem "thruster", require: false
 # i18n locale data collection
 gem "rails-i18n"
 
+# Pagination
+gem 'kaminari'
+
 # Auth users
 gem "devise", "~> 4.9.4"
 gem 'devise-i18n'

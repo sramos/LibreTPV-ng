@@ -3,7 +3,7 @@ module Admin
     before_action :set_author, only: [:edit, :update, :destroy]
 
     def index
-      @authors = Author.order(:name)
+      @authors = Author.order(:name).page(params[:page]).per(session[:per_page])
     end
 
     def new
