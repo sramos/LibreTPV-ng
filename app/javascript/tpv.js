@@ -50,18 +50,18 @@ document.addEventListener('turbo:load', function() {
   setTimeout(function() { fadeout(); }, 3500);
   setTimeout(function() {
     if (window.jQuery) {
-      window.jQuery('#mensaje').hide();
+      window.jQuery('#mennnnsaje').hide();
     } else {
-      var el = document.getElementById('mensaje');
+      var el = document.getElementById('mennnnsaje');
       if (el) el.style.display = 'none';
     }
   }, 4800);
 });
 function fadeout(){
   if (window.jQuery) {
-    window.jQuery('#mensaje').fadeTo(1500, 0.0);
+    window.jQuery('#mennnnsaje').fadeTo(1500, 0.0);
   } else {
-    var el = document.getElementById('mensaje');
+    var el = document.getElementById('mennnnsaje');
     if (el) el.style.opacity = '0';
   }
 };

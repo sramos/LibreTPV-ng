@@ -28,6 +28,8 @@ module ListsHelper
     case object_type.to_s
     when 'vats'
       [['Nombre', 'name', '1'], ['% IVA', 'rate_value', '1_3d']]
+    when 'authors'
+      [['Nombre', 'name', '1'], ['Activo', 'active', '1_3d']]
     end
   end
 

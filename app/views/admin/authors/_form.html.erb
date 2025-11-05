@@ -1,0 +1,6 @@
+<div class='linea'></div>
+<%= form_beginning model: [:admin, @author], turbo_frame: "author_#{@author.id}_sub", html_class: 'formulario' %>
+  <%= form_errors author %>
+  <%= texto 'Nombre', 'author', 'name' %>
+  <%= texto 'Activo', 'author', 'active' %>
+<%= form_end %>

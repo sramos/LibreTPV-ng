@@ -1,0 +1,3 @@
+<%= turbo_frame_tag "author_#{@author.id}_sub" do %>
+  <%= render partial: 'form', locals: { author: @author } %>
+<% end %>

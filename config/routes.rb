@@ -26,8 +26,9 @@ Rails.application.routes.draw do
     resources :products
   end
   namespace :admin, section: :admin do
-    resources :users, path: :users
+    resources :authors, path: :authors
     resources :vats, path: :vats
+    resources :users, path: :users
     resources :payment_types, path: :payment_types
     resources :suppliers, path: :suppliers
     resources :clients, path: :clients

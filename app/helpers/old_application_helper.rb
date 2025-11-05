@@ -351,7 +351,7 @@ module OldApplicationHelper
       products: {url: '/products/products', label: 'Productos'},
       accounting: {url: '/accounting/caja', label: 'Tesorería'},
       #distribution: {url: '/editor/products', label: 'Distribuidora'},
-      admin: {url: '/admin/avisos', label: 'Administración'}
+      admin: {url: '/admin/vats', label: 'Administración'}
     }
     if user && user.class.name == "User"
       sections = sections.select{|k, v| user.granted?(k) }
@@ -393,17 +393,18 @@ module OldApplicationHelper
                         ]
       when :admin
         controladores = [ { label: 'Usuarios', controlador: 'usuarios' },
-                          { label: 'Backup', controlador: 'backup' },
-                          { label: 'Recuperar Objetos', controlador: 'perdidos' },
+                          #{ label: 'Backup', controlador: 'backup' },
+                          #{ label: 'Recuperar Objetos', controlador: 'perdidos' },
 			                    { label: 'Parámetros', controlador: 'configuracion' },
-                          { label: 'Usuarios', controlador: 'users' },
+                          #{ label: 'Usuarios', controlador: 'users' },
                           { label: 'Formas de Pago', controlador: 'forma_pago' },
-                          { label: 'Tipos de IVA', controlador: 'iva' },
+                          { label: 'Tipos de IVA', controlador: 'admin/vats' },
                           { label: 'Familias de Productos', controlador: 'familia' },
                           { label: 'Materias', controlador: 'materia' },
                           { label: 'Editoriales', controlador: 'editorial' },
                           { label: 'Autores', controlador: 'autor' },
-                          { label: 'Avisos', controlador: 'avisos' } ]
+                          #{ label: 'Avisos', controlador: 'avisos' }
+                        ]
 
     end
     return controladores

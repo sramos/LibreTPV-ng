@@ -6,6 +6,14 @@ module Admin
       @vats = Vat.order(:name)
     end
 
+    def new
+      @vat = Vat.new
+      respond_to do |format|
+        format.html { render layout: false }
+        format.turbo_stream
+      end
+    end
+
     def edit
       respond_to do |format|
         format.html { render layout: false }

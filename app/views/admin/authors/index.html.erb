@@ -1,0 +1,8 @@
+<!--- author types --->
+<div id="authors">
+  <%= index_header 'authors', {url: new_admin_author_path, title: 'Crear nuevo tipo de IVA' } %>
+    <% for author in @authors %>
+      <%= render partial: 'author', locals: {author: author} %>
+    <% end %>
+  <%= index_footer %>
+</div>

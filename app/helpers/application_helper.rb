@@ -10,8 +10,13 @@ module ApplicationHelper
       output += "<div class='listado_campo_#{field[2]}' id='listado_campo_etiqueta_#{field[1]}'>" + field[0] + "</div>"
     end
     output += "<div class='listado_derecha'>"
-    output += link_to( icono('Download', {title: 'Exportar a XLS'} ), request.parameters.merge({format: :xls, format_xls_count: (@format_xls.to_i+1)}) ) if @format_xls
-    output += modal icono('Plus',{title: "Nuevo"}), attrs[:url], attrs[:title] || 'Nuevo' if attrs[:url]
+    output += link_to( icono('Download', title: 'Exportar a XLS'), request.parameters.merge({format: :xls, format_xls_count: (@format_xls.to_i+1)}) ) if @format_xls
+    #output += modal icono('Plus', title: 'Nuevo'), attrs[:url], attrs[:title] || 'Nuevo' if attrs[:url]
+    
+    output += link_to( icono('Plus', title: attrs[:title]||'Añadir nuevo'),
+                       attrs[:url] || '#',
+                       data: { turbo_method: :get, turbo_frame: "#{object_type}_new"},
+                       class: 'link-edit') if attrs[:url]
     output += "</div></div>"
     return output.html_safe
   end
@@ -76,8 +81,12 @@ module ApplicationHelper
   def form_beginning attrs={}
     attrs[:model] ||= '#'
     attrs[:turbo_frame] ||= '#'
-    attrs[:html_class] ||= 'formulario'
-    output  = "<div class='linea'></div>"
+    attrs[:html_class] ||= 'form-box'
+    close_script = "this.closest('turbo-frame').innerHTML = '<div class=\\'object-container\\'></div>'; return false;"
+    output  = '<div class="caja_completa">'
+    output += '<div class="linea"><div class="elemento_derecha">' 
+    output += link_to icono('Cancel', title: 'Cancelar'), "#", onclick: close_script
+    output += '</div></div>'
     output += form_with model: attrs[:model], local: false,
                         data: { turbo_frame: attrs[:turbo_frame] }, html_class: attrs[:html_class] 
     return output.html_safe
@@ -97,11 +106,16 @@ module ApplicationHelper
   def form_end attrs={}
     attrs[:send_label] ||= 'Guardar'
     attrs[:cancel_label] ||= 'Cancelar'
-    output  = '<div class="actions">'
+    output  = '<div class="linea elemento_derecha actions">'
     output += submit_tag attrs[:send_label]
-    output += link_to attrs[:cancel_label], "#", onclick: "this.closest('turbo-frame').innerHTML = '<div class=\\'object-container\\'></div>'; return false;"
     output += '</div>'
     output += '</form>'
+    output += '</div><!--- Caja completa --->'
     return output.html_safe
+  end
+
+  # Other helpers
+  def message msg
+    return ('<div class="message">' + msg + '</div>').html_safe
   end
 end

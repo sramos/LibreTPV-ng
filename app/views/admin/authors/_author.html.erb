@@ -1,0 +1,13 @@
+<% turbo_frame = "author_#{author.id}_sub" %>
+<div id="author_<%= author.id %>" class="listadofila">
+  <%= index_line author, 'authors' %>
+  <div class="listado_derecha">
+    <%= object_edition url: edit_admin_author_path(author.id), turbo_frame: turbo_frame %>
+    <%= object_destroy url: admin_author_path(author.id),
+                       title: 'Eliminar tipo de IVA',
+                       confirmation: "¿Está seguro de querer eliminar el tipo de IVA '#{author.name}'?" %>
+  </div>
+  <%= turbo_frame_tag turbo_frame do %>
+    <div class="object-container"></div>
+  <% end %>
+</div>
