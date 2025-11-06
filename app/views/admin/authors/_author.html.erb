@@ -1,5 +1,4 @@
-<% turbo_frame = "author_#{author.id}_sub" %>
-<div id="author_<%= author.id %>" class="listadofila">
+<div id="author_<%= author.id %>" class="listadofila<%= ' flash-highlight' if local_assigns[:highlight] %>">
   <%= index_line author, 'authors' %>
   <div class="listado_derecha">
     <%= object_edition url: edit_admin_author_path(author.id), turbo_frame: 'modal' %>

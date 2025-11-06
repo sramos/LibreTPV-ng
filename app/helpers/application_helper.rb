@@ -163,17 +163,23 @@ module ApplicationHelper
     script = "(function(){\n"+
              (show_section_id ? "  var s=document.getElementById('#{show_section_id}'); if(s){ s.style.display='block'; }\n" : '') +
              "  var el=document.getElementById('#{highlight_dom_id}');\n"+
-             "  if(el){ el.classList.add('flash-highlight'); el.scrollIntoView({behavior:'smooth',block:'center'}); setTimeout(function(){ el.classList.remove('flash-highlight'); }, 1600); }\n"+
+             "  if(el){\n"+
+             "    try { el.classList.add('flash-highlight'); } catch(e){}\n"+
+             "    el.scrollIntoView({behavior:'smooth',block:'center'});\n"+
+             "    var prevBg = el.style.backgroundColor; var prevTransition = el.style.transition;\n"+
+             "    el.style.transition = 'background-color 0.6s ease'; el.style.backgroundColor = '#fff3cd';\n"+
+             "    setTimeout(function(){ el.style.backgroundColor = prevBg || ''; el.style.transition = prevTransition || ''; try { el.classList.remove('flash-highlight'); } catch(e){} }, 1600);\n"+
+             "  }\n"+
              "  var m=document.getElementById('modal'); if(m){ setTimeout(function(){ m.innerHTML='' }, 300); }\n"+
              "})();"
     streams = []
     case stream_action.to_sym
     when :after
-      streams << turbo_stream.after(container_dom_id, partial: stream_partial, locals: stream_locals)
+      streams << turbo_stream.after(container_dom_id, partial: stream_partial, locals: stream_locals.merge({highlight: true}))
     when :replace
-      streams << turbo_stream.replace(container_dom_id, partial: stream_partial, locals: stream_locals)
+      streams << turbo_stream.replace(container_dom_id, partial: stream_partial, locals: stream_locals.merge({highlight: true}))
     else
-      streams << turbo_stream.update(container_dom_id, partial: stream_partial, locals: stream_locals)
+      streams << turbo_stream.update(container_dom_id, partial: stream_partial, locals: stream_locals.merge({highlight: true}))
     end
     streams << turbo_stream.update('modal', javascript_tag(script))
     streams
