@@ -1,17 +1,6 @@
 <!--- Authors --->
 <div id="authors">
-  <div id="new_authors" style="display:none">
-    <%= index_header 'authors' %>
-      <%= turbo_frame_tag 'authors_new' do %>
-        <div id='author_new'></div>
-      <% end %>
-    <%= index_footer %>
-    <%= message ("Los nuevos elementos añadidos se incorporarán al listado principal (abajo) cuando " +
-                 link_to('se vuelva a refrescar la página', admin_authors_path(request.query_parameters))) %>
-    <div class="linea"></div>
-  </div>
-
-  <%= index_header 'authors', {url: new_admin_author_path, title: 'Crear nuevo autor', turbo_frame: 'modal' } %>
+  <%= index_header 'authors', {new_url: new_admin_author_path, refresh_url: admin_authors_path, title: 'Crear nuevo autor' } %>
     <% for author in @authors %>
       <%= render partial: 'author', locals: {author: author} %>
     <% end %>

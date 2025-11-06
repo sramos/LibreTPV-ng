@@ -10,7 +10,7 @@
     <div class="linea"></div>
   </div>
 
-  <%= index_header 'vats', {url: new_admin_vat_path, title: 'Crear nuevo tipo de IVA' } %>
+  <%= index_header 'vats', {new_url: new_admin_vat_path, title: 'Crear nuevo tipo de IVA' } %>
     <% for vat in @vats %>
       <%= render partial: 'vat', locals: {vat: vat} %>
     <% end %>

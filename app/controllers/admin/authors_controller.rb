@@ -19,23 +19,14 @@ module Admin
       if @author.save
         respond_to do |format|
           format.turbo_stream do
-            scroll_and_close = view_context.javascript_tag(
-              "(function(){\n"+
-              "  var sec=document.getElementById('new_authors'); if(sec){ sec.style.display='block'; }\n"+
-              "  var el=document.getElementById('author_#{@author.id}');\n"+
-              "  if(el){\n"+
-              "    el.classList.add('flash-highlight');\n"+
-              "    el.scrollIntoView({behavior:'smooth',block:'center'});\n"+
-              "    setTimeout(function(){ el.classList.remove('flash-highlight'); }, 1600);\n"+
-              "  }\n"+
-              "  var m=document.getElementById('modal');\n"+
-              "  if(m){ setTimeout(function(){ m.innerHTML='' }, 300); }\n"+
-              "})();"
+            render turbo_stream: helpers.update_object_turbo_stream(
+              container_dom_id: 'authors_new_element',
+              stream_action: :after,
+              stream_partial: 'author',
+              stream_locals: { author: @author },
+              highlight_dom_id: "author_#{@author.id}",
+              show_section_id: 'new_authors'
             )
-            render turbo_stream: [
-              turbo_stream.after('author_new', partial: 'author', locals: { author: @author }),
-              turbo_stream.update('modal', scroll_and_close)
-            ]
           end
           format.html { redirect_to admin_authors_path, notice: 'Autor creado correctamente' }
         end
@@ -62,9 +53,13 @@ module Admin
       if @author.update(author_params)
         respond_to do |format|
           format.turbo_stream do
-            render turbo_stream: [
-              turbo_stream.replace("author_#{@author.id}", partial: 'author', locals: { author: @author }),
-            ]
+            render turbo_stream: helpers.update_object_turbo_stream(
+              container_dom_id: "author_#{@author.id}",
+              stream_action: :replace,
+              stream_partial: 'author',
+              stream_locals: { author: @author },
+              highlight_dom_id: "author_#{@author.id}"
+            )
           end
           format.html { redirect_to admin_authors_path, notice: 'Autor actualizado correctamente' }
         end

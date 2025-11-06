@@ -4,20 +4,32 @@ module ApplicationHelper
   def index_header object_type, attrs={}
     # Sacamos los campos a mostrar bien vengan como array (posicion global) o como tipo
     fields = object_type.is_a?(Array) ? object_type : index_fields(object_type)
+    output = ''
+    # Dibujamos el bloque de nuevos objetos
+    output += index_new_objects_header(object_type, attrs) if attrs[:new_url]
     # Dibujamos la cabecera del listado
-    output = "<div class='listado'><div class='listadocabecera'>"
+    output += "<div class='listado'><div class='listadocabecera'>"
     for field in fields
       output += "<div class='listado_campo_#{field[2]}' id='listado_campo_etiqueta_#{field[1]}'>" + field[0] + "</div>"
     end
     output += "<div class='listado_derecha'>"
-    output += link_to( icono('Download', title: 'Exportar a XLS'), request.parameters.merge({format: :xls, format_xls_count: (@format_xls.to_i+1)}) ) if @format_xls
-    #output += modal icono('Plus', title: 'Nuevo'), attrs[:url], attrs[:title] || 'Nuevo' if attrs[:url]
-    
+    output += link_to( icono('Download', title: 'Exportar a XLS'), request.parameters.merge({format: :xls, format_xls_count: (@format_xls.to_i+1)}) ) if @format_xls    
     output += link_to( icono('Plus', title: attrs[:title]||'Añadir nuevo'),
-                       attrs[:url] || '#',
-                       data: { turbo_method: :get, turbo_frame: (attrs[:turbo_frame] || "#{object_type}_new") },
-                       class: 'link-edit') if attrs[:url]
+                       attrs[:new_url] || '#',
+                       data: { turbo_method: :get, turbo_frame: 'modal' },
+                       class: 'link-edit') if attrs[:new_url]
     output += "</div></div>"
+    return output.html_safe
+  end
+  def index_new_objects_header object_type, attrs={}
+    output = ''
+    output  = "<div id='new_#{object_type}' style='display:none'>"
+    output += index_header object_type
+    output += turbo_frame_tag("#{object_type}_new"){"<div id='#{object_type}_new_element'></div>".html_safe}
+    output += index_footer
+    output += message ('Los nuevos elementos añadidos se incorporarán al listado principal (abajo) cuando se vuelva a ' +
+                        link_to('refrescar la página', attrs[:refresh_url])) if attrs[:refresh_url]
+    output += '<div class="linea"></div></div>'
     return output.html_safe
   end
   def index_line object, object_type
@@ -117,7 +129,7 @@ module ApplicationHelper
     output += '<div class="modal-body"><div class="linea"></div>' 
     output += form_with model: attrs[:model], local: false,
                         data: { turbo_frame: attrs[:turbo_frame] }, html_class: attrs[:html_class] 
-    return output.html_safe
+    return turbo_frame_tag('modal') { output.html_safe }
   end
   def form_errors object
     output = ''
@@ -145,5 +157,25 @@ module ApplicationHelper
   # Other helpers
   def message msg
     return ('<div class="message">' + msg + '</div>').html_safe
+  end
+
+  def update_object_turbo_stream container_dom_id:, stream_action:, stream_partial:, stream_locals: {}, highlight_dom_id:, show_section_id: nil
+    script = "(function(){\n"+
+             (show_section_id ? "  var s=document.getElementById('#{show_section_id}'); if(s){ s.style.display='block'; }\n" : '') +
+             "  var el=document.getElementById('#{highlight_dom_id}');\n"+
+             "  if(el){ el.classList.add('flash-highlight'); el.scrollIntoView({behavior:'smooth',block:'center'}); setTimeout(function(){ el.classList.remove('flash-highlight'); }, 1600); }\n"+
+             "  var m=document.getElementById('modal'); if(m){ setTimeout(function(){ m.innerHTML='' }, 300); }\n"+
+             "})();"
+    streams = []
+    case stream_action.to_sym
+    when :after
+      streams << turbo_stream.after(container_dom_id, partial: stream_partial, locals: stream_locals)
+    when :replace
+      streams << turbo_stream.replace(container_dom_id, partial: stream_partial, locals: stream_locals)
+    else
+      streams << turbo_stream.update(container_dom_id, partial: stream_partial, locals: stream_locals)
+    end
+    streams << turbo_stream.update('modal', javascript_tag(script))
+    streams
   end
 end

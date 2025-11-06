@@ -1,5 +1,5 @@
-<div class='linea'></div>
-<%= form_beginning model: [:admin, @vat], turbo_frame: "vat_#{@vat.id}_sub", html_class: 'formulario' %>
+<% header ||= 'Formulario' unless defined?(header) %>
+<%= form_beginning model: [:admin, @vat], header: header %>
   <%= form_errors vat %>
   <%= texto 'Nombre', 'vat', 'name' %>
   <%= texto 'Valor', 'vat', 'rate_value' %>
