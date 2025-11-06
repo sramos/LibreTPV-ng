@@ -1,9 +1,6 @@
-<div class='linea'></div>
-<%= form_beginning model: [:admin, @author], turbo_frame: "author_#{@author.id}_sub", html_class: 'formulario' %>
+<% header ||= 'Formulario' unless defined?(header) %>
+<%= form_beginning model: [:admin, @author], header: header, turbo_frame: "author_#{@author.id}_sub", html_class: 'formulario' %>
   <%= form_errors author %>
   <%= texto 'Nombre', 'author', 'name' %>
-  <div class='elemento'>
-    Activo<br/>
-    <%= check_box :author, :active %>
-  </div>
+  <%= checkbox 'Activo', 'author', 'active', {izquierda: true, abajo: true, checked: @author.active} %>
 <%= form_end %>

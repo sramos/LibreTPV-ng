@@ -1,12 +1,3 @@
 <%= turbo_frame_tag 'modal' do %>
-  <div class="modal-overlay" onclick="document.getElementById('modal').innerHTML=''"></div>
-  <div class="modal-panel" onclick="event.stopPropagation()">
-    <div class="modal-header">
-      <h3>Nuevo autor</h3>
-      <%= link_to '✕', '#', onclick: "document.getElementById('modal').innerHTML=''; return false;", class: 'modal-close' %>
-    </div>
-    <div class="modal-body">
-      <%= render partial: 'form', locals: { author: @author } %>
-    </div>
-  </div>
+  <%= render partial: 'form', locals: { header: 'Nuevo autor', author: @author } %>
 <% end %>

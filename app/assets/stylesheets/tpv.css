@@ -229,11 +229,13 @@ margin-top:15px;
 
 .elemento, .elemento_x1 {
     float: left;
+    text-align: left;
     width:190px;
 }
 
 .elemento_x2 {
     float: left;
+    text-align: left;
     width:380;
 }
 
@@ -255,11 +257,13 @@ margin-top:15px;
 
 .elemento_x01 {
     float: left;
+    text-align: left;
     width: 20px;
 }
 
 .elemento_x15 {
     float: left;
+    text-align: left;
     width:225px
 }
 

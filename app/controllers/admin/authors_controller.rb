@@ -21,6 +21,7 @@ module Admin
           format.turbo_stream do
             scroll_and_close = view_context.javascript_tag(
               "(function(){\n"+
+              "  var sec=document.getElementById('new_authors'); if(sec){ sec.style.display='block'; }\n"+
               "  var el=document.getElementById('author_#{@author.id}');\n"+
               "  if(el){\n"+
               "    el.classList.add('flash-highlight');\n"+

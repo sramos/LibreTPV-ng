@@ -105,13 +105,16 @@ module ApplicationHelper
   # Generic beginning of a form, wrapping form_with and yielding the builder
   def form_beginning attrs={}
     attrs[:model] ||= '#'
+    attrs[:header] ||= 'Formulario'
     attrs[:turbo_frame] ||= '#'
     attrs[:html_class] ||= 'form-box'
-    close_script = "this.closest('turbo-frame').innerHTML = '<div class=\\'object-container\\'></div>'; return false;"
-    output  = '<div class="caja_completa">'
-    output += '<div class="linea"><div class="elemento_derecha">' 
-    output += link_to icono('Cancel', title: 'Cancelar'), "#", onclick: close_script
-    output += '</div></div>'
+    output  = '<div class="modal-overlay" onclick="document.getElementById(\'modal\').innerHTML=\'\'"></div>'
+    output += '<div class="modal-panel" onclick="event.stopPropagation()">'
+    output += '<div class="modal-header">'
+    output += '<h3>' + attrs[:header]+ '</h3>'
+    output += link_to '✕', '#', onclick: "document.getElementById('modal').innerHTML=''; return false;", class: 'modal-close'
+    output += '</div>'
+    output += '<div class="modal-body"><div class="linea"></div>' 
     output += form_with model: attrs[:model], local: false,
                         data: { turbo_frame: attrs[:turbo_frame] }, html_class: attrs[:html_class] 
     return output.html_safe
@@ -120,7 +123,7 @@ module ApplicationHelper
     output = ''
     if object.errors.any?
       output += '<div id="error_explanation"><h2>'
-      output += pluralize(object.errors.count, 'error') + ' prohibited this object from being saved:</h2><ul>'
+      output += pluralize(object.errors.count, 'error') + ' impiden guardar el objeto:</h2><ul>'
       object.errors.each do |error|
         output += "<li>#{error.full_message}</li>"
       end
@@ -133,9 +136,9 @@ module ApplicationHelper
     attrs[:cancel_label] ||= 'Cancelar'
     output  = '<div class="linea elemento_derecha actions">'
     output += submit_tag attrs[:send_label]
-    output += '</div>'
-    output += '</form>'
-    output += '</div><!--- Caja completa --->'
+    output += '</div></form>'
+    output += '<div class="linea"></div>'
+    output += '</div></div><!--- Caja completa --->'
     return output.html_safe
   end
 

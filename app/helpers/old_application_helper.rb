@@ -219,14 +219,14 @@ module OldApplicationHelper
   end
 
   # check_box
-  #def checkbox rotulo, objeto, atributo, otros={}
-  def old_checkbox rotulo, objeto, atributo, otros={}
+  def checkbox rotulo, objeto, atributo, otros={}
     clase = otros[:clase]||''
     title = otros[:title] ? ("title = '" + otros[:title] + "'" ) : ""
+    checked = otros[:checked] || objeto.send(atributo)
     if otros[:izquierda]
-      ('<div class="elemento' + clase + '" #{title}>' + ( ("<br>" if otros[:abajo]) || "")).html_safe +  check_box( objeto, atributo, {:checked => otros[:checked], :disabled => otros[:disabled]} ) + rotulo + "</div>".html_safe
+      ('<div class="elemento' + clase + '" #{title}>' + ( ("<br>" if otros[:abajo]) || "")).html_safe +  check_box( objeto, atributo, {checked: checked, disabled: otros[:disabled]} ) + rotulo + "</div>".html_safe
     else
-      ('<div class="elemento' + clase + '" #{title}>' + ( ("<br>" if otros[:abajo]) || "")).html_safe + rotulo + check_box( objeto, atributo, {:checked => otros[:checked], :disabled => otros[:disabled]} ) + "</div>".html_safe
+      ('<div class="elemento' + clase + '" #{title}>' + ( ("<br>" if otros[:abajo]) || "")).html_safe + rotulo + check_box( objeto, atributo, {checked: checked, disabled: otros[:disabled]} ) + "</div>".html_safe
     end
   end
 
