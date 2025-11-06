@@ -2,5 +2,8 @@
 <%= form_beginning model: [:admin, @author], turbo_frame: "author_#{@author.id}_sub", html_class: 'formulario' %>
   <%= form_errors author %>
   <%= texto 'Nombre', 'author', 'name' %>
-  <%= texto 'Activo', 'author', 'active' %>
+  <div class='elemento'>
+    Activo<br/>
+    <%= check_box :author, :active %>
+  </div>
 <%= form_end %>

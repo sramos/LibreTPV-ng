@@ -15,7 +15,7 @@ module ApplicationHelper
     
     output += link_to( icono('Plus', title: attrs[:title]||'Añadir nuevo'),
                        attrs[:url] || '#',
-                       data: { turbo_method: :get, turbo_frame: "#{object_type}_new"},
+                       data: { turbo_method: :get, turbo_frame: (attrs[:turbo_frame] || "#{object_type}_new") },
                        class: 'link-edit') if attrs[:url]
     output += "</div></div>"
     return output.html_safe

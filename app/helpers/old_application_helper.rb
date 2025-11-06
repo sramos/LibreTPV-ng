@@ -402,7 +402,7 @@ module OldApplicationHelper
                           { label: 'Familias de Productos', controlador: 'familia' },
                           { label: 'Materias', controlador: 'materia' },
                           { label: 'Editoriales', controlador: 'editorial' },
-                          { label: 'Autores', controlador: 'autor' },
+                          { label: 'Autores', controlador: 'admin/authors' },
                           #{ label: 'Avisos', controlador: 'avisos' }
                         ]
 

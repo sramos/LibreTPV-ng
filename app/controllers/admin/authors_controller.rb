@@ -14,6 +14,42 @@ module Admin
       end
     end
 
+    def create
+      @author = Author.new(author_params)
+      if @author.save
+        respond_to do |format|
+          format.turbo_stream do
+            scroll_and_close = view_context.javascript_tag(
+              "(function(){\n"+
+              "  var el=document.getElementById('author_#{@author.id}');\n"+
+              "  if(el){\n"+
+              "    el.classList.add('flash-highlight');\n"+
+              "    el.scrollIntoView({behavior:'smooth',block:'center'});\n"+
+              "    setTimeout(function(){ el.classList.remove('flash-highlight'); }, 1600);\n"+
+              "  }\n"+
+              "  var m=document.getElementById('modal');\n"+
+              "  if(m){ setTimeout(function(){ m.innerHTML='' }, 300); }\n"+
+              "})();"
+            )
+            render turbo_stream: [
+              turbo_stream.after('author_new', partial: 'author', locals: { author: @author }),
+              turbo_stream.update('modal', scroll_and_close)
+            ]
+          end
+          format.html { redirect_to admin_authors_path, notice: 'Autor creado correctamente' }
+        end
+      else
+        respond_to do |format|
+          format.turbo_stream do
+            render turbo_stream: [
+              turbo_stream.update('modal', html: render_to_string(:new, layout: false, status: :unprocessable_entity))
+            ]
+          end
+          format.html { render :new, status: :unprocessable_entity, layout: false }
+        end
+      end
+    end
+
     def edit
       respond_to do |format|
         format.html { render layout: false }
@@ -68,7 +104,7 @@ module Admin
     end
 
     def author_params
-      params.require(:author).permit(:name, :rate_value)
+      params.require(:author).permit(:name, :active)
     end
   end
 end

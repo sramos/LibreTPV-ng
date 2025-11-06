@@ -38,6 +38,8 @@
 
     <!-- Mensajes de aviso -->
     <%= mensaje flash[:mensaje] if flash[:mensaje] %>
+
+    <%= turbo_frame_tag 'modal' %>
   </body>
 
   <% if user_signed_in? %>
