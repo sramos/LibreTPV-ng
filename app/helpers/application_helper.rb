@@ -23,9 +23,9 @@ module ApplicationHelper
   end
   def index_new_objects_header object_type, attrs={}
     output = ''
-    output  = "<div id='new_#{object_type}' style='display:none'>"
+    output  = "<div id='new_#{object_type}_section' style='display:none'>"
     output += index_header object_type
-    output += turbo_frame_tag("#{object_type}_new"){"<div id='#{object_type}_new_element'></div>".html_safe}
+    output += turbo_frame_tag("turbo_stream_new_#{object_type}"){"<div id='new_#{object_type}_tag'></div>".html_safe}
     output += index_footer
     output += message ('Los nuevos elementos añadidos se incorporarán al listado principal (abajo) cuando se vuelva a ' +
                         link_to('refrescar la página', attrs[:refresh_url])) if attrs[:refresh_url]

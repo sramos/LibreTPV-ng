@@ -20,12 +20,12 @@ module Admin
         respond_to do |format|
           format.turbo_stream do
             render turbo_stream: helpers.update_object_turbo_stream(
-              container_dom_id: 'authors_new_element',
+              container_dom_id: 'new_authors_tag',
               stream_action: :after,
               stream_partial: 'author',
               stream_locals: { author: @author },
               highlight_dom_id: "author_#{@author.id}",
-              show_section_id: 'new_authors'
+              show_section_id: 'new_authors_section'
             )
           end
           format.html { redirect_to admin_authors_path, notice: 'Autor creado correctamente' }
