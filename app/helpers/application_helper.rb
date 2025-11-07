@@ -13,8 +13,8 @@ module ApplicationHelper
       output += "<div class='listado_campo_#{field[2]}' id='listado_campo_etiqueta_#{field[1]}'>" + field[0] + "</div>"
     end
     output += "<div class='listado_derecha'>"
-    output += link_to( icono('Download', title: 'Exportar a XLS'), request.parameters.merge({format: :xls, format_xls_count: (@format_xls.to_i+1)}) ) if @format_xls    
-    output += link_to( icono('Plus', title: attrs[:title]||'Añadir nuevo'),
+    output += link_to( icon('download', title: 'Exportar a XLS'), request.parameters.merge({format: :xls, format_xls_count: (@format_xls.to_i+1)}) ) if @format_xls    
+    output += link_to( icon('plus', title: attrs[:title]||'Añadir nuevo'),
                        attrs[:new_url] || '#',
                        data: { turbo_method: :get, turbo_frame: 'modal' },
                        class: 'link-edit') if attrs[:new_url]
@@ -98,7 +98,7 @@ module ApplicationHelper
     link_to(attrs[:url] || '#',
                      data: data_attrs,
                      class: 'link-edit') do
-      attrs[:icon] || icono('Write', title: attrs[:title]||'Editar')
+      attrs[:icon] || icon('pen', title: attrs[:title]||'Editar')
     end
   end
 
@@ -109,8 +109,20 @@ module ApplicationHelper
                        turbo_confirm: attrs[:confirmation] || '¿Está seguro?'
                      },
                      class: 'link-delete') do
-      attrs[:icon] || icono('Trash', title: attrs[:title]||'Borrar')
+      attrs[:icon] || icon('trash', title: attrs[:title]||'Borrar')
     end
+  end
+
+  # Icons using font awesome
+  def icon fa_name, attrs={}
+    # FA style prefix. Defaults to 'fa' (compatible). Allow overriding with :fa => 'fas'/'far'/'fab'.
+    fa_prefix = (attrs[:fa] || 'fa').to_s
+    # Optional size like 'lg', '2x', etc.
+    size_class = attrs[:size] ? "fa-#{attrs[:size]}" : nil
+    classes = [fa_prefix, "fa-#{fa_name}"]
+    classes << size_class if size_class
+    classes << attrs[:class] if attrs[:class]
+    content_tag(:i, '', class: classes.compact.join(' '), title: attrs[:title], aria: { hidden: true })
   end
 
   # Form helpers

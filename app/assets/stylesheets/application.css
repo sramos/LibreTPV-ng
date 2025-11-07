@@ -52,3 +52,45 @@
   text-decoration: none;
 }
 .modal-close:hover { color: #111827; }
+
+/* Action icon hover effects */
+.link-edit .fa, .link-delete .fa, .link-edit .fas, .link-delete .fas,
+.link-edit .far, .link-delete .far, .link-edit .fab, .link-delete .fab {
+  transition: transform .15s ease, color .15s ease, opacity .15s ease;
+}
+
+.link-edit:hover .fa, .link-edit:hover .fas, .link-edit:hover .far, .link-edit:hover .fab {
+  transform: scale(1.12);
+  color: #111827; /* near-black */
+}
+
+.link-delete:hover .fa, .link-delete:hover .fas, .link-delete:hover .far, .link-delete:hover .fab {
+  transform: scale(1.12);
+  color: #b91c1c; /* red-700 */
+}
+
+/* Generic hover for other FA icons */
+i.fa:hover, i.fas:hover, i.far:hover, i.fab:hover {
+  opacity: .9;
+}
+
+/* Consistent 16x16 icon box for Font Awesome icons */
+i.fa, i.fas, i.far, i.fab {
+  display: inline-flex;
+  width: 16px;
+  height: 16px;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  font-size: 12px; /* fits well in 16px box */
+  vertical-align: middle;
+  border: 1px solid #e5e7eb; /* gray-200 */
+  border-radius: 3px;
+  background: #f9fafb; /* gray-50 */
+}
+
+/* Slightly darker border on hover for visibility */
+.link-edit:hover i.fa, .link-edit:hover i.fas, .link-edit:hover i.far, .link-edit:hover i.fab,
+.link-delete:hover i.fa, .link-delete:hover i.fas, .link-delete:hover i.far, .link-delete:hover i.fab {
+  border-color: #d1d5db; /* gray-300 */
+}

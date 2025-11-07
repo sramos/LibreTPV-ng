@@ -2,5 +2,5 @@
 <%= form_beginning model: [:admin, @author], header: header %>
   <%= form_errors author %>
   <%= texto 'Nombre', 'author', 'name' %>
-  <%= checkbox 'Activo', 'author', 'active', {izquierda: true, abajo: true, checked: @author.active} %>
+  <%= _checkbox 'Activo', 'author', 'active', {izquierda: true, abajo: true, checked: @author.active} %>
 <%= form_end %>
