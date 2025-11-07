@@ -2,7 +2,7 @@
 <div id="vats">
   <%= index_header 'vats', {new_url: new_admin_vat_path, refresh_url: admin_vats_path, title: 'Crear nuevo tipo de IVA' } %>
     <% for vat in @vats %>
-      <%= render partial: 'vat', locals: {vat: vat} %>
+      <%= render partial: 'item', locals: {vat: vat} %>
     <% end %>
   <%= index_footer @vats %>
 </div>

@@ -1,0 +1,8 @@
+<!--- Payment types --->
+<div id="payment_types">
+  <%= index_header 'payment_types', {new_url: new_admin_payment_type_path, refresh_url: admin_payment_types_path, title: 'Crear nueva forma de pago' } %>
+    <% for payment_type in @payment_types %>
+      <%= render partial: 'item', locals: {payment_type: payment_type} %>
+    <% end %>
+  <%= index_footer @payment_types %>
+</div>

@@ -47,15 +47,16 @@ module ApplicationHelper
       end
       value = value.localtime.strftime("%d/%m/%Y %H:%M:%S") if value.class.name == 'ActiveSupport::TimeWithZone'
       value = 'Sí' if value.class.name == 'TrueClass'
-      value = 'No' if value.class.name == 'FalseClass' && campo != 'valor_defecto'
+      value = 'No' if value.class.name == 'FalseClass' && field[1] != 'valor_defecto'
       value = value.strftime("%d/%m/%Y") if value.class.name == 'Date'
       value = sprintf("%.2f", value) if value.class.name == 'Float'
-      output += "<div class='#{html_class}' id='#{html_id}' title='#{value||'&nbsp;'}'>" + value + '</div>'
+      value = '&nbsp;' if value.blank?
+      output += "<div class='#{html_class}' id='#{html_id}' title='#{value}'>" + value + '</div>'
     end
     return output.html_safe
   end
   def index_field_value object, field
-    value = object
+    value = field.blank? ? nil :object
     field.split('.').each do |method|
       value = (method =~ /(\S+)\s(\S+)/ ? value.send($1,$2) : value.send(method)) if value
     end
@@ -171,7 +172,7 @@ module ApplicationHelper
     return ('<div class="message">' + msg + '</div>').html_safe
   end
 
-  def update_object_turbo_stream container_dom_id:, stream_action: :replace, stream_partial:, stream_locals: {}, highlight_dom_id: nil, show_section_id: nil
+  def update_object_turbo_stream container_dom_id:, stream_action: :replace, stream_partial: 'item', stream_locals: {}, highlight_dom_id: nil, show_section_id: nil
     highlight_dom_id ||= container_dom_id
     script = "(function(){\n"+
              (show_section_id ? "  var s=document.getElementById('#{show_section_id}'); if(s){ s.style.display='block'; }\n" : '') +

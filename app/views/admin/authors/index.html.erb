@@ -2,7 +2,7 @@
 <div id="authors">
   <%= index_header 'authors', {new_url: new_admin_author_path, refresh_url: admin_authors_path, title: 'Crear nuevo autor' } %>
     <% for author in @authors %>
-      <%= render partial: 'author', locals: {author: author} %>
+      <%= render partial: 'item', locals: {author: author} %>
     <% end %>
   <%= index_footer @authors %>
 </div>

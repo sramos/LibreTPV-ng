@@ -27,9 +27,11 @@ module ListsHelper
   def index_fields object_type
     case object_type.to_s
     when 'vats'
-      [['Nombre', 'name', '1'], ['% IVA', 'rate_value', '1_3d']]
+      [['Nombre', 'name', '1'], ['% IVA', 'rate_value', '1_3d'], ['&nbsp', '', '1_5'], ['Activo', 'active', '1_4']]
     when 'authors'
       [['Nombre', 'name', '1'], ['Activo', 'active', '1_3d']]
+    when 'payment_types'
+      [['Nombre', 'name', '1'], ['Caja', 'cash', '1_4'], ['Activo', 'active', '1_4']]
     end
   end
 

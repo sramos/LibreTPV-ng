@@ -220,13 +220,13 @@ module OldApplicationHelper
 
   # check_box
   def _checkbox rotulo, objeto, atributo, otros={}
-    clase = otros[:clase]||''
-    title = otros[:title] ? ("title = '" + otros[:title] + "'" ) : ""
-    checked = otros[:checked] || objeto.send(atributo)
+    clase = otros[:clase]||'elemento'
+    title = otros[:title] ? "title = '#{otros[:title]}'" : ""
+    checked = otros[:checked]
     if otros[:izquierda]
-      ('<div class="elemento' + clase + '" #{title}>' + ( ("<br>" if otros[:abajo]) || "")).html_safe +  check_box( objeto, atributo, {checked: checked, disabled: otros[:disabled]} ) + rotulo + "</div>".html_safe
+      ('<div class="' + clase + '" ' + title + '>' + ( ("<br>" if otros[:abajo]) || "")).html_safe +  check_box( objeto, atributo, {checked: checked, disabled: otros[:disabled]} ) + rotulo + "</div>".html_safe
     else
-      ('<div class="elemento' + clase + '" #{title}>' + ( ("<br>" if otros[:abajo]) || "")).html_safe + rotulo + check_box( objeto, atributo, {checked: checked, disabled: otros[:disabled]} ) + "</div>".html_safe
+      ('<div class="' + clase + '" ' + title + '>' + ( ("<br>" if otros[:abajo]) || "")).html_safe + rotulo + check_box( objeto, atributo, {checked: checked, disabled: otros[:disabled]} ) + "</div>".html_safe
     end
   end
 
@@ -397,7 +397,7 @@ module OldApplicationHelper
                           #{ label: 'Recuperar Objetos', controlador: 'perdidos' },
 			                    { label: 'Parámetros', controlador: 'configuracion' },
                           #{ label: 'Usuarios', controlador: 'users' },
-                          { label: 'Formas de Pago', controlador: 'forma_pago' },
+                          { label: 'Formas de Pago', controlador: 'admin/payment_types' },
                           { label: 'Tipos de IVA', controlador: 'admin/vats' },
                           { label: 'Familias de Productos', controlador: 'familia' },
                           { label: 'Materias', controlador: 'materia' },

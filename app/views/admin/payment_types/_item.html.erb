@@ -1,0 +1,9 @@
+<div id="payment_type_<%= payment_type.id %>" class="listadofila<%= ' flash-highlight' if local_assigns[:highlight] %>">
+  <%= index_line payment_type, 'payment_types' %>
+  <div class="listado_derecha">
+    <%= object_edition url: edit_admin_payment_type_path(payment_type.id), title: "Editar forma de pago '#{payment_type.name}'" %>
+    <%= object_destroy url: admin_payment_type_path(payment_type.id),
+                       title: "Eliminar forma de pago '#{payment_type.name}'",
+                       confirmation: "¿Está seguro de querer eliminar la forma de pago '#{payment_type.name}'?" %>
+  </div>
+</div>

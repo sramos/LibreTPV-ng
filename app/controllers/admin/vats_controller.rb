@@ -82,7 +82,7 @@ module Admin
       respond_to do |format|
         format.turbo_stream do
           render turbo_stream: [
-            turbo_stream.remove("vat_#{@vat&.id}")
+            turbo_stream.remove("vat_#{@vat.id}")
           ]
         end
         format.html { redirect_to admin_vats_path, notice: msg }

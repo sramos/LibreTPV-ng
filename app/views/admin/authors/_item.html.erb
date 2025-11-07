@@ -3,7 +3,7 @@
   <div class="listado_derecha">
     <%= object_edition url: edit_admin_author_path(author.id), title: "Editar autor '#{author.name}'" %>
     <%= object_destroy url: admin_author_path(author.id),
-                       title: 'Eliminar autor '#{author.name}',
+                       title: "Eliminar autor '#{author.name}'",
                        confirmation: "¿Está seguro de querer eliminar el autor '#{author.name}'?" %>
   </div>
 </div>
