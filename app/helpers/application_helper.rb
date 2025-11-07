@@ -92,7 +92,7 @@ module ApplicationHelper
 
   # Action buttons 
   def object_edition attrs={}
-    data_attrs = { turbo_method: :get }
+    data_attrs = { turbo_method: :get, turbo_frame: 'modal' }
     data_attrs[:turbo_frame] = attrs[:turbo_frame] if attrs[:turbo_frame]
     
     link_to(attrs[:url] || '#',
@@ -171,7 +171,8 @@ module ApplicationHelper
     return ('<div class="message">' + msg + '</div>').html_safe
   end
 
-  def update_object_turbo_stream container_dom_id:, stream_action:, stream_partial:, stream_locals: {}, highlight_dom_id:, show_section_id: nil
+  def update_object_turbo_stream container_dom_id:, stream_action: :replace, stream_partial:, stream_locals: {}, highlight_dom_id: nil, show_section_id: nil
+    highlight_dom_id ||= container_dom_id
     script = "(function(){\n"+
              (show_section_id ? "  var s=document.getElementById('#{show_section_id}'); if(s){ s.style.display='block'; }\n" : '') +
              "  var el=document.getElementById('#{highlight_dom_id}');\n"+

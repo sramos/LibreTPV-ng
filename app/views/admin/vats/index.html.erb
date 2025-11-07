@@ -1,18 +1,8 @@
 <!--- Vat types --->
-<div id="vat_types">
-  <div id="new_vats" style="dispddlay:none">
-    <%= index_header 'vats' %>
-      <%= turbo_frame_tag 'vats_new' do %>
-        <div id='vat_new'></div>
-      <% end %>
-    <%= index_footer %>
-    <%= message 'Los nuevos elementos añadidos se incorporarán al listado principal (abajo) cuando se vuelva a refrescar la página' %>
-    <div class="linea"></div>
-  </div>
-
-  <%= index_header 'vats', {new_url: new_admin_vat_path, title: 'Crear nuevo tipo de IVA' } %>
+<div id="vats">
+  <%= index_header 'vats', {new_url: new_admin_vat_path, refresh_url: admin_vats_path, title: 'Crear nuevo tipo de IVA' } %>
     <% for vat in @vats %>
       <%= render partial: 'vat', locals: {vat: vat} %>
     <% end %>
-  <%= index_footer %>
+  <%= index_footer @vats %>
 </div>

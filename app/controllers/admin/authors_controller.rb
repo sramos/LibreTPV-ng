@@ -55,10 +55,8 @@ module Admin
           format.turbo_stream do
             render turbo_stream: helpers.update_object_turbo_stream(
               container_dom_id: "author_#{@author.id}",
-              stream_action: :replace,
               stream_partial: 'author',
               stream_locals: { author: @author },
-              highlight_dom_id: "author_#{@author.id}"
             )
           end
           format.html { redirect_to admin_authors_path, notice: 'Autor actualizado correctamente' }
