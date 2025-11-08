@@ -1,13 +1,13 @@
 module Admin
-  class VatsController < ApplicationController
-    before_action :set_vat, only: [:edit, :update, :destroy]
+  class UsersController < ApplicationController
+    before_action :set_user, only: [:edit, :update, :destroy]
 
     def index
-      @vats = Vat.order(:name).page(params[:page]).per(session[:per_page])
+      @users = User.order(:name).page(params[:page]).per(session[:per_page])
     end
 
     def new
-      @vat = Vat.new
+      @user = User.new
       respond_to do |format|
         format.html { render layout: false }
         format.turbo_stream
@@ -15,19 +15,19 @@ module Admin
     end
 
     def create
-      @vat = Vat.new(vat_params)
-      if @vat.save
+      @user = User.new(user_params)
+      if @user.save
         respond_to do |format|
           format.turbo_stream do
             render turbo_stream: helpers.update_object_turbo_stream(
-              container_dom_id: 'new_vats_tag',
+              container_dom_id: 'new_users_tag',
               stream_action: :after,
-              stream_locals: { vat: @vat },
-              highlight_dom_id: "vat_#{@vat.id}",
-              show_section_id: 'new_vats_section'
+              stream_locals: { user: @user },
+              highlight_dom_id: "user_#{@user.id}",
+              show_section_id: 'new_users_section'
             )
           end
-          format.html { redirect_to admin_vats_path, notice: 'Tipo de IVA creado correctamente' }
+          format.html { redirect_to admin_users_path, notice: 'Usuario creado correctamente' }
         end
       else
         respond_to do |format|
@@ -49,21 +49,21 @@ module Admin
     end
 
     def update
-      if @vat.update(vat_params)
+      if @user.update(user_params)
         respond_to do |format|
           format.turbo_stream do
             render turbo_stream: helpers.update_object_turbo_stream(
-              container_dom_id: "vat_#{@vat.id}",
-              stream_locals: { vat: @vat },
+              container_dom_id: "user_#{@user.id}",
+              stream_locals: { user: @user },
             )
           end
-          format.html { redirect_to admin_vats_path, notice: 'Tipo de IVA actualizado correctamente' }
+          format.html { redirect_to admin_users_path, notice: 'Usuario actualizado correctamente' }
         end
       else
         respond_to do |format|
           format.turbo_stream do
             render turbo_stream: [
-              turbo_stream.replace("vat_#{@vat.id}_sub", partial: 'form', locals: { vat: @vat })
+              turbo_stream.replace("user_#{@user.id}_sub", partial: 'form', locals: { user: @user })
             ]
           end
           format.html { render :edit, status: :unprocessable_entity, layout: false }
@@ -72,31 +72,31 @@ module Admin
     end
 
     def destroy
-      if @vat.destroy
-        msg = 'Tipo de IVA eliminado correctamente'
+      if @user.destroy
+        msg = 'Usuario eliminado correctamente'
       else
-        msg = 'Se han producido errores eliminando el tipo de IVA: ' + @vat.errors.inspect
+        msg = 'Se han producido errores eliminando el usuario: ' + @user.errors.inspect
       end
       respond_to do |format|
         format.turbo_stream do
           render turbo_stream: [
-            turbo_stream.remove("vat_#{@vat.id}")
+            turbo_stream.remove("user_#{@user&.id}")
           ]
         end
-        format.html { redirect_to admin_vats_path, notice: msg }
+        format.html { redirect_to admin_users_path, notice: msg }
       end
     rescue => e
-      redirect_to admin_vats_path, alert: "Error al eliminar el tipo de IVA: #{e.message}"
+      redirect_to admin_users_path, alert: "Error al eliminar el usuario: #{e.message}"
     end
 
     private
 
-    def set_vat
-      @vat = Vat.find(params[:id])
+    def set_user
+      @user = User.find(params[:id])
     end
 
-    def vat_params
-      params.require(:vat).permit(:name, :rate_value, :active)
+    def user_params
+      params.require(:user).permit(:name, :email, :active)
     end
   end
 end

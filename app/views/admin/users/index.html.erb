@@ -1,0 +1,8 @@
+<!--- Users --->
+<div id="users">
+  <%= index_header 'users', {new_url: new_admin_user_path, refresh_url: admin_users_path, title: 'Crear nuevo usuario' } %>
+    <% for user in @users %>
+      <%= render partial: 'item', locals: {user: user} %>
+    <% end %>
+  <%= index_footer @users %>
+</div>

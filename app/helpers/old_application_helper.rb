@@ -85,28 +85,6 @@ module OldApplicationHelper
     return cadena.html_safe
   end
 
-  # paginación, se integra en final_listado
-  def paginacion elementopaginado, elementosxpagina
-    formulario  = "<div class='listadofila' id='paginado'>" + (will_paginate(elementopaginado, class: "listado_campo_2") || " ")
-    formulario += "<div class='listado_derecha'> "+ informacion_paginacion(elementopaginado)  + "</div>"
-    formulario += "<div class='linea'></div></div>"
-    return formulario.html_safe
-  end
-
-  # completa paginacion
-  def informacion_paginacion collection
-      if collection.total_pages < 2
-        case collection.size
-        when 0; "<b>" + "No tiene elementos" + "</b>"
-        when 1; "<b>" + "Mostrando 1 elemento" + "</b>"
-        else;   "<b>" + "Mostrando todos los elementos: " + (collection.size).to_s + "</b>"
-        end
-      else
-        "Mostrando elementos" + " <b>"+ (collection.offset + 1).to_s + " - " + (collection.offset + collection.length).to_s + "</b> de <b> " + (collection.total_entries).to_s +
-            "</b>" + " en total"
-      end
-  end
-
   def cabecera_sublistado rotulo, tipo, sub_id, nuevo={}, clase="sublistado"
     #@campos_sublistado = campos
     @campos_sublistado = tipo.is_a?(Array) ? tipo : campos_listado(tipo)
@@ -147,27 +125,6 @@ module OldApplicationHelper
       return "</fieldset>".html_safe
   end
 
-  def icono tipo, props={}
-    size = props[:size] == 'grande'? 32 : 16
-    image_tag("icons/" + size.to_s + "/" + tipo + ".png", border: 0,
-                class: (props[:size] == "grande" ? "" : "icono"),
-                title: props[:title] || '', style: props[:style] || '',
-                alt: props[:title],
-                onmouseover: "this.src=url('icons/" + size.to_s + "/" + tipo + ".png');",
-                onmouseout: "this.src=url('icons/" + size.to_s + "/" + tipo + ".png');" )
-  end
-
-  def inicio_formulario url, ajax, otros={}
-    if ajax
-      cadena = form_remote_tag( :url => url, :html => {:id => otros[:id]||"formulario_ajax", :class => "formulario"}, :multipart => true, :loading => "Element.show('spinner'); Element.hide('botonguardar');", :complete => "Element.hide('spinner')")
-      cadena += "<div class='fila' id='spinner' style='display:none'></div>".html_safe
-    else
-      cadena = form_tag( url, :multipart => true, :id => otros[:id]||"formulario", :class => "formulario" )
-    end
-    cadena += "<div class='fila'></div>".html_safe
-    return cadena.html_safe
-  end
-
   def texto rotulo, objeto, atributo, valor=nil, otros={}
     cadena = ("<div class='elemento'>" + rotulo +"<br/>").html_safe
     opciones = {:class => "texto", :id => "formulario_campo_" + objeto + "_" + atributo, :type => "d" }
@@ -179,6 +136,22 @@ module OldApplicationHelper
     end
     return cadena + "</div>".html_safe
   end
+
+  def texto_area rotulo , objeto, atributo, otros={}
+    cadena = ""
+    title = (otros[:title] || otros[:placeholder]) if otros[:title] || otros[:placeholder]
+    otros[:name] ||= "#{objeto}[#{atributo}]"
+    opciones = {type: "d", name: otros[:name]}
+    opciones[:rows] = otros[:rows] if otros[:rows]
+    opciones[:value] = otros[:value] if otros[:value]
+    opciones[:placeholder] = otros[:placeholder] if otros[:placeholder]
+    opciones[:title] = title if title
+    opciones[:class] = "textoarea"+otros[:clase].to_s
+    opciones[:rows] = 3
+    cadena = ("<div class='textoarea#{otros[:clase]}' title='#{title}'>").html_safe + rotulo + '<br/>'.html_safe + text_area( objeto, atributo , opciones)
+    return cadena << "</div>".html_safe
+  end
+
 
   def fecha rotulo, objeto, atributo, valor=nil, discards=[false, false]
     cadena = ("<div class='elemento_x1'>" + rotulo + "<br/>").html_safe
@@ -230,34 +203,6 @@ module OldApplicationHelper
     end
   end
 
-  def final_formulario boton={}
-    cadena = '<div class="fila" id="botonguardar"> <div class="elemento_derecha">'.html_safe
-    if boton[:submit_disabled] != true
-      etiqueta = boton[:etiqueta] || 'Guardar'
-      cadena << submit_tag( etiqueta, class: 'boton', 'data-disable-with' => 'Enviando...')
-    end
-    cadena += "</div></div>".html_safe
-    cadena += "<div class='fila' id='spinner' style='display:none'></div>".html_safe
-    cadena += "</form>".html_safe
-    cadena += javascript_tag("
-      (function() {
-        var tryActivate = function() {
-          if (window.activaSelectoresChosen) {
-            window.activaSelectoresChosen();
-          } else {
-            setTimeout(tryActivate, 50);
-          }
-        };
-        if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', tryActivate);
-        } else {
-          tryActivate();
-        }
-      })();
-    ")
-    return cadena
-  end
-
   # dibuja un mensage flash
   def mensaje msg
     ("<div id = 'mensaje'>" + msg + "</div>").html_safe if msg
@@ -288,46 +233,6 @@ module OldApplicationHelper
     return cadena
   end
 
-  # Ventana modal (*otros para futuro uso)
-  def modal( rotulo, url, titulo, otros={} )
-    # OJOOOOO CON ESTO!!!
-    link_to rotulo, nil, remote: true, title: titulo,
-            onclick: "Modalbox.show('#{url_for(url)}', {title: '#{titulo}', width:820 }); return false;",
-            id: (otros[:id]||""), class: (otros[:class]||"")
-  end
-
-
-  # Ventana modal que pide confirmacion para el borrado de un elemento
-  def borrado rotulo, url, titulo, texto, otros={}
-    texto_confirmacion = "Va a eliminar:\n#{texto}\n\n¿Está seguro?"
-    cadena = link_to(url, 
-                     data: { 
-                       turbo_method: :delete, 
-                       turbo_confirm: texto_confirmacion 
-                     }, 
-                     class: 'link-delete') do
-      rotulo
-    end
-    return cadena
-  end
-
-  # Ventana modal que pide confirmacion para el borrado de un elemento
-  def old_borrado rotulo, url, titulo, texto, otros={}
-  
-    # Falta añadir al titulo de la ventana modal el mismo texto superior que llevan las modales sobre la variable de session.
-    cadena = '<div style="display:none;" id="'+ (otros[:id] || url[:id].to_s ) +'_borrar" class="elemento_c">'
-    cadena << 'Va a eliminar:<br>' unless otros[:no_borrado]
-    cadena << '<B>' + texto + '<br><br>'
-    cadena << '<div class="fila"><a href="#" onclick="Modalbox.hide()"> Cancelar </a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; '
-    cadena << link_to( "Confirmar", url, :id => otros[:id].to_s + "_confirmar") unless otros[:ajax]
-    cadena << link_to_remote( "Confirmar", :url => url, :html =>  {:id => otros[:id].to_s + "_confirmar"}) if otros[:ajax]
-    cadena << '</b></div></div>'
-    cadena << "<a id=\"#{ (otros[:id] || url[:id].to_s )  }\" onclick=\"Modalbox.show($('#{ (otros[:id] || url[:id].to_s )  }_borrar'), {title: '" + titulo + "', width: 600}); return false;\" href=\"#\" title='"+ url[:action].to_s + "'>"
-    cadena << rotulo
-    cadena << "</a>"
-    return cadena.html_safe
-  end
-
  # Sustituye al helper de auto_complete para presentar los resultados
  def auto_complete_result_2(entries, field, phrase = nil)
     return unless entries
@@ -351,7 +256,7 @@ module OldApplicationHelper
       products: {url: '/products/products', label: 'Productos'},
       accounting: {url: '/accounting/caja', label: 'Tesorería'},
       #distribution: {url: '/editor/products', label: 'Distribuidora'},
-      admin: {url: '/admin/vats', label: 'Administración'}
+      admin: {url: '/admin/authors', label: 'Administración'}
     }
     if user && user.class.name == "User"
       sections = sections.select{|k, v| user.granted?(k) }
@@ -392,15 +297,14 @@ module OldApplicationHelper
                           { label: 'Inventario', controlador: 'productos_editorial' }
                         ]
       when :admin
-        controladores = [ { label: 'Usuarios', controlador: 'usuarios' },
+        controladores = [ { label: 'Usuarios', controlador: 'admin/users' },
                           #{ label: 'Backup', controlador: 'backup' },
                           #{ label: 'Recuperar Objetos', controlador: 'perdidos' },
 			                    { label: 'Parámetros', controlador: 'admin/configs' },
-                          #{ label: 'Usuarios', controlador: 'users' },
                           { label: 'Formas de Pago', controlador: 'admin/payment_types' },
                           { label: 'Tipos de IVA', controlador: 'admin/vats' },
-                          { label: 'Familias de Productos', controlador: 'familia' },
-                          { label: 'Materias', controlador: 'materia' },
+                          { label: 'Materias/Subtipos', controlador: 'admin/product_subtypes' },
+                          { label: 'Tipos de Producto', controlador: 'admin/product_types' },
                           { label: 'Editoriales', controlador: 'admin/editors' },
                           { label: 'Autores', controlador: 'admin/authors' },
                           #{ label: 'Avisos', controlador: 'avisos' }

@@ -10,6 +10,8 @@ class Vat < ApplicationRecord
 
   before_destroy :validate_destroy, prepend: true
 
+  scope :active, -> { where(active: true).order(:name) }
+
   def rate_value
     100.0 * rate.to_f
   end

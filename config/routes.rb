@@ -21,21 +21,21 @@ Rails.application.routes.draw do
       get :show_lines, on: :member
       resources :note_lines, path: :lines
     end
+    resources :clients, path: :clients
   end
   scope :products, section: :products do
     resources :products
+    resources :suppliers, path: :suppliers
   end
   namespace :admin, section: :admin do
     resources :authors, path: :authors
     resources :configs, path: :configs, only: [:index, :edit, :update]
     resources :editors, path: :editors
     resources :payment_types, path: :payment_types
-    resources :vats, path: :vats
-    resources :users, path: :users
-    resources :suppliers, path: :suppliers
-    resources :clients, path: :clients
     resources :product_types, path: :product_types
     resources :product_subtypes, path: :product_subtypes
+    resources :users, path: :users
+    resources :vats, path: :vats
   end
   match ':section/:controller(/:action(/:id))', via: [:get, :post, :put, :delete, :patch]
 

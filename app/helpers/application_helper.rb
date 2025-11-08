@@ -159,7 +159,7 @@ module ApplicationHelper
   def form_end attrs={}
     attrs[:send_label] ||= 'Guardar'
     attrs[:cancel_label] ||= 'Cancelar'
-    output  = '<div class="linea elemento_derecha actions">'
+    output  = '<br><div class="linea elemento_derecha actions">'
     output += submit_tag attrs[:send_label]
     output += '</div></form>'
     output += '<div class="linea"></div>'

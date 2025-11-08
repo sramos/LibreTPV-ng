@@ -1,0 +1,9 @@
+<div id="user_<%= user.id %>" class="listadofila<%= ' flash-highlight' if local_assigns[:highlight] %>">
+  <%= index_line user, 'users' %>
+  <div class="listado_derecha">
+    <%= object_edition url: edit_admin_user_path(user.id), title: "Editar usuario '#{user.name}'" %>
+    <%= object_destroy url: admin_user_path(user.id),
+                       title: "Eliminar usuario '#{user.name}'",
+                       confirmation: "¿Está seguro de querer eliminar el usuario '#{user.name}'?" %>
+  </div>
+</div>

@@ -1,0 +1,8 @@
+<!--- Product subtypes --->
+<div id="product_subtypes">
+  <%= index_header 'product_subtypes', {new_url: new_admin_product_subtype_path, refresh_url: admin_product_subtypes_path, title: 'Crear nuevo subtipo de producto' } %>
+    <% for product_subtype in @product_subtypes %>
+      <%= render partial: 'item', locals: {product_subtype: product_subtype} %>
+    <% end %>
+  <%= index_footer @product_subtypes %>
+</div>

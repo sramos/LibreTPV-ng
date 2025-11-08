@@ -1,0 +1,8 @@
+<!--- Product types --->
+<div id="product_types">
+  <%= index_header 'product_types', {new_url: new_admin_product_type_path, refresh_url: admin_product_types_path, title: 'Crear nuevo tipo de producto' } %>
+    <% for product_type in @product_types %>
+      <%= render partial: 'item', locals: {product_type: product_type} %>
+    <% end %>
+  <%= index_footer @product_types %>
+</div>
