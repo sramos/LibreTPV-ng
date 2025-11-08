@@ -80,7 +80,7 @@ module Admin
       respond_to do |format|
         format.turbo_stream do
           render turbo_stream: [
-            turbo_stream.remove("author_#{@author.id}")
+            turbo_stream.remove("author_#{@author&.id}")
           ]
         end
         format.html { redirect_to admin_authors_path, notice: msg }

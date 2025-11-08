@@ -1,13 +1,13 @@
 module Admin
-  class VatsController < ApplicationController
-    before_action :set_vat, only: [:edit, :update, :destroy]
+  class EditorsController < ApplicationController
+    before_action :set_editor, only: [:edit, :update, :destroy]
 
     def index
-      @vats = Vat.order(:name).page(params[:page]).per(session[:per_page])
+      @editors = Editor.order(:name).page(params[:page]).per(session[:per_page])
     end
 
     def new
-      @vat = Vat.new
+      @editor = Editor.new
       respond_to do |format|
         format.html { render layout: false }
         format.turbo_stream
@@ -15,19 +15,19 @@ module Admin
     end
 
     def create
-      @vat = Vat.new(vat_params)
-      if @vat.save
+      @editor = Editor.new(editor_params)
+      if @editor.save
         respond_to do |format|
           format.turbo_stream do
             render turbo_stream: helpers.update_object_turbo_stream(
-              container_dom_id: 'new_vats_tag',
+              container_dom_id: 'new_editors_tag',
               stream_action: :after,
-              stream_locals: { vat: @vat },
-              highlight_dom_id: "vat_#{@vat.id}",
-              show_section_id: 'new_vats_section'
+              stream_locals: { editor: @editor },
+              highlight_dom_id: "editor_#{@editor.id}",
+              show_section_id: 'new_editors_section'
             )
           end
-          format.html { redirect_to admin_vats_path, notice: 'Tipo de IVA creado correctamente' }
+          format.html { redirect_to admin_editors_path, notice: 'Editorial creada correctamente' }
         end
       else
         respond_to do |format|
@@ -49,21 +49,21 @@ module Admin
     end
 
     def update
-      if @vat.update(vat_params)
+      if @editor.update(editor_params)
         respond_to do |format|
           format.turbo_stream do
             render turbo_stream: helpers.update_object_turbo_stream(
-              container_dom_id: "vat_#{@vat.id}",
-              stream_locals: { vat: @vat },
+              container_dom_id: "editor_#{@editor.id}",
+              stream_locals: { editor: @editor },
             )
           end
-          format.html { redirect_to admin_vats_path, notice: 'Tipo de IVA actualizado correctamente' }
+          format.html { redirect_to admin_editors_path, notice: 'Editorial actualizada correctamente' }
         end
       else
         respond_to do |format|
           format.turbo_stream do
             render turbo_stream: [
-              turbo_stream.replace("vat_#{@vat.id}_sub", partial: 'form', locals: { vat: @vat })
+              turbo_stream.replace("editor_#{@editor.id}_sub", partial: 'form', locals: { editor: @editor })
             ]
           end
           format.html { render :edit, status: :unprocessable_entity, layout: false }
@@ -72,31 +72,31 @@ module Admin
     end
 
     def destroy
-      if @vat.destroy
-        msg = 'Tipo de IVA eliminado correctamente'
+      if @editor.destroy
+        msg = 'Editorial eliminada correctamente'
       else
-        msg = 'Se han producido errores eliminando el tipo de IVA: ' + @vat.errors.inspect
+        msg = 'Se han producido errores eliminando la editorial: ' + @editor.errors.inspect
       end
       respond_to do |format|
         format.turbo_stream do
           render turbo_stream: [
-            turbo_stream.remove("vat_#{@vat.id}")
+            turbo_stream.remove("editor_#{@editor&.id}")
           ]
         end
-        format.html { redirect_to admin_vats_path, notice: msg }
+        format.html { redirect_to admin_editors_path, notice: msg }
       end
     rescue => e
-      redirect_to admin_vats_path, alert: "Error al eliminar el tipo de IVA: #{e.message}"
+      redirect_to admin_editors_path, alert: "Error al eliminar la editorial: #{e.message}"
     end
 
     private
 
-    def set_vat
-      @vat = Vat.find(params[:id])
+    def set_editor
+      @editor = Editor.find(params[:id])
     end
 
-    def vat_params
-      params.require(:vat).permit(:name, :rate_value)
+    def editor_params
+      params.require(:editor).permit(:name, :active)
     end
   end
 end

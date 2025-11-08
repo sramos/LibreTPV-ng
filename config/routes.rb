@@ -27,15 +27,15 @@ Rails.application.routes.draw do
   end
   namespace :admin, section: :admin do
     resources :authors, path: :authors
+    resources :configs, path: :configs, only: [:index, :edit, :update]
+    resources :editors, path: :editors
+    resources :payment_types, path: :payment_types
     resources :vats, path: :vats
     resources :users, path: :users
-    resources :payment_types, path: :payment_types
     resources :suppliers, path: :suppliers
     resources :clients, path: :clients
     resources :product_types, path: :product_types
     resources :product_subtypes, path: :product_subtypes
-    resources :products, path: :products
-    resources :product_authors, path: :product_authors
   end
   match ':section/:controller(/:action(/:id))', via: [:get, :post, :put, :delete, :patch]
 

@@ -395,13 +395,13 @@ module OldApplicationHelper
         controladores = [ { label: 'Usuarios', controlador: 'usuarios' },
                           #{ label: 'Backup', controlador: 'backup' },
                           #{ label: 'Recuperar Objetos', controlador: 'perdidos' },
-			                    { label: 'Parámetros', controlador: 'configuracion' },
+			                    { label: 'Parámetros', controlador: 'admin/configs' },
                           #{ label: 'Usuarios', controlador: 'users' },
                           { label: 'Formas de Pago', controlador: 'admin/payment_types' },
                           { label: 'Tipos de IVA', controlador: 'admin/vats' },
                           { label: 'Familias de Productos', controlador: 'familia' },
                           { label: 'Materias', controlador: 'materia' },
-                          { label: 'Editoriales', controlador: 'editorial' },
+                          { label: 'Editoriales', controlador: 'admin/editors' },
                           { label: 'Autores', controlador: 'admin/authors' },
                           #{ label: 'Avisos', controlador: 'avisos' }
                         ]

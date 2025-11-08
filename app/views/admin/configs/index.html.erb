@@ -1,0 +1,8 @@
+<!--- Configs --->
+<div id="configs">
+  <%= index_header 'configs' %>
+    <% for config in @configs %>
+      <%= render partial: 'item', locals: {config: config} %>
+    <% end %>
+  <%= index_footer @configs %>
+</div>

@@ -1,0 +1,6 @@
+<% header ||= 'Formulario' unless defined?(header) %>
+<%= form_beginning model: [:admin, @config], header: header %>
+  <%= form_errors @config %>
+  <%= texto 'Nombre', 'config', 'name' %>
+  <%= texto 'Valor', 'config', 'value' %>
+<%= form_end %>

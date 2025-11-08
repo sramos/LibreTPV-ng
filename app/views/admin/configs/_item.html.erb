@@ -1,0 +1,6 @@
+<div id="config_<%= config.id %>" class="listadofila<%= ' flash-highlight' if local_assigns[:highlight] %>">
+  <%= index_line config, 'configs' %>
+  <div class="listado_derecha">
+    <%= object_edition url: edit_admin_config_path(config.id), title: "Editar configuración '#{config.name}'" if config.editable %>
+  </div>
+</div>
