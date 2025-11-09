@@ -42,6 +42,7 @@
     <%= mensaje flash[:mensaje] if flash[:mensaje] %>
 
     <%= turbo_frame_tag 'modal' %>
+    <div id="toast" class="toast" aria-live="polite" aria-atomic="true"></div>
   </body>
 
   <% if user_signed_in? %>

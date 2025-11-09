@@ -20,12 +20,14 @@ module Admin
       if @product_type.save
         respond_to do |format|
           format.turbo_stream do
-            render turbo_stream: helpers.update_object_turbo_stream(
-              container_dom_id: 'new_product_types_tag',
-              stream_action: :after,
-              stream_locals: { product_type: @product_type },
-              highlight_dom_id: "product_type_#{@product_type.id}",
-              show_section_id: 'new_product_types_section'
+            render turbo_stream: (
+              helpers.update_object_turbo_stream(
+                container_dom_id: 'new_product_types_tag',
+                stream_action: :after,
+                stream_locals: { product_type: @product_type },
+                highlight_dom_id: "product_type_#{@product_type.id}",
+                show_section_id: 'new_product_types_section'
+              )
             )
           end
           format.html { redirect_to admin_product_types_path, notice: 'Tipo de producto creado correctamente' }
@@ -53,9 +55,11 @@ module Admin
       if @product_type.update(product_type_params)
         respond_to do |format|
           format.turbo_stream do
-            render turbo_stream: helpers.update_object_turbo_stream(
-              container_dom_id: "product_type_#{@product_type.id}",
-              stream_locals: { product_type: @product_type },
+            render turbo_stream: (
+              helpers.update_object_turbo_stream(
+                container_dom_id: "product_type_#{@product_type.id}",
+                stream_locals: { product_type: @product_type }
+              )
             )
           end
           format.html { redirect_to admin_product_types_path, notice: 'Tipo de producto actualizado correctamente' }
@@ -64,7 +68,7 @@ module Admin
         respond_to do |format|
           format.turbo_stream do
             render turbo_stream: [
-              turbo_stream.replace("product_type_#{@product_type.id}_sub", partial: 'form', locals: { product_type: @product_type })
+              turbo_stream.replace('modal', partial: 'form', locals: { product_type: @product_type })
             ]
           end
           format.html { render :edit, status: :unprocessable_entity, layout: false }

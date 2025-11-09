@@ -94,3 +94,32 @@ i.fa, i.fas, i.far, i.fab {
 .link-delete:hover i.fa, .link-delete:hover i.fas, .link-delete:hover i.far, .link-delete:hover i.fab {
   border-color: #d1d5db; /* gray-300 */
 }
+
+/* Toast (centered temporary message) */
+#toast {
+  position: fixed;
+  inset: 0; /* full viewport */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  pointer-events: none;
+}
+.toast-message {
+  display: inline-block;
+  background: #16a34a; /* green-600 */
+  color: #fff; /* ensure contrast */
+  padding: 10px 14px;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0,0,0,.25);
+  font-size: 14px;
+  max-width: 90vw;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: opacity .2s ease, transform .2s ease;
+}
+.toast-message.show {
+  opacity: 1;
+  transform: translateY(0);
+}

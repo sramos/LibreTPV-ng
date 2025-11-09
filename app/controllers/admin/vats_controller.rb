@@ -63,7 +63,7 @@ module Admin
         respond_to do |format|
           format.turbo_stream do
             render turbo_stream: [
-              turbo_stream.replace("vat_#{@vat.id}_sub", partial: 'form', locals: { vat: @vat })
+              turbo_stream.replace('modal', partial: 'form', locals: { vat: @vat })
             ]
           end
           format.html { render :edit, status: :unprocessable_entity, layout: false }

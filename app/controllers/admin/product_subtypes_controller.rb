@@ -64,7 +64,7 @@ module Admin
         respond_to do |format|
           format.turbo_stream do
             render turbo_stream: [
-              turbo_stream.replace("product_subtype_#{@product_subtype.id}_sub", partial: 'form', locals: { product_subtype: @product_subtype })
+              turbo_stream.replace('modal', partial: 'form', locals: { product_subtype: @product_subtype })
             ]
           end
           format.html { render :edit, status: :unprocessable_entity, layout: false }

@@ -63,7 +63,7 @@ module Admin
         respond_to do |format|
           format.turbo_stream do
             render turbo_stream: [
-              turbo_stream.replace("editor_#{@editor.id}_sub", partial: 'form', locals: { editor: @editor })
+              turbo_stream.replace('modal', partial: 'form', locals: { editor: @editor })
             ]
           end
           format.html { render :edit, status: :unprocessable_entity, layout: false }

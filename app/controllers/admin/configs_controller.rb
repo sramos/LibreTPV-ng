@@ -28,7 +28,7 @@ module Admin
         respond_to do |format|
           format.turbo_stream do
             render turbo_stream: [
-              turbo_stream.replace("config_#{@config.id}_sub", partial: 'form', locals: { config: @config })
+              turbo_stream.replace('modal', partial: 'form', locals: { config: @config })
             ]
           end
           format.html { render :edit, status: :unprocessable_entity, layout: false }
