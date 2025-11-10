@@ -90,28 +90,63 @@ module ApplicationHelper
       "Mostrando elementos <b>#{start_item + 1} - #{end_item}</b> de <b> #{objects.total_count}</b> en total"
     end
   end
+  
+  # Subindex helpers
+  def subindex_header object_type, attrs={}
+    # Sacamos los campos a mostrar bien vengan como array (posicion global) o como tipo
+    fields = object_type.is_a?(Array) ? object_type : index_fields(object_type)
+    output  = '<br><fieldset class="sublistado">'
+    output += "<legend>#{attrs[:title]}</legend><div class='listado_derecha'>"
+    output += link_to icon('xmark', title: 'Cerrar'), '#',
+                      onclick: "document.getElementById('#{attrs[:dom_id]}').innerHTML=''; return false;",
+                      class: 'link-delete'
+    output += "</div><br>"
 
-  # Action buttons 
-  def object_edition attrs={}
-    data_attrs = { turbo_method: :get, turbo_frame: 'modal' }
+    output += '<div class="listadocabecera">'
+    for field in fields
+      output += "<div class='listado_campo_#{field[2]}' id='listado_campo_etiqueta_#{field[1]}'>" + field[0] + "</div>"
+    end
+    if attrs[:new_url]
+      output += '<div class="listado_derecha">'
+      output += object_action url: attrs[:new_url],
+                              title: attrs[:new_object_title],
+                              icon: icon('plus', title: attrs[:new_object_title])
+      output += '</div>'
+    end
+    output += '</div>'
+    return output.html_safe
+  end
+  def subindex_footer objects=nil
+    return '</fieldset>'.html_safe
+  end
+
+  # Action buttons
+  def object_action attrs={}
+    data_attrs = { turbo_method: attrs[:method]||:get }
     data_attrs[:turbo_frame] = attrs[:turbo_frame] if attrs[:turbo_frame]
+    data_attrs[:turbo_confirm] = attrs[:confirmation] if attrs[:confirmation]
     
     link_to(attrs[:url] || '#',
-                     data: data_attrs,
-                     class: 'link-edit') do
-      attrs[:icon] || icon('pen', title: attrs[:title]||'Editar')
+            data: data_attrs,
+            class: attrs[:class] || 'link-action') do
+      attrs[:icon]
     end
+  end
+  
+  def object_edition attrs={}
+    attrs[:method] ||= :get
+    attrs[:turbo_frame] ||= 'modal'
+    attrs[:class] ||= 'link-edit'
+    attrs[:icon] ||= icon('pen', title: attrs[:title]||'Editar')
+    object_action attrs
   end
 
   def object_destroy attrs={}
-    link_to(attrs[:url] || '#',
-                     data: { 
-                       turbo_method: :delete, 
-                       turbo_confirm: attrs[:confirmation] || '¿Está seguro?'
-                     },
-                     class: 'link-delete') do
-      attrs[:icon] || icon('trash', title: attrs[:title]||'Borrar')
-    end
+    attrs[:method] ||= :delete
+    attrs[:class] ||= 'link-delete'
+    attrs[:icon] ||= icon('trash', title: attrs[:title]||'Borrar')
+    attrs[:confirmation] ||= '¿Está seguro?'
+    object_action attrs
   end
 
   # Icons using font awesome

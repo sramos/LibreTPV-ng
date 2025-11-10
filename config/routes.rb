@@ -32,8 +32,9 @@ Rails.application.routes.draw do
     resources :configs, path: :configs, only: [:index, :edit, :update]
     resources :editors, path: :editors
     resources :payment_types, path: :payment_types
-    resources :product_types, path: :product_types
-    resources :product_subtypes, path: :product_subtypes
+    resources :product_types, path: :product_types do
+      resources :product_subtypes, path: :product_subtypes
+    end
     resources :users, path: :users
     resources :vats, path: :vats
   end

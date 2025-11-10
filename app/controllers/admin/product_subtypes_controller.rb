@@ -1,14 +1,19 @@
 module Admin
   class ProductSubtypesController < ApplicationController
+    before_action :set_product_type
     before_action :set_product_subtype, only: [:edit, :update, :destroy]
     before_action :form_values, only: [:new, :edit]
 
     def index
-      @product_subtypes = ProductSubtype.order(:name).page(params[:page]).per(session[:per_page])
+      @product_subtypes = @product_type.product_subtypes.order(:name).page(params[:page]).per(session[:per_page])
+      respond_to do |format|
+        format.html { render layout: false }
+        format.turbo_stream
+      end
     end
 
     def new
-      @product_subtype = ProductSubtype.new
+      @product_subtype = ProductSubtype.new(product_type_id: @product_type.id)
       respond_to do |format|
         format.html { render layout: false }
         format.turbo_stream
@@ -16,8 +21,8 @@ module Admin
     end
 
     def create
-      @product_subtype = ProductSubtype.new(product_subtype_params)
-      if @product_subtype.save
+      @product_subtype = ProductSubtype.new(product_type_id: @product_type.id)
+      if @product_subtype.update(product_subtype_params)
         respond_to do |format|
           format.turbo_stream do
             render turbo_stream: helpers.update_object_turbo_stream(
@@ -92,8 +97,12 @@ module Admin
 
     private
 
+    def set_product_type
+      @product_type = ProductType.find(params[:product_type_id])
+    end
+    
     def set_product_subtype
-      @product_subtype = ProductSubtype.find(params[:id])
+      @product_subtype = @product_type.product_subtypes.find(params[:id])
     end
 
     def form_values
@@ -101,7 +110,7 @@ module Admin
     end
     
     def product_subtype_params
-      params.require(:product_subtype).permit(:name, :description, :product_type_id,:active)
+      params.require(:product_subtype).permit(:name, :description, :product_type_id, :active)
     end
   end
 end

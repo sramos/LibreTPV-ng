@@ -303,7 +303,6 @@ module OldApplicationHelper
 			                    { label: 'Parámetros', controlador: 'admin/configs' },
                           { label: 'Formas de Pago', controlador: 'admin/payment_types' },
                           { label: 'Tipos de IVA', controlador: 'admin/vats' },
-                          { label: 'Materias/Subtipos', controlador: 'admin/product_subtypes' },
                           { label: 'Tipos de Producto', controlador: 'admin/product_types' },
                           { label: 'Editoriales', controlador: 'admin/editors' },
                           { label: 'Autores', controlador: 'admin/authors' },
