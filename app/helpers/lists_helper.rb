@@ -28,6 +28,10 @@ module ListsHelper
     case object_type.to_s
     when 'authors'
       [['Nombre', 'name', '1'], ['Activo', 'active', '1_3d']]
+    when 'clients'
+      [['NIF', 'code_id', '1_2'], ['Nombre', 'name', '1'],
+       ['Teléfono', 'phone', '1_2'], ['email', 'email', '1_2'],
+       ['% Dto.', 'discount_value', '1_3d'], ['Activo', 'active', '1_3d']]
     when 'configs'
       [['Nombre', 'name', '1'], ['Valor', 'value', '1']]
     when 'editors'
@@ -38,6 +42,10 @@ module ListsHelper
       [['Nombre', 'name', '1'], ['IVA', 'vat.name', '1_2'], ['Activo', 'active', '1_3d']]
     when 'product_subtypes'
       [['Nombre', 'name', '1'], ['Tipo', 'product_type.name', '1_2'], ['Activo', 'active', '1_3d']]
+    when 'suppliers'
+      [['CIF', 'code_id', '1_2'], ['Nombre', 'name', '1'],
+       ['Teléfono', 'phone', '1_2'], ['email', 'email', '1_2'],
+       ['% Dto.', 'discount_value', '1_3d'], ['Activo', 'active', '1_3d']]
     when 'users'
       [['Nombre', 'name', '1'], ['Email', 'email', '1'], ['Activo', 'active', '1_3d']]
     when 'vats'

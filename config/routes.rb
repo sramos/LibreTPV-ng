@@ -16,15 +16,15 @@ Rails.application.routes.draw do
   #root 'home#index'
 
   root to: 'home#index', section: "inicio", controller: "home", action: "index"
-  scope :sales, section: :sales do
-    resources :client_notes, path: :notes do
-      get :show_lines, on: :member
-      resources :note_lines, path: :lines
-    end
+  namespace :sales, section: :sales do
+    #resources :client_notes, path: :notes do
+    #  get :show_lines, on: :member
+    #  resources :note_lines, path: :lines
+    #end
     resources :clients, path: :clients
   end
-  scope :products, section: :products do
-    resources :products
+  namespace :products, section: :products do
+    #resources :products
     resources :suppliers, path: :suppliers
   end
   namespace :admin, section: :admin do

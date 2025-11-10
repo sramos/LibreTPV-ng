@@ -252,11 +252,11 @@ module OldApplicationHelper
   # Devuelve las secciones disponibles para el usuario
   def menu_secciones user=nil
     sections = {
-      sales: {url: client_notes_path, label: 'Caja'},
-      products: {url: '/products/products', label: 'Productos'},
+      sales: {url: sales_clients_path, label: 'Caja'},
+      products: {url: products_suppliers_path, label: 'Productos'},
       accounting: {url: '/accounting/caja', label: 'Tesorería'},
       #distribution: {url: '/editor/products', label: 'Distribuidora'},
-      admin: {url: '/admin/authors', label: 'Administración'}
+      admin: {url: admin_authors_path, label: 'Administración'}
     }
     if user && user.class.name == "User"
       sections = sections.select{|k, v| user.granted?(k) }
@@ -272,7 +272,7 @@ module OldApplicationHelper
       when :sales
         controladores = [ { label: 'Pedidos', controlador: 'pedidos' },
                           { label: 'Facturas Clientes', controlador: 'factura' },
-                          { label: 'Clientes', controlador: 'cliente' },
+                          { label: 'Clientes', controlador: 'sales/clients' },
                           { label: 'Entradas/Salidas de Caja', controlador: 'caja' },
                           { label: 'Ventas/Devoluciones', controlador: 'client_notes' } ]
       when :products
@@ -280,7 +280,7 @@ module OldApplicationHelper
                           { label: 'Depósitos', controlador: 'deposito' },
                           { label: 'Albaranes aceptados', controlador: 'albaranes_cerrados' },
                           { label: 'Albaranes de entrada', controlador: 'albarans' },
-                          { label: 'Proveedores', controlador: 'proveedor' },
+                          { label: 'Proveedores', controlador: 'products/suppliers' },
                           { label: 'Inventario', controlador: 'productos' } ]
       when :accounting
         controladores = [ { label: 'Informes', controlador: 'informe' },

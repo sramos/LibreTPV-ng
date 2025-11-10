@@ -1,0 +1,9 @@
+<div id="supplier_<%= supplier.id %>" class="listadofila<%= ' flash-highlight' if local_assigns[:highlight] %>">
+  <%= index_line supplier, 'suppliers' %>
+  <div class="listado_derecha">
+    <%= object_edition url: edit_products_supplier_path(supplier.id), title: "Editar proveedor '#{supplier.name}'" %>
+    <%= object_destroy url: products_supplier_path(supplier.id),
+                       title: "Eliminar proveedor '#{supplier.name}'",
+                       confirmation: "¿Está seguro de querer eliminar el proveedor '#{supplier.name}'?" %>
+  </div>
+</div>

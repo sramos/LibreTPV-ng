@@ -12,6 +12,10 @@ class Supplier < ApplicationRecord
 
   scope :active, -> { where(active: true).order(:name) }
 
+  def discount_value
+    discount * 100
+  end
+
   private
 
   def validate_destroy

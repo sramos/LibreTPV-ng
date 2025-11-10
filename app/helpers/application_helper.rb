@@ -47,9 +47,9 @@ module ApplicationHelper
       end
       value = value.localtime.strftime("%d/%m/%Y %H:%M:%S") if value.class.name == 'ActiveSupport::TimeWithZone'
       value = 'Sí' if value.class.name == 'TrueClass'
-      value = 'No' if value.class.name == 'FalseClass' && field[1] != 'valor_defecto'
+      value = 'No' if value.class.name == 'FalseClass'
       value = value.strftime("%d/%m/%Y") if value.class.name == 'Date'
-      value = sprintf("%.2f", value) if value.class.name == 'Float'
+      value = sprintf("%.2f", value) if value.class.name == 'Float' || value.class.name == 'BigDecimal'
       value = '&nbsp;' if value.blank?
       output += "<div class='#{html_class}' id='#{html_id}' title='#{value}'>" + value + '</div>'
     end

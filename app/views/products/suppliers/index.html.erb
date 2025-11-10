@@ -1,0 +1,8 @@
+<!--- Suppliers --->
+<div id="suppliers">
+  <%= index_header 'suppliers', {new_url: new_products_supplier_path, refresh_url: products_suppliers_path, title: 'Crear nuevo proveedor' } %>
+    <% for supplier in @suppliers %>
+      <%= render partial: 'item', locals: {supplier: supplier} %>
+    <% end %>
+  <%= index_footer @suppliers %>
+</div>

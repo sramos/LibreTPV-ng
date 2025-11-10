@@ -1,0 +1,8 @@
+<!--- Clients --->
+<div id="clients">
+  <%= index_header 'clients', {new_url: new_sales_client_path, refresh_url: sales_clients_path, title: 'Crear nuevo cliente' } %>
+    <% for client in @clients %>
+      <%= render partial: 'item', locals: {client: client} %>
+    <% end %>
+  <%= index_footer @clients %>
+</div>
