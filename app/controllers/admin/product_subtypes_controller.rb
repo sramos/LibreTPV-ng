@@ -26,11 +26,10 @@ module Admin
         respond_to do |format|
           format.turbo_stream do
             render turbo_stream: helpers.update_object_turbo_stream(
-              container_dom_id: 'new_product_subtypes_tag',
+              container_dom_id: "new_product_#{@product_type.id}_subtypes_tag",
               stream_action: :after,
               stream_locals: { product_subtype: @product_subtype },
               highlight_dom_id: "product_subtype_#{@product_subtype.id}",
-              show_section_id: 'new_product_subtypes_section'
             )
           end
           format.html { redirect_to admin_product_subtypes_path, notice: 'Materia/subtipo de producto creado correctamente' }

@@ -16,6 +16,6 @@ class ApplicationController < ActionController::Base
   end
 
   def set_pagination
-    session[:per_page] = params[:per_page] ||= 25
+    session[:per_page] = params[:per_page] ||= 20
   end
 end

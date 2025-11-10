@@ -70,18 +70,18 @@ module ApplicationHelper
   def index_paginator objects
     output = ''
     if objects.present?
-      output  = "<div class='listadofila' id='paginado'>" + (paginate(objects, class: "listado_campo_2") || " ")
-      output += "<div class='listado_derecha'> "+ index_pagination_info(objects)  + "</div>"
-      output += "<div class='linea'></div></div>"
+      output += '<div class="listadofila" id="paginado">' + (paginate(objects, class: 'listado_campo_2') || ' ')
+      output += '<div class="listado_derecha"> '+ index_pagination_info(objects)  + '</div>'
+      output += '<div class="linea"></div></div>'
     end
-    return output
+    return output.html_safe
   end
   def index_pagination_info objects
     if objects.total_pages < 2
       case objects.size
-      when 0; "<b>" + "No tiene elementos" + "</b>"
-      when 1; "<b>" + "Mostrando 1 elemento" + "</b>"
-      else;   "<b>" + "Mostrando todos los elementos: " + (objects.size).to_s + "</b>"
+      when 0; '<b>' + 'No tiene elementos' + '</b>'
+      when 1; '<b>' + 'Mostrando 1 elemento' + '</b>'
+      else;   '<b>' + 'Mostrando todos los elementos: ' + (objects.size).to_s + '</b>'
       end
     else
       start_item = (objects.current_page - 1) * session[:per_page].to_i
@@ -118,8 +118,14 @@ module ApplicationHelper
     return output.html_safe
   end
   def subindex_footer objects=nil
-    return '</fieldset>'.html_safe
+    output = ''
+    output += index_paginator objects
+    output += '</fieldset>'
+    return output.html_safe
   end
+
+  # Pagination helpers
+  
 
   # Action buttons
   def object_action attrs={}

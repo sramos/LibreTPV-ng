@@ -4,6 +4,7 @@
     <%= subindex_header 'product_subtypes', {title: 'Subtipos/Materias', dom_id: "product_subtype_sub_#{@product_type.id}",
                                              new_url: new_admin_product_type_product_subtype_path(@product_type.id),
                                              new_object_title: 'Crear nueva materia/subtipo de producto' } %>
+      <div id="new_product_<%= @product_type.id %>_subtypes_tag"></div>
       <% for product_subtype in @product_subtypes %>
         <%= render partial: 'item', locals: {product_subtype: product_subtype} %>
       <% end %>
