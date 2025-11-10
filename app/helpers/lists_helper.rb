@@ -38,6 +38,8 @@ module ListsHelper
       [['Nombre', 'name', '1'], ['Activo', 'active', '1_3d']]
     when 'payment_types'
       [['Nombre', 'name', '1'], ['Caja', 'cash', '1_4'], ['Activo', 'active', '1_4']]
+    when 'products'
+      [['Código', 'code', '1_2'], ['Tipo', 'product_type.name', '1_2'], ['Nombre/Título', 'name', '1'], ['Autor', 'authors_names', '1'], ['Cant.', 'stock', '1_5d'], ['PVP', 'price', '1_3d'] ]
     when 'product_types'
       [['Nombre', 'name', '1'], ['IVA', 'vat.name', '1_2'], ['Activo', 'active', '1_3d']]
     when 'product_subtypes'

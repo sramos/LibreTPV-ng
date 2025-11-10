@@ -1,0 +1,9 @@
+<div id="product_<%= product.id %>" class="listadofila<%= ' flash-highlight' if local_assigns[:highlight] %>">
+  <%= index_line product, 'products' %>
+  <div class="listado_derecha">
+    <%= object_edition url: edit_products_product_path(product.id), title: "Editar producto '#{product.name}'" %>
+    <%= object_destroy url: products_product_path(product.id),
+                       title: "Eliminar producto '#{product.name}'",
+                       confirmation: "¿Está seguro de querer eliminar el proveedor '#{product.name}'?" %>
+  </div>
+</div>

@@ -24,7 +24,7 @@ Rails.application.routes.draw do
     resources :clients, path: :clients
   end
   namespace :products, section: :products do
-    #resources :products
+    resources :products, path: :products
     resources :suppliers, path: :suppliers
   end
   namespace :admin, section: :admin do

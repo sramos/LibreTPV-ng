@@ -28,6 +28,10 @@ class Product < ApplicationRecord
     id.present? ? self : Product.find_by(name: name, code: code, price: price)
   end
 
+  def authors_names
+    authors.collect{|a| a.name}.join('; ')
+  end
+
   private
 
   def validate_destroy

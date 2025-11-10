@@ -281,7 +281,7 @@ module OldApplicationHelper
                           { label: 'Albaranes aceptados', controlador: 'albaranes_cerrados' },
                           { label: 'Albaranes de entrada', controlador: 'albarans' },
                           { label: 'Proveedores', controlador: 'products/suppliers' },
-                          { label: 'Inventario', controlador: 'productos' } ]
+                          { label: 'Inventario', controlador: 'products/products' } ]
       when :accounting
         controladores = [ { label: 'Informes', controlador: 'informe' },
                           { label: 'Libro diario', controlador: 'libro_diario' },

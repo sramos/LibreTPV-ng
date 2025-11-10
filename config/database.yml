@@ -65,3 +65,12 @@ production:
     <<: *primary_production
     database: <%= ENV.fetch('DB_NAME') { 'libretpv_ng' } %>_cable
     migrations_paths: db/cable_migrate
+
+old_models_development:
+  adapter: mysql2
+  encoding: utf8mb4
+  host: <%= ENV.fetch('OLD_DB_HOST') { 'localhost' } %>
+  database: <%= ENV.fetch('OLD_DB_NAME') { 'libretpv' } %>
+  username: <%= ENV.fetch('OLD_DB_USER') { 'libretpv' } %>
+  password: <%= ENV.fetch('OLD_DB_PASS') { 'libretpv' } %>
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>

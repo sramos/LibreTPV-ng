@@ -51,7 +51,7 @@ module ApplicationHelper
       value = value.strftime("%d/%m/%Y") if value.class.name == 'Date'
       value = sprintf("%.2f", value) if value.class.name == 'Float' || value.class.name == 'BigDecimal'
       value = '&nbsp;' if value.blank?
-      output += "<div class='#{html_class}' id='#{html_id}' title='#{value}'>" + value + '</div>'
+      output += "<div class='#{html_class}' id='#{html_id}' title='#{value}'>" + value.to_s + '</div>'
     end
     return output.html_safe
   end
