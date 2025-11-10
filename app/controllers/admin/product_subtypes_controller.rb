@@ -33,7 +33,7 @@ module Admin
               show_section_id: 'new_product_subtypes_section'
             )
           end
-          format.html { redirect_to admin_product_subtypes_path, notice: 'Subtipo de producto creado correctamente' }
+          format.html { redirect_to admin_product_subtypes_path, notice: 'Materia/subtipo de producto creado correctamente' }
         end
       else
         respond_to do |format|
@@ -63,7 +63,7 @@ module Admin
               stream_locals: { product_subtype: @product_subtype },
             )
           end
-          format.html { redirect_to admin_product_subtypes_path, notice: 'Subtipo de producto actualizado correctamente' }
+          format.html { redirect_to admin_product_subtypes_path, notice: 'Materia/subtipo de producto actualizado correctamente' }
         end
       else
         respond_to do |format|
@@ -79,9 +79,9 @@ module Admin
 
     def destroy
       if @product_subtype.destroy
-        msg = 'Subtipo de producto eliminado correctamente'
+        msg = 'Materia/subtipo de producto eliminado correctamente'
       else
-        msg = 'Se han producido errores eliminando el subtipo de producto: ' + @product_subtype.errors.inspect
+        msg = 'Se han producido errores eliminando la materia/subtipo de producto: ' + @product_subtype.errors.inspect
       end
       respond_to do |format|
         format.turbo_stream do
@@ -92,7 +92,7 @@ module Admin
         format.html { redirect_to admin_product_subtypes_path, notice: msg }
       end
     rescue => e
-      redirect_to admin_product_subtypes_path, alert: "Error al eliminar el subtipo de producto: #{e.message}"
+      redirect_to admin_product_subtypes_path, alert: "Error al eliminar la materia/subtipo de producto: #{e.message}"
     end
 
     private
@@ -110,7 +110,7 @@ module Admin
     end
     
     def product_subtype_params
-      params.require(:product_subtype).permit(:name, :description, :product_type_id, :active)
+      params.require(:product_subtype).permit(:name, :description, :active)
     end
   end
 end

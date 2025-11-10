@@ -183,9 +183,9 @@ module OldApplicationHelper
     clase = opciones[:enriquecido] ? "chosen_select " : ""
     clase += (opciones[:tipo] || 'selector_x15')
     if opciones[:valor].blank?
-      cadena << select(objeto, atributo, valores, {:id => "formulario_campo_" + objeto + "_" + atributo, :include_blank => opciones[:vacio]}, {:class => clase})
+      cadena << select(objeto, atributo, valores, {id: "formulario_campo_" + objeto + "_" + atributo, include_blank: opciones[:vacio], disabled: opciones[:disabled]}, {:class => clase})
     else
-      cadena << select(objeto, atributo, valores, {:id => "formulario_campo_" + objeto + "_" + atributo, :selected => opciones[:valor], :include_blank => opciones[:vacio]}, {:class => clase})
+      cadena << select(objeto, atributo, valores, {id: "formulario_campo_" + objeto + "_" + atributo, selected: opciones[:valor], include_blank: opciones[:vacio], disabled: opciones[:disabled]}, {:class => clase})
     end
     cadena += "</div>".html_safe
     return cadena

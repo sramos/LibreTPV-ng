@@ -109,6 +109,7 @@ module ApplicationHelper
     if attrs[:new_url]
       output += '<div class="listado_derecha">'
       output += object_action url: attrs[:new_url],
+                              turbo_frame: 'modal',
                               title: attrs[:new_object_title],
                               icon: icon('plus', title: attrs[:new_object_title])
       output += '</div>'

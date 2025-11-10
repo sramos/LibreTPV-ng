@@ -1,9 +1,8 @@
 <% header ||= 'Formulario' unless defined?(header) %>
-<%= form_beginning model: [:admin, @product_subtype], header: header %>
+<%= form_beginning model: [:admin, @product_type, @product_subtype], header: header %>
   <%= form_errors @product_subtype %>
   <div class="linea">
     <%= texto 'Nombre', 'product_subtype', 'name' %>
-    <%= selector 'Tipo de producto', 'product_subtype', 'product_type_id', @product_types %>
     <%= _checkbox 'Activo', 'product_subtype', 'active', {elemento: 'elemento_x05', izquierda: true, abajo: true, checked: @product_subtype.active} %>
   </div>
   <div class="linea">
