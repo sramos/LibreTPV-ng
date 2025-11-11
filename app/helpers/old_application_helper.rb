@@ -127,7 +127,8 @@ module OldApplicationHelper
 
   def texto rotulo, objeto, atributo, valor=nil, otros={}
     cadena = ("<div class='elemento'>" + rotulo +"<br/>").html_safe
-    opciones = {:class => "texto", :id => "formulario_campo_" + objeto + "_" + atributo, :type => "d" }
+    html_id = otros[:id] || "formulario_campo_#{objeto}_#{atributo}"
+    opciones = {class: 'texto', id: html_id, type: 'd' }
     opciones[:value] = valor if valor
     if otros[:autocomplete]
       cadena << text_field_with_auto_complete( objeto, atributo, {:class => "texto"}, {:method => :get, :with => "'search=' + element.value"} )
@@ -182,11 +183,10 @@ module OldApplicationHelper
     cadena = ("<div class='elemento_" + (opciones[:tipo] || "x15") + "' id='selector_" + objeto + "_" + atributo + "'>" + rotulo + "<br/>").html_safe
     clase = opciones[:enriquecido] ? "chosen_select " : ""
     clase += (opciones[:tipo] || 'selector_x15')
-    if opciones[:valor].blank?
-      cadena << select(objeto, atributo, valores, {id: "formulario_campo_" + objeto + "_" + atributo, include_blank: opciones[:vacio], disabled: opciones[:disabled]}, {:class => clase})
-    else
-      cadena << select(objeto, atributo, valores, {id: "formulario_campo_" + objeto + "_" + atributo, selected: opciones[:valor], include_blank: opciones[:vacio], disabled: opciones[:disabled]}, {:class => clase})
-    end
+    html_id = opciones[:id] || "formulario_campo_" + objeto + "_" + atributo
+    select_options = {include_blank: opciones[:vacio], disabled: opciones[:disabled]}
+    select_options[:selected] = opciones[:valor] if opciones[:valor]
+    cadena << select(objeto, atributo, valores, select_options, {id: html_id, class: clase})
     cadena += "</div>".html_safe
     return cadena
   end
@@ -276,10 +276,10 @@ module OldApplicationHelper
                           { label: 'Entradas/Salidas de Caja', controlador: 'caja' },
                           { label: 'Ventas/Devoluciones', controlador: 'client_notes' } ]
       when :products
-        controladores = [ { label: 'Facturas Proveedores', controlador: 'factura' },
-                          { label: 'Depósitos', controlador: 'deposito' },
-                          { label: 'Albaranes aceptados', controlador: 'albaranes_cerrados' },
-                          { label: 'Albaranes de entrada', controlador: 'albarans' },
+        controladores = [ #{ label: 'Facturas Proveedores', controlador: 'factura' },
+                          #{ label: 'Depósitos', controlador: 'deposito' },
+                          #{ label: 'Albaranes aceptados', controlador: 'albaranes_cerrados' },
+                          #{ label: 'Albaranes de entrada', controlador: 'albarans' },
                           { label: 'Proveedores', controlador: 'products/suppliers' },
                           { label: 'Inventario', controlador: 'products/products' } ]
       when :accounting

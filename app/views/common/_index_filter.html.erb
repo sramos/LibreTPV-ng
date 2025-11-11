@@ -1,25 +1,76 @@
-<% nombre = params[:controller] || 'general' %>
-<fieldset class="filtrado" id="filtro_<%= nombre %>">
-  <%= inicio_formulario( { action: 'filtrado' }, false ) %>
+<% filter_scope = params[:controller] + '_filter' %>
+<fieldset class="filtrado" id="fieldset_<%= filter_scope %>">
+  <%= form_tag( {action: 'filter'}, multipart: true, class: 'index_form' ) %>
+    <div class="fila"></div>
     <div class="linea">
-      <%= selector 'Criterio de Filtrado', 'filtro', 'tipo', @campos_filtro.map {|u| [u[0],u[1]]} %>
-      <%= observe_field( "filtro_tipo" , :function => 'if (document.getElementById("filtro_tipo").selectedIndex == 3) { Element.hide("filtro_condicion"); Element.hide("filtro_valor"); } else if (document.getElementById("filtro_tipo").selectedIndex == 2 ){ Element.show("filtro_condicion"); Element.show("filtro_valor");} else { Element.hide("filtro_condicion");Element.show("filtro_valor");}' ) %>
-      <div id="filtro_condicion" style="display: none;">
-        <%= selector '', 'filtro', 'condicion', [["igual a","="], ["mayor que",">"], ["menor que","<"]] %>
+      <%= selector 'Criterio de Filtrado', 'filter', 'type', @filter_fields.map {|u| [u[0],u[1]]} %>
+      <div id="filter_options_number" style="display: none;">
+        <%= selector '', 'filter', 'condition', [["igual a","="], ["mayor que",">"], ["menor que","<"]] %>
       </div>
-      <div id="filtro_valor">
-        <%= texto '', 'filtro', 'valor' %>
+      <div id="filter_options_boolean" style="display: none;">
+        <%= selector '', 'filter', 'value', [['Sí','Sí'], ['No','No']], id: 'filter_options_boolean_field' %>
+      </div>
+      <div id="filter_options_value" style="display: block;">
+        <%= texto '', 'filter', 'value', nil, id: 'filter_options_value_field' %>
       </div>
       <div class='elemento_derecha' id='boton_filtrado'><br/>
         <%= submit_tag 'Filtrar', class: 'boton', 'data-disable-with' => 'Filtrando...' %>
       </div>
     </div>
   </form>
-  <% if session[(nombre + '_filtrado_valor').to_sym] && session[(nombre + "_filtrado_valor").to_sym] != '' %>
+  <% if session[filter_scope] && session[filter_scope]['value'].present? %>
     <div class='linea texto_filtrado' id="texto_filtrado">
-      Filtrado por <%= session[(nombre + "_filtrado_tipo").to_sym].capitalize %>
-      <%= session[(nombre + "_filtrado_condicion").to_sym] ? session[(nombre + "_filtrado_condicion").to_sym] : " >> " %>
-      "<%= session[(nombre + "_filtrado_valor").to_sym] %>"
+      Filtrado por <%= session[filter_scope]['type'].capitalize %>
+      <%= session[filter_scope]['condition'] ? session[filter_scope]['condition'] : ' >> ' %>
+      "<%= session[filter_scope]['value'] %>"
     </div>
   <% end %>
 </fieldset>
+
+<script>
+  (function(){
+    var map = <%= raw(@filter_fields.map{|u| [u[1], u[2]]}.to_h.to_json) %>;
+    function setup(){
+      var sel = document.querySelector("select[name='filter[type]']") || document.getElementById('formulario_campo_filter_type');
+      var filter_options_number = document.getElementById('filter_options_number');
+      var filter_options_boolean = document.getElementById('filter_options_boolean');
+      var filter_options_boolean_field = document.getElementById('filter_options_boolean_field');
+      var filter_options_value = document.getElementById('filter_options_value');
+      var filter_options_value_field = document.getElementById('filter_options_value_field');
+      if(!sel) return;
+      function isNumber(){
+        var key = sel.value;
+        if (map && map[key]) return map[key] === 'number';
+      }
+      function isBoolean(){
+        var key = sel.value;
+        if (map && map[key]) return map[key] === 'boolean';
+      }
+      function update(){
+        if (isNumber()) {
+          filter_options_number.style.display = 'block';
+          filter_options_boolean.style.display = 'none';
+          filter_options_boolean_field.disabled = true;
+          filter_options_value.style.display = 'block';
+          filter_options_value_field.disabled = false;
+        } else if (isBoolean()) {
+          filter_options_number.style.display = 'none';
+          filter_options_boolean.style.display = 'block';
+          filter_options_boolean_field.disabled = false;
+          filter_options_value.style.display = 'none';
+          filter_options_value_field.disabled = true;
+        } else {
+          filter_options_number.style.display = 'none';
+          filter_options_boolean.style.display = 'none';
+          filter_options_boolean_field.disabled = true;
+          filter_options_value.style.display = 'block';
+          filter_options_value_field.disabled = false;
+        }
+      }
+      sel.addEventListener('change', update);
+      update();
+    }
+    document.addEventListener('DOMContentLoaded', setup);
+    document.addEventListener('turbo:load', setup);
+  })();
+</script>

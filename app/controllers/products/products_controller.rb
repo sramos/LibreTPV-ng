@@ -1,11 +1,21 @@
 module Products 
   class ProductsController < ApplicationController
+    before_action :index_filtered, only: [:index]
     before_action :set_product, only: [:edit, :update, :destroy]
 
     def index
-      @products = Product.order(:name).page(params[:page]).per(session[:per_page])
     end
 
+    def filter
+      if params[:filter] && session[filter_scope]
+        session[filter_scope]['type'] = params[:filter][:type].blank? ? nil : params[:filter][:type]
+        session[filter_scope]['value'] = params[:filter][:value].blank? ? nil : params[:filter][:value]
+        session[filter_scope]['condition'] = params[:filter][:condition].blank? ? nil : params[:filter][:condition]
+        puts "session[filter_scope]: #{session[filter_scope]}"
+      end
+      redirect_to products_products_path
+    end
+    
     def new
       @product = Product.new
       respond_to do |format|
@@ -91,6 +101,40 @@ module Products
 
     private
 
+    def index_filtered
+      @filter_fields = [ ['Nombre','name','string'],
+                         ['Autor','author.name','string'],
+                         ['Cantidad','stock','number'],
+                         #['Deposito','deposit','boolean'],
+                         ['Codigo','code','string'],
+                         ['Editor','publisher.name','string'],
+                         ['Tipo','product_type.name','string'] ]
+
+      @products = Product.order(:name)
+      value = session[filter_scope]['value']
+      if session[filter_scope] && value.present?
+        case session[filter_scope]['type']
+        when 'name'
+          @products = @products.where("name LIKE ?", "%#{value}%")
+        when 'code'
+          @products = @products.where("code LIKE ?", "%#{value}%")
+        when 'stock'
+          operator = session[filter_scope]['condition'] if ['=','>','<'].include?(session[filter_scope]['condition'])
+          @products = @products.where("stock #{operator} ?", value)
+        when 'deposit'
+          condition = session[filter_scope]['value'] == 'Sí' ? 'IS TRUE' : 'IS NOT TRUE'
+          @products = @products.where("deposit #{condition}")
+        when 'author.name'
+          @products = @products.joins(:authors).where("authors.name LIKE ?", "%#{value}%")
+        when 'publisher.name'
+          @products = @products.joins(:publisher).where("publisher.name LIKE ?", "%#{value}%")
+        when 'product_type.name'
+          @products = @products.joins(:product_type).where("product_type.name LIKE ?", "%#{value}%")
+        end
+      end
+      @products = @products.page(params[:page]).per(session[:per_page])
+    end
+    
     def set_product
       @product = Product.find(params[:id])
     end

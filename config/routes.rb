@@ -24,7 +24,11 @@ Rails.application.routes.draw do
     resources :clients, path: :clients
   end
   namespace :products, section: :products do
-    resources :products, path: :products
+    resources :products, path: :products do
+      collection do
+        post :filter
+      end
+    end
     resources :suppliers, path: :suppliers
   end
   namespace :admin, section: :admin do
@@ -38,6 +42,5 @@ Rails.application.routes.draw do
     resources :users, path: :users
     resources :vats, path: :vats
   end
-  match ':section/:controller(/:action(/:id))', via: [:get, :post, :put, :delete, :patch]
-
+  #match ':section/:controller(/:action(/:id))', via: [:get, :post, :put, :delete, :patch]
 end

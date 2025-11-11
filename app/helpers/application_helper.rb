@@ -171,6 +171,19 @@ module ApplicationHelper
   end
 
   # Form helpers
+  def index_form_beginning attrs={}
+    output  = ''
+    output += form_tag( attrs[:url], multipart: true, id: attrs[:id]||'index_form', class: 'formulario' )
+    output += '<div class="fila"></div>'
+    return output.html_safe
+  end
+  def index_form_end attrs={}
+    output  = '<div class="fila"><div class="elemento_derecha">'
+    output += submit_tag attrs[:send_label]||'Guardar', class: 'boton', 'data-disable-with' => attrs[:send_label]||'Guardando...'
+    output += '</div></div>'
+    output += '</form>'
+    return output.html_safe
+  end
   # Generic beginning of a form, wrapping form_with and yielding the builder
   def form_beginning attrs={}
     attrs[:model] ||= '#'

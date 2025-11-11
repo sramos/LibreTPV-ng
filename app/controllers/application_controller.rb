@@ -5,6 +5,8 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   # Define global pagination
   before_action :set_pagination
+  # Initialize filter
+  before_action :initialize_filter
   # Locales
   #around_action :set_locale
 
@@ -17,5 +19,13 @@ class ApplicationController < ActionController::Base
 
   def set_pagination
     session[:per_page] = params[:per_page] ||= 20
+  end
+
+  def initialize_filter
+    session[filter_scope] ||= {}
+  end
+
+  def filter_scope
+    "#{params[:controller]}_filter"
   end
 end
