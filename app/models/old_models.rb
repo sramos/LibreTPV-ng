@@ -19,6 +19,11 @@ class OldModels < ApplicationRecord
     OldModels::Autor.migrate unless Author.any?
     OldModels::Proveedor.migrate unless Supplier.any?
     OldModels::Cliente.migrate unless Client.any?
+    OldModels::Producto.migrate unless Product.any?
+    OldModels::Factura.migrate unless Invoice.any?
+    OldModels::Pago.migrate unless Payment.any?
+    OldModels::Albaran.migrate unless Note.any?
+    OldModels::AlbaranLinea.migrate unless NoteLine.any?
   end
 
   private

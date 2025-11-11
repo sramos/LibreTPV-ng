@@ -9,7 +9,7 @@ class OldModels::Familia < OldModels
       vat = OldModelsMap.find_by(old_object: obj.iva)
       new_obj = ProductType.create(
         name: obj.nombre,
-        vat_id: vat.new_object.id,
+        vat_id: vat.new_object_id,
         active: true,
         created_at: obj.created_at,
         updated_at: obj.updated_at

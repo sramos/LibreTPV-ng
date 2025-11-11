@@ -4,6 +4,32 @@ class OldModels::AlbaranLinea < OldModels
  
   has_one :linea_descuento, :foreign_key => :linea_descuento_id, :class_name => "AlbaranLinea", :dependent => :destroy
 
+  def self.migrate
+    all.each do |obj|
+      note = OldModelsMap.find_by(old_object: obj.albaran)
+      if note.nil?
+        Rails.logger.error "No se ha encontrado el albaran para #{obj.albaran_id} - #{obj.albaran&.codigo}"
+        next
+      end
+      product = OldModelsMap.find_by(old_object: obj.producto)
+      if product.nil?
+        Rails.logger.warn "No se ha encontrado el producto para #{obj.producto_id} - #{obj.producto&.codigo}"
+      end
+      new_obj = NoteLine.create(
+        note_id: note.new_object_id,
+        product_id: product ? product.new_object_id : nil,
+        quantity: obj.cantidad,
+        discount: obj.descuento,
+        product_name: obj.producto&.nombre,
+        product_price: obj.precio_compra || obj.precio_venta,
+        product_vat: (obj.iva||0.0)/100,
+        created_at: obj.created_at,
+        updated_at: obj.updated_at
+      )
+      OldModels.log_migration(obj, new_obj)
+    end
+  end
+
   # devuelve el subtotal (sin iva)
   def subtotal
     if ( self.albaran.proveedor_id )

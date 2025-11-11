@@ -3,6 +3,47 @@ class OldModels::Factura < OldModels
   has_many :pagos
   has_many :albarans
 
+  def self.migrate
+    default_client_id = Client.first.id
+    all.each do |obj|
+      new_obj_data = {
+        code: obj.codigo,
+        date: obj.fecha, paid: obj.pagado,
+        total_amount: obj.importe||0.0,
+        base_amount: obj.importe_base||0.0,
+        vat: (obj.valor_iva||0.0)/100,
+        income_retention: (obj.valor_irpf||0.0)/100,
+        expiration_date: obj.fecha_vencimiento,
+        created_at: obj.created_at,
+        updated_at: obj.updated_at
+      }
+      if obj.proveedor_id
+        new_obj_data[:type] = 'SupplierInvoice'
+        supplier = OldModelsMap.find_by(old_object: obj.proveedor)
+        if supplier.nil?
+          Rails.logger.error "No se ha encontrado el proveedor para #{obj.proveedor_id} - #{obj.proveedor&.nombre}"
+          next
+        end
+        new_obj_data[:supplier_id] = supplier.new_object_id
+      else
+        new_obj_data[:type] = 'ClientInvoice'
+        client = OldModelsMap.find_by(old_object: obj.albarans.first&.cliente)
+        if client.nil?
+          Rails.logger.warn "No se ha encontrado el cliente para #{obj.albarans.first&.cliente_id} - #{obj.albarans.first&.cliente&.nombre}"
+          new_obj_data[:client_id] = default_client_id
+        else
+          new_obj_data[:client_id] = client.new_object_id
+        end
+      end
+      new_obj = Invoice.create(new_obj_data)
+      if new_obj.errors[:code].present?
+        new_obj.code += " (D/#{obj.id})"
+        new_obj.save
+      end
+      OldModels.log_migration(obj, new_obj)
+    end
+  end
+
   # devuelve el codigo de la factura o el del albaran si no existe
   def codigo_mayusculas
     (self.codigo == "N/A" && self.albarans.first && self.albarans.first.codigo != "") ? "(*) " + self.albarans.first.codigo.upcase : self.codigo.upcase
