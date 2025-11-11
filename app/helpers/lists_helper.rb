@@ -27,31 +27,33 @@ module ListsHelper
   def index_fields object_type
     case object_type.to_s
     when 'authors'
-      [['Nombre', 'name', '1'], ['Activo', 'active', '1_3d']]
+      [['Nombre', 'name', '4'], ['Activo', 'active', '1_3 right']]
     when 'clients'
-      [['NIF', 'code_id', '1_2'], ['Nombre', 'name', '1'],
-       ['Teléfono', 'contact_info.phone', '1_2'], ['Email', 'contact_info.email', '1_2'],
-       ['% Dto.', 'discount_value', '1_3d'], ['Activo', 'active', '1_3d']]
+      [['NIF', 'code_id', '2_3'], ['Nombre', 'name', '3'],
+       ['Teléfono', 'contact_info.phone', '3_2'], ['Email', 'contact_info.email', '3_2'],
+       ['% Dto.', 'discount_value', '1_3 right'], ['Activo', 'active', '1_3 right']]
     when 'configs'
-      [['Nombre', 'name', '1'], ['Valor', 'value', '1']]
+      [['Nombre', 'name', '3_2'], ['Valor', 'value', '3']]
     when 'payment_types'
-      [['Nombre', 'name', '1'], ['Caja', 'cash', '1_4'], ['Activo', 'active', '1_4']]
+      [['Nombre', 'name', '3_2'], ['Caja', 'cash', '1_3 right'], ['Activo', 'active', '1_3 right']]
     when 'products'
-      [['Código', 'code', '1_2'], ['Tipo', 'product_type.name', '1_2'], ['Nombre/Título', 'name', '1'], ['Autor', 'authors_names', '1'], ['Cant.', 'stock', '1_5d'], ['PVP', 'price', '1_3d'] ]
+      [['Código', 'code', '1'], ['Tipo', 'product_type.name', '2_3'],
+       ['Nombre/Título', 'name', '3'], ['Autores', 'authors_names', '7_2'],
+       ['Cant.', 'stock', '1_4 right'], ['PVP', 'price', '1_3 right'] ]
     when 'product_types'
-      [['Nombre', 'name', '1'], ['IVA', 'vat.name', '1_2'], ['Activo', 'active', '1_3d']]
+      [['Nombre', 'name', '4'], ['IVA', 'vat.name', '1'], ['Activo', 'active', '1_3 right']]
     when 'product_subtypes'
-      [['Nombre', 'name', '1'], ['Tipo', 'product_type.name', '1_2'], ['Activo', 'active', '1_3d']]
+      [['Nombre', 'name', '1'], ['Tipo', 'product_type.name', '1_2'], ['Activo', 'active', '1_3 right']]
     when 'publishers'
-      [['Nombre', 'name', '1'], ['Activo', 'active', '1_3d']]
+      [['Nombre', 'name', '4'], ['Activo', 'active', '1_3 right']]
     when 'suppliers'
-      [['CIF', 'code_id', '1_2'], ['Nombre', 'name', '1'],
-       ['Teléfono', 'contact_info.phone', '1_2'], ['Email', 'contact_info.email', '1_2'],
-       ['% Dto.', 'discount_value', '1_3d'], ['Activo', 'active', '1_3d']]
+      [['CIF', 'code_id', '2_3'], ['Nombre', 'name', '3'],
+       ['Teléfono', 'contact_info.phone', '3_2'], ['Email', 'contact_info.email', '3_2'],
+       ['% Dto.', 'discount_value', '1_3 right'], ['Activo', 'active', '1_3 right']]
     when 'users'
-      [['Nombre', 'name', '1'], ['Email', 'email', '1'], ['Activo', 'active', '1_3d']]
+      [['Nombre', 'name', '2'], ['Email', 'email', '2'], ['Activo', 'active', '1_3 right']]
     when 'vats'
-      [['Nombre', 'name', '1'], ['% IVA', 'rate_value', '1_3d'], ['&nbsp', '', '1_5'], ['Activo', 'active', '1_4']]
+      [['Nombre', 'name', '3_2'], ['% IVA', 'rate_value', '1_3 right'], ['&nbsp', '', '1_5'], ['Activo', 'active', '1_3 right']]
     end
   end
 

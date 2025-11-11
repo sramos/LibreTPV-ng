@@ -123,3 +123,42 @@ i.fa, i.fas, i.far, i.fab {
   opacity: 1;
   transform: translateY(0);
 }
+
+/* Index elements */
+.index_field {
+  float: left;
+  font-size:11px;
+  padding: 0 5 0 5;
+  overflow: hidden;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  height: 16px;
+}
+
+.element_1_5 { width:24px;   }
+.element_1_4 { width:30px;   }
+.element_1_3 { width:40px;   }
+.element_1_2 { width:60px;   }
+.element_2_3 { width:80px;   }
+.element_3_4 { width:90px;   }
+.element_1   { width:120px;  }
+.element_3_2 { width:180px;  }
+.element_2   { width:240px;  }
+.element_5_2 { width:300px;  }
+.element_3   { width:360px;  }
+.element_7_2 { width:420px;  }
+.element_4   { width:480px;  }
+.element_5   { width:600px;  }
+.element_6   { width:720px;  }
+.element_7   { width:840px;  }
+.element_8   { width:960px;  }
+.element_9   { width:1080px; }
+
+.right {
+  text-align: right;
+}
+
+.center {
+  text-align: center;
+}
