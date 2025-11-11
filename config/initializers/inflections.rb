@@ -28,6 +28,8 @@ ActiveSupport::Inflector.inflections do |inflect|
 #   inflect.singular /^(ox)en/i, '\1'
 #   inflect.irregular 'person', 'people'
 #   inflect.uncountable %w( fish sheep )
+  
+  #   OLD MODELS
   inflect.irregular 'configuracion', 'configuracion'
   inflect.irregular 'caja', 'caja'
   inflect.irregular 'materia', 'materia'

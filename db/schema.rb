@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_14_073450) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_10_231918) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -57,9 +57,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_14_073450) do
 
   create_table "clients", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "name", default: "", null: false
-    t.string "code_id"
+    t.string "code_id", default: "", null: false
     t.decimal "credit", precision: 8, scale: 2, default: "0.0", null: false
-    t.decimal "discount", precision: 4, scale: 3, default: "0.0", null: false
+    t.decimal "discount", precision: 4, scale: 2, default: "0.0", null: false
     t.boolean "active", default: true, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -75,14 +75,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_14_073450) do
   end
 
   create_table "contact_infos", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
-    t.string "address"
-    t.string "postal_code"
-    t.string "province"
-    t.string "country"
-    t.string "phone"
-    t.string "contact"
-    t.string "email"
-    t.string "web"
+    t.string "address", default: "", null: false
+    t.string "postal_code", default: "", null: false
+    t.string "city", default: "", null: false
+    t.string "province", default: "", null: false
+    t.string "country", default: "", null: false
+    t.string "phone", default: "", null: false
+    t.string "contact", default: "", null: false
+    t.string "email", default: "", null: false
+    t.string "web", default: "", null: false
     t.string "contactable_type"
     t.bigint "contactable_id"
     t.datetime "created_at", null: false
@@ -144,6 +145,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_14_073450) do
     t.index ["client_id"], name: "index_notes_on_client_id"
     t.index ["invoice_id"], name: "index_notes_on_invoice_id"
     t.index ["supplier_id"], name: "index_notes_on_supplier_id"
+  end
+
+  create_table "old_models_maps", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+    t.string "old_object_type"
+    t.bigint "old_object_id"
+    t.string "new_object_type"
+    t.bigint "new_object_id"
+    t.index ["new_object_type", "new_object_id"], name: "index_old_models_maps_on_new_object"
+    t.index ["old_object_type", "old_object_id"], name: "index_old_models_maps_on_old_object"
   end
 
   create_table "payment_types", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
@@ -216,8 +226,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_14_073450) do
 
   create_table "suppliers", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "name", default: "", null: false
-    t.string "code_id"
-    t.decimal "discount", precision: 4, scale: 3, default: "0.0", null: false
+    t.string "code_id", default: "", null: false
+    t.decimal "discount", precision: 4, scale: 2, default: "0.0", null: false
     t.boolean "active", default: true, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
