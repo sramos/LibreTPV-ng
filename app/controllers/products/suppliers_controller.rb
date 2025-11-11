@@ -91,13 +91,19 @@ module Products
     private
 
     def index_filtered
-      @filter_fields = [ ['Nombre','name','string'] ]
+      @filter_fields = [ ['Nombre','name','string'],
+                         ['Email','email','string'],
+                         ['NIF','code_id','string'] ]
       @suppliers = Supplier.order(:name)
       value = session[filter_scope]['value']
       if session[filter_scope] && value.present?
         case session[filter_scope]['type']
         when 'name'
           @suppliers = @suppliers.where("name LIKE ?", "%#{value}%")
+        when 'email'
+          @suppliers = @suppliers.joins(:contact_info).where("contact_infos.email LIKE ?", "%#{value}%")
+        when 'code_id'
+          @suppliers = @suppliers.where("code_id LIKE ?", "%#{value}%")
         end
       end
       @suppliers = @suppliers.page(params[:page]).per(session[:per_page])

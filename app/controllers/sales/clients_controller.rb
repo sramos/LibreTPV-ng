@@ -91,13 +91,19 @@ module Sales
     private
 
     def index_filtered
-      @filter_fields = [ ['Nombre','name','string'] ]
+      @filter_fields = [ ['Nombre','name','string'],
+                         ['Email','email','string'],
+                         ['NIF','code_id','string'] ]
       @clients = Client.order(:name)
       value = session[filter_scope]['value']
       if session[filter_scope] && value.present?
         case session[filter_scope]['type']
         when 'name'
           @clients = @clients.where("name LIKE ?", "%#{value}%")
+        when 'email'
+          @clients = @clients.joins(:contact_info).where("contact_infos.email LIKE ?", "%#{value}%")
+        when 'code_id'
+          @clients = @clients.where("code_id LIKE ?", "%#{value}%")
         end
       end
       @clients = @clients.page(params[:page]).per(session[:per_page])
