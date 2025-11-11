@@ -30,7 +30,7 @@ module ListsHelper
       [['Nombre', 'name', '1'], ['Activo', 'active', '1_3d']]
     when 'clients'
       [['NIF', 'code_id', '1_2'], ['Nombre', 'name', '1'],
-       ['Teléfono', 'phone', '1_2'], ['email', 'email', '1_2'],
+       ['Teléfono', 'contact_info.phone', '1_2'], ['Email', 'contact_info.email', '1_2'],
        ['% Dto.', 'discount_value', '1_3d'], ['Activo', 'active', '1_3d']]
     when 'configs'
       [['Nombre', 'name', '1'], ['Valor', 'value', '1']]
@@ -46,7 +46,7 @@ module ListsHelper
       [['Nombre', 'name', '1'], ['Activo', 'active', '1_3d']]
     when 'suppliers'
       [['CIF', 'code_id', '1_2'], ['Nombre', 'name', '1'],
-       ['Teléfono', 'phone', '1_2'], ['email', 'email', '1_2'],
+       ['Teléfono', 'contact_info.phone', '1_2'], ['Email', 'contact_info.email', '1_2'],
        ['% Dto.', 'discount_value', '1_3d'], ['Activo', 'active', '1_3d']]
     when 'users'
       [['Nombre', 'name', '1'], ['Email', 'email', '1'], ['Activo', 'active', '1_3d']]
