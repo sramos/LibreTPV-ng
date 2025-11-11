@@ -3,7 +3,6 @@ module Admin
     before_action :set_publisher, only: [:edit, :update, :destroy]
 
     def index
-      @publishers = Publisher.order(:name).page(params[:page]).per(session[:per_page])
     end
 
     def new
@@ -91,6 +90,19 @@ module Admin
 
     private
 
+    def index_filtered
+      @filter_fields = [ ['Nombre','name','string'] ]
+      @publishers = Publisher.order(:name)
+      value = session[filter_scope]['value']
+      if session[filter_scope] && value.present?
+        case session[filter_scope]['type']
+        when 'name'
+          @publishers = @publishers.where("name LIKE ?", "%#{value}%")
+        end
+      end
+      @publishers = @publishers.page(params[:page]).per(session[:per_page])
+    end
+    
     def set_publisher
       @publisher = Publisher.find(params[:id])
     end

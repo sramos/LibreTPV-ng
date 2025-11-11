@@ -3,7 +3,6 @@ module Products
     before_action :set_supplier, only: [:edit, :update, :destroy]
 
     def index
-      @suppliers = Supplier.order(:name).page(params[:page]).per(session[:per_page])
     end
 
     def new
@@ -90,6 +89,19 @@ module Products
     end
 
     private
+
+    def index_filtered
+      @filter_fields = [ ['Nombre','name','string'] ]
+      @suppliers = Supplier.order(:name)
+      value = session[filter_scope]['value']
+      if session[filter_scope] && value.present?
+        case session[filter_scope]['type']
+        when 'name'
+          @suppliers = @suppliers.where("name LIKE ?", "%#{value}%")
+        end
+      end
+      @suppliers = @suppliers.page(params[:page]).per(session[:per_page])
+    end
 
     def set_supplier
       @supplier = Supplier.find(params[:id])

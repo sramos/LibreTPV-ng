@@ -3,7 +3,6 @@ module Admin
     before_action :set_author, only: [:edit, :update, :destroy]
 
     def index
-      @authors = Author.order(:name).page(params[:page]).per(session[:per_page])
     end
 
     def new
@@ -91,6 +90,19 @@ module Admin
 
     private
 
+    def index_filtered
+      @filter_fields = [ ['Nombre','name','string'] ]
+      @authors = Author.order(:name)
+      value = session[filter_scope]['value']
+      if session[filter_scope] && value.present?
+        case session[filter_scope]['type']
+        when 'name'
+          @authors = @authors.where("name LIKE ?", "%#{value}%")
+        end
+      end
+      @authors = @authors.page(params[:page]).per(session[:per_page])
+    end
+    
     def set_author
       @author = Author.find(params[:id])
     end

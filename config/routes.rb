@@ -21,20 +21,26 @@ Rails.application.routes.draw do
     #  get :show_lines, on: :member
     #  resources :note_lines, path: :lines
     #end
-    resources :clients, path: :clients
+    resources :clients, path: :clients do
+      collection { post :filter }
+    end
   end
   namespace :products, section: :products do
     resources :products, path: :products do
-      collection do
-        post :filter
-      end
+      collection { post :filter }
     end
-    resources :suppliers, path: :suppliers
+    resources :suppliers, path: :suppliers do
+      collection { post :filter }
+    end
   end
   namespace :admin, section: :admin do
-    resources :authors, path: :authors
+    resources :authors, path: :authors do
+      collection { post :filter }
+    end
     resources :configs, path: :configs, only: [:index, :edit, :update]
-    resources :publishers, path: :publishers
+    resources :publishers, path: :publishers do
+      collection { post :filter }
+    end
     resources :payment_types, path: :payment_types
     resources :product_types, path: :product_types do
       resources :product_subtypes, path: :product_subtypes

@@ -3,7 +3,6 @@ module Sales
     before_action :set_client, only: [:edit, :update, :destroy]
 
     def index
-      @clients = Client.order(:name).page(params[:page]).per(session[:per_page])
     end
 
     def new
@@ -91,6 +90,19 @@ module Sales
 
     private
 
+    def index_filtered
+      @filter_fields = [ ['Nombre','name','string'] ]
+      @clients = Client.order(:name)
+      value = session[filter_scope]['value']
+      if session[filter_scope] && value.present?
+        case session[filter_scope]['type']
+        when 'name'
+          @clients = @clients.where("name LIKE ?", "%#{value}%")
+        end
+      end
+      @clients = @clients.page(params[:page]).per(session[:per_page])
+    end
+    
     def set_client
       @client = Client.find(params[:id])
     end

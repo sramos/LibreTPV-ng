@@ -253,7 +253,7 @@ module OldApplicationHelper
   def menu_secciones user=nil
     sections = {
       sales: {url: sales_clients_path, label: 'Caja'},
-      products: {url: products_suppliers_path, label: 'Productos'},
+      products: {url: products_products_path, label: 'Productos'},
       accounting: {url: '/accounting/caja', label: 'Tesorería'},
       #distribution: {url: '/editor/products', label: 'Distribuidora'},
       admin: {url: admin_authors_path, label: 'Administración'}

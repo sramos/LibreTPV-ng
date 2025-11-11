@@ -1,5 +1,4 @@
 <!--- Products --->
-<%= render partial: 'common/index_filter' %>
 <div id="products">
   <%= index_header 'products', {new_url: new_products_product_path, refresh_url: products_products_path, title: 'Crear nuevo producto' } %>
     <% for product in @products %>

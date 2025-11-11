@@ -1,6 +1,5 @@
 module Products 
   class ProductsController < ApplicationController
-    before_action :index_filtered, only: [:index]
     before_action :set_product, only: [:edit, :update, :destroy]
 
     def index

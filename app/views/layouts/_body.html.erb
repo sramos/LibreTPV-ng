@@ -3,6 +3,7 @@
   <!-- Mensajes de informacion -->
   <%= mensaje_ok flash[:mensaje_ok] if flash[:mensaje_ok] %>
   <%= mensaje_error(flash[:error]) if flash[:error]%>
+  <%= render partial: 'common/index_filter' if @filter_fields %>
   <!-- Contenido de cada accion -->
   <%= yield %>
   <br/><br/>

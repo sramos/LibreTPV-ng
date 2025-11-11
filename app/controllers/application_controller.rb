@@ -7,8 +7,19 @@ class ApplicationController < ActionController::Base
   before_action :set_pagination
   # Initialize filter
   before_action :initialize_filter
+  before_action :index_filtered, only: [:index]
   # Locales
   #around_action :set_locale
+
+  def filter
+    if params[:filter] && session[filter_scope]
+      session[filter_scope]['type'] = params[:filter][:type].blank? ? nil : params[:filter][:type]
+      session[filter_scope]['value'] = params[:filter][:value].blank? ? nil : params[:filter][:value]
+      session[filter_scope]['condition'] = params[:filter][:condition].blank? ? nil : params[:filter][:condition]
+      puts "session[filter_scope]: #{session[filter_scope]}"
+    end
+    redirect_to action: :index
+  end
 
   private
 
@@ -25,6 +36,9 @@ class ApplicationController < ActionController::Base
     session[filter_scope] ||= {}
   end
 
+  def index_filtered
+  end
+  
   def filter_scope
     "#{params[:controller]}_filter"
   end
