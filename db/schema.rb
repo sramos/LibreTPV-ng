@@ -91,13 +91,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_10_231918) do
     t.index ["contactable_type", "contactable_id"], name: "index_contact_infos_on_contactable"
   end
 
-  create_table "editors", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
-    t.string "name", default: "", null: false
-    t.boolean "active", default: true, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "invoices", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "code", default: "", null: false
     t.datetime "date"
@@ -215,13 +208,20 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_10_231918) do
     t.integer "stock", default: 0, null: false
     t.bigint "product_type_id", null: false
     t.bigint "product_subtype_id"
-    t.bigint "editor_id"
+    t.bigint "publisher_id"
     t.boolean "active", default: true, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["editor_id"], name: "index_products_on_editor_id"
     t.index ["product_subtype_id"], name: "index_products_on_product_subtype_id"
     t.index ["product_type_id"], name: "index_products_on_product_type_id"
+    t.index ["publisher_id"], name: "index_products_on_publisher_id"
+  end
+
+  create_table "publishers", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+    t.string "name", default: "", null: false
+    t.boolean "active", default: true, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "suppliers", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|

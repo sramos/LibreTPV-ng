@@ -7,8 +7,6 @@ es:
       vat_or_income_retention: Una factura de cliente no puede tener campos de IVA o de retención de IRPF
     clients:
       removal_with_existing_notes: No se puede eliminar un cliente que tenga creados albaranes
-    editors:
-      removal_with_existing_products: No se puede eliminar un editor que tenga productos en el catálogo
     global:
       must_be_unique: debe ser único
     invoices:
@@ -20,6 +18,8 @@ es:
     products:
       removal_with_existing_notes: No se puede eliminar un producto incluído en albaranes
       removal_with_non_zero_stock: No se puede eliminar un producto cuyo stock no sea cero
+    publishers:
+      removal_with_existing_products: No se puede eliminar un editor que tenga productos en el catálogo
     supplier_invoices:
       unique_for_supplier: debe ser único para el proveedor
     suppliers:

@@ -1,13 +1,13 @@
 module Admin
-  class EditorsController < ApplicationController
-    before_action :set_editor, only: [:edit, :update, :destroy]
+  class PublishersController < ApplicationController
+    before_action :set_publisher, only: [:edit, :update, :destroy]
 
     def index
-      @editors = Editor.order(:name).page(params[:page]).per(session[:per_page])
+      @publishers = Publisher.order(:name).page(params[:page]).per(session[:per_page])
     end
 
     def new
-      @editor = Editor.new
+      @publisher = Publisher.new
       respond_to do |format|
         format.html { render layout: false }
         format.turbo_stream
@@ -15,19 +15,19 @@ module Admin
     end
 
     def create
-      @editor = Editor.new(editor_params)
-      if @editor.save
+      @publisher = Publisher.new(publisher_params)
+      if @publisher.save
         respond_to do |format|
           format.turbo_stream do
             render turbo_stream: helpers.update_object_turbo_stream(
-              container_dom_id: 'new_editors_tag',
+              container_dom_id: 'new_publishers_tag',
               stream_action: :after,
-              stream_locals: { editor: @editor },
-              highlight_dom_id: "editor_#{@editor.id}",
-              show_section_id: 'new_editors_section'
+              stream_locals: { publisher: @publisher },
+              highlight_dom_id: "publisher_#{@publisher.id}",
+              show_section_id: 'new_publishers_section'
             )
           end
-          format.html { redirect_to admin_editors_path, notice: 'Editorial creada correctamente' }
+          format.html { redirect_to admin_publishers_path, notice: 'Editorial creada correctamente' }
         end
       else
         respond_to do |format|
@@ -49,21 +49,21 @@ module Admin
     end
 
     def update
-      if @editor.update(editor_params)
+      if @publisher.update(publisher_params)
         respond_to do |format|
           format.turbo_stream do
             render turbo_stream: helpers.update_object_turbo_stream(
-              container_dom_id: "editor_#{@editor.id}",
-              stream_locals: { editor: @editor },
+              container_dom_id: "publisher_#{@publisher.id}",
+              stream_locals: { publisher: @publisher },
             )
           end
-          format.html { redirect_to admin_editors_path, notice: 'Editorial actualizada correctamente' }
+          format.html { redirect_to admin_publishers_path, notice: 'Editorial actualizada correctamente' }
         end
       else
         respond_to do |format|
           format.turbo_stream do
             render turbo_stream: [
-              turbo_stream.replace('modal', partial: 'form', locals: { editor: @editor })
+              turbo_stream.replace('modal', partial: 'form', locals: { publisher: @publisher })
             ]
           end
           format.html { render :edit, status: :unprocessable_entity, layout: false }
@@ -72,31 +72,31 @@ module Admin
     end
 
     def destroy
-      if @editor.destroy
+      if @publisher.destroy
         msg = 'Editorial eliminada correctamente'
       else
-        msg = 'Se han producido errores eliminando la editorial: ' + @editor.errors.inspect
+        msg = 'Se han producido errores eliminando la editorial: ' + @publisher.errors.inspect
       end
       respond_to do |format|
         format.turbo_stream do
           render turbo_stream: [
-            turbo_stream.remove("editor_#{@editor&.id}")
+            turbo_stream.remove("publisher_#{@publisher&.id}")
           ]
         end
-        format.html { redirect_to admin_editors_path, notice: msg }
+        format.html { redirect_to admin_publishers_path, notice: msg }
       end
     rescue => e
-      redirect_to admin_editors_path, alert: "Error al eliminar la editorial: #{e.message}"
+      redirect_to admin_publishers_path, alert: "Error al eliminar la editorial: #{e.message}"
     end
 
     private
 
-    def set_editor
-      @editor = Editor.find(params[:id])
+    def set_publisher
+      @publisher = Publisher.find(params[:id])
     end
 
-    def editor_params
-      params.require(:editor).permit(:name, :active)
+    def publisher_params
+      params.require(:publisher).permit(:name, :active)
     end
   end
 end

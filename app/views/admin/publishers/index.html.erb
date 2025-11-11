@@ -1,0 +1,8 @@
+<!--- Publishers --->
+<div id="publishers">
+  <%= index_header 'publishers', {new_url: new_admin_publisher_path, refresh_url: admin_publishers_path, title: 'Crear nueva editorial' } %>
+    <% for publisher in @publishers %>
+      <%= render partial: 'item', locals: {publisher: publisher} %>
+    <% end %>
+  <%= index_footer @publishers %>
+</div>

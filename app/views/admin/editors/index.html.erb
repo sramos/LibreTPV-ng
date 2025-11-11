@@ -1,8 +1,0 @@
-<!--- Editors --->
-<div id="editors">
-  <%= index_header 'editors', {new_url: new_admin_editor_path, refresh_url: admin_editors_path, title: 'Crear nueva editorial' } %>
-    <% for editor in @editors %>
-      <%= render partial: 'item', locals: {editor: editor} %>
-    <% end %>
-  <%= index_footer @editors %>
-</div>

@@ -1,0 +1,12 @@
+publisher_one:
+  name: Editorial Ejemplo
+  active: true
+
+publisher_two:
+  name: Editorial Moderna
+  active: true
+
+publisher_empty:
+  name: Editorial Antigua
+  active: true
+

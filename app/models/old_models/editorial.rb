@@ -3,7 +3,7 @@ class OldModels::Editorial < OldModels
 
   def self.migrate
     all.each do |obj|
-      new_obj = Editor.create(
+      new_obj = Publisher.create(
         name: obj.nombre || 'N/A',
         active: true,
         created_at: obj.created_at,

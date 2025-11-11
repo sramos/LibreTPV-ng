@@ -10,7 +10,7 @@ class CreateProduct < ActiveRecord::Migration[8.0]
       t.integer :stock, null: false, default: 0
       t.references :product_type, null: false, foreign_key: true
       t.references :product_subtype
-      t.references :editor
+      t.references :publisher
       t.boolean :active, null: false, default: true
       t.timestamps
     end

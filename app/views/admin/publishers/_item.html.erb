@@ -1,0 +1,9 @@
+<div id="publisher_<%= publisher.id %>" class="listadofila<%= ' flash-highlight' if local_assigns[:highlight] %>">
+  <%= index_line publisher, 'publishers' %>
+  <div class="listado_derecha">
+    <%= object_edition url: edit_admin_publisher_path(publisher.id), title: "Editar editorial '#{publisher.name}'" %>
+    <%= object_destroy url: admin_publisher_path(publisher.id),
+                       title: "Eliminar editorial '#{publisher.name}'",
+                       confirmation: "¿Está seguro de querer eliminar la editorial '#{publisher.name}'?" %>
+  </div>
+</div>

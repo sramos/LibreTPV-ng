@@ -14,7 +14,9 @@ class ProductTest < ActiveSupport::TestCase
   end
 
   test "should not save product with negative price" do
-    product = Product.new(price: -1)
+    product = Product.new(name: 'Price test', code: 'price_test',
+                          product_type: product_types(:product_type_one),
+                          price: -1)
     product.valid?
     assert product.errors[:price].any?
   end

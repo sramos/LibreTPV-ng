@@ -304,7 +304,7 @@ module OldApplicationHelper
                           { label: 'Formas de Pago', controlador: 'admin/payment_types' },
                           { label: 'Tipos de IVA', controlador: 'admin/vats' },
                           { label: 'Tipos de Producto', controlador: 'admin/product_types' },
-                          { label: 'Editoriales', controlador: 'admin/editors' },
+                          { label: 'Editoriales', controlador: 'admin/publishers' },
                           { label: 'Autores', controlador: 'admin/authors' },
                           #{ label: 'Avisos', controlador: 'avisos' }
                         ]

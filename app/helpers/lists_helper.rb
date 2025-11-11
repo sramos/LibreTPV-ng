@@ -34,8 +34,6 @@ module ListsHelper
        ['% Dto.', 'discount_value', '1_3d'], ['Activo', 'active', '1_3d']]
     when 'configs'
       [['Nombre', 'name', '1'], ['Valor', 'value', '1']]
-    when 'editors'
-      [['Nombre', 'name', '1'], ['Activo', 'active', '1_3d']]
     when 'payment_types'
       [['Nombre', 'name', '1'], ['Caja', 'cash', '1_4'], ['Activo', 'active', '1_4']]
     when 'products'
@@ -44,6 +42,8 @@ module ListsHelper
       [['Nombre', 'name', '1'], ['IVA', 'vat.name', '1_2'], ['Activo', 'active', '1_3d']]
     when 'product_subtypes'
       [['Nombre', 'name', '1'], ['Tipo', 'product_type.name', '1_2'], ['Activo', 'active', '1_3d']]
+    when 'publishers'
+      [['Nombre', 'name', '1'], ['Activo', 'active', '1_3d']]
     when 'suppliers'
       [['CIF', 'code_id', '1_2'], ['Nombre', 'name', '1'],
        ['Teléfono', 'phone', '1_2'], ['email', 'email', '1_2'],

@@ -7,6 +7,7 @@ class NoteLine < ApplicationRecord
   validates :product_vat, presence: true, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 1 }
   validates :quantity, presence: true
   validates :note, presence: true
+  # Remove next comment after old data migration
   #validate :avoid_changes_on_disabled_note
 
   before_validation :set_product_values

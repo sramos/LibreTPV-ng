@@ -30,7 +30,7 @@ Rails.application.routes.draw do
   namespace :admin, section: :admin do
     resources :authors, path: :authors
     resources :configs, path: :configs, only: [:index, :edit, :update]
-    resources :editors, path: :editors
+    resources :publishers, path: :publishers
     resources :payment_types, path: :payment_types
     resources :product_types, path: :product_types do
       resources :product_subtypes, path: :product_subtypes

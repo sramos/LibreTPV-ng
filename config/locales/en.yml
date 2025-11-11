@@ -7,8 +7,6 @@ en:
       vat_or_income_retention: vat or income_retention cannot be present at client invoice
     clients:
       removal_with_existing_notes: Cannot remove a client with existing invoices
-    editors:
-      removal_with_existing_products: Cannot remove an editor with products in the catalog
     global:
       must_be_unique: must be unique
     invoices:
@@ -17,6 +15,8 @@ en:
       closed_note: Cannot modify a closed note
       removal_closed_note: Cannot remove a closed note
       reopen_with_invoice: Cannot reopen a note that has an issued invoice
+    publishers:
+      removal_with_existing_products: Cannot remove an editor with products in the catalog
     products:
       removal_with_existing_notes: Cannot remove a product included in invoices
       removal_with_non_zero_stock: Cannot remove a product with non-zero stock

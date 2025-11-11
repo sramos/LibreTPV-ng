@@ -3,7 +3,7 @@ one:
   code: LIB123
   price: 10
   stock: 100
-  editor: editor_one
+  publisher: publisher_one
   product_type: product_type_two
 
 two:
@@ -11,6 +11,7 @@ two:
   code: PAN456
   price: 2.5
   stock: 50
+  publisher: publisher_one
   product_type: product_type_one
 
 three:
@@ -18,5 +19,5 @@ three:
   code: TEN789
   price: 0.5
   stock: 200
-  editor: editor_three
+  publisher: publisher_two
   product_type: product_type_one

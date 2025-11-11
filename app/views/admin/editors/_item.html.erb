@@ -1,9 +1,0 @@
-<div id="editor_<%= editor.id %>" class="listadofila<%= ' flash-highlight' if local_assigns[:highlight] %>">
-  <%= index_line editor, 'editors' %>
-  <div class="listado_derecha">
-    <%= object_edition url: edit_admin_editor_path(editor.id), title: "Editar editorial '#{editor.name}'" %>
-    <%= object_destroy url: admin_editor_path(editor.id),
-                       title: "Eliminar editorial '#{editor.name}'",
-                       confirmation: "¿Está seguro de querer eliminar la editorial '#{editor.name}'?" %>
-  </div>
-</div>

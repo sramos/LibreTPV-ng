@@ -1,4 +1,4 @@
-class Editor < ApplicationRecord
+class Publisher < ApplicationRecord
   include ::Sanitizable
   stripable :name
   upcaseable :name
@@ -12,7 +12,7 @@ class Editor < ApplicationRecord
 
   def validate_destroy
     if products.any?
-      errors.add(:base, I18n.t('errors.editors.removal_with_existing_products'))
+      errors.add(:base, I18n.t('errors.publishers.removal_with_existing_products'))
       throw :abort
     end
   end

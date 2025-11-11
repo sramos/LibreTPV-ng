@@ -15,14 +15,14 @@ class OldModels < ApplicationRecord
     OldModels::FormaPago.migrate unless PaymentType.any?
     OldModels::Familia.migrate unless ProductType.any?
     OldModels::Materia.migrate unless ProductSubtype.any?
-    OldModels::Editorial.migrate unless Editor.any?
+    OldModels::Editorial.migrate unless Publisher.any?
     OldModels::Autor.migrate unless Author.any?
     OldModels::Proveedor.migrate unless Supplier.any?
     OldModels::Cliente.migrate unless Client.any?
   end
 
   private
-  
+
   def self.log_migration obj, new_obj
     if new_obj.errors.empty?
       OldModelsMap.create(old_object: obj, new_object: new_obj)

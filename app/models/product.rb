@@ -8,12 +8,12 @@ class Product < ApplicationRecord
   has_many :notes, through: :note_lines
   belongs_to :product_type
   belongs_to :product_subtype, optional: true
-  belongs_to :editor, optional: true
+  belongs_to :publisher, optional: true
   has_one :vat, through: :product_type
   has_one_attached :image
 
   validates :name, presence: true
-  validates :price, presence: true, numericality: { greater_or_equal_than: 0 }
+  validates :price, presence: true, numericality: { greater_than_or_equal_to: 0 }
   validates :stock, presence: true
   validates :product_type, presence: true
   validates :code, presence: true, uniqueness: true
