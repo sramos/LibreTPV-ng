@@ -3,6 +3,7 @@ module Products
     before_action :set_supplier, only: [:edit, :update, :destroy]
 
     def index
+      index_filtered
     end
 
     def new

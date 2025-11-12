@@ -3,6 +3,7 @@ module Products
     before_action :set_product, only: [:edit, :update, :destroy]
 
     def index
+      index_filtered
     end
 
     def filter
@@ -110,8 +111,10 @@ module Products
                          ['Tipo','product_type.name','string'] ]
 
       @products = Product.order(:name)
-      value = session[filter_scope]['value']
-      if session[filter_scope] && value.present?
+      
+      session[filter_scope] ||= {}
+      value = session[filter_scope]['value'] if session[filter_scope]
+      if value.present?
         case session[filter_scope]['type']
         when 'name'
           @products = @products.where("name LIKE ?", "%#{value}%")

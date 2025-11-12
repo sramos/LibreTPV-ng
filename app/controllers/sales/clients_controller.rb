@@ -3,6 +3,7 @@ module Sales
     before_action :set_client, only: [:edit, :update, :destroy]
 
     def index
+      index_filtered
     end
 
     def new
@@ -95,8 +96,10 @@ module Sales
                          ['Email','email','string'],
                          ['NIF','code_id','string'] ]
       @clients = Client.order(:name)
-      value = session[filter_scope]['value']
-      if session[filter_scope] && value.present?
+      
+      session[filter_scope] ||= {}
+      value = session[filter_scope]['value'] if session[filter_scope]
+      if value.present?
         case session[filter_scope]['type']
         when 'name'
           @clients = @clients.where("name LIKE ?", "%#{value}%")

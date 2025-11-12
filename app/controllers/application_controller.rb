@@ -5,12 +5,10 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   # Define global pagination
   before_action :set_pagination
-  # Initialize filter
-  before_action :initialize_filter
-  before_action :index_filtered, only: [:index]
   # Locales
   #around_action :set_locale
 
+  # Common filter method for all controllers
   def filter
     if params[:filter] && session[filter_scope]
       session[filter_scope]['type'] = params[:filter][:type].blank? ? nil : params[:filter][:type]
@@ -30,13 +28,6 @@ class ApplicationController < ActionController::Base
 
   def set_pagination
     session[:per_page] = params[:per_page] ||= 20
-  end
-
-  def initialize_filter
-    session[filter_scope] ||= {}
-  end
-
-  def index_filtered
   end
   
   def filter_scope
