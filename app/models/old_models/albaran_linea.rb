@@ -8,18 +8,18 @@ class OldModels::AlbaranLinea < OldModels
     all.each do |obj|
       note = OldModelsMap.find_by(old_object: obj.albaran)
       if note.nil?
-        Rails.logger.error "No se ha encontrado el albaran para #{obj.albaran_id} - #{obj.albaran&.codigo}"
+        Rails.logger.error "No se ha encontrado el albaran #{obj.albaran_id} - #{obj.albaran&.codigo}"
         next
       end
       product = OldModelsMap.find_by(old_object: obj.producto)
       if product.nil?
-        Rails.logger.warn "No se ha encontrado el producto para #{obj.producto_id} - #{obj.producto&.codigo}"
+        Rails.logger.warn "No se ha encontrado el producto #{obj.producto_id} - #{obj.producto&.codigo}"
       end
       new_obj = NoteLine.create(
         note_id: note.new_object_id,
         product_id: product ? product.new_object_id : nil,
         quantity: obj.cantidad,
-        discount: obj.descuento,
+        discount: (obj.descuento||0.0)/100,
         product_name: obj.producto&.nombre,
         product_price: obj.precio_compra || obj.precio_venta,
         product_vat: (obj.iva||0.0)/100,

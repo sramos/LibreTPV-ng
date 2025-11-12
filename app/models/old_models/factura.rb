@@ -11,17 +11,17 @@ class OldModels::Factura < OldModels
         date: obj.fecha, paid: obj.pagado,
         total_amount: obj.importe||0.0,
         base_amount: obj.importe_base||0.0,
-        vat: (obj.valor_iva||0.0)/100,
-        income_retention: (obj.valor_irpf||0.0)/100,
         expiration_date: obj.fecha_vencimiento,
         created_at: obj.created_at,
         updated_at: obj.updated_at
       }
       if obj.proveedor_id
         new_obj_data[:type] = 'SupplierInvoice'
+        new_obj_data[:vat] = (obj.valor_iva||0.0)/100
+        new_obj_data[:income_retention] = (obj.valor_irpf||0.0)/100
         supplier = OldModelsMap.find_by(old_object: obj.proveedor)
         if supplier.nil?
-          Rails.logger.error "No se ha encontrado el proveedor para #{obj.proveedor_id} - #{obj.proveedor&.nombre}"
+          Rails.logger.error "No se ha encontrado el proveedor #{obj.proveedor_id} - #{obj.proveedor&.nombre}"
           next
         end
         new_obj_data[:supplier_id] = supplier.new_object_id
@@ -29,7 +29,7 @@ class OldModels::Factura < OldModels
         new_obj_data[:type] = 'ClientInvoice'
         client = OldModelsMap.find_by(old_object: obj.albarans.first&.cliente)
         if client.nil?
-          Rails.logger.warn "No se ha encontrado el cliente para #{obj.albarans.first&.cliente_id} - #{obj.albarans.first&.cliente&.nombre}"
+          Rails.logger.warn "No se ha encontrado el cliente #{obj.albarans.first&.cliente_id} - #{obj.albarans.first&.cliente&.nombre}"
           new_obj_data[:client_id] = default_client_id
         else
           new_obj_data[:client_id] = client.new_object_id

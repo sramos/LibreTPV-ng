@@ -25,6 +25,7 @@
 module ListsHelper
 
   def index_fields object_type
+    puts "**** Nos piden tipo #{object_type.inspect}"
     case object_type.to_s
     when 'authors'
       [['Nombre', 'name', '4'], ['Activo', 'active', '1_3 right']]
@@ -32,6 +33,8 @@ module ListsHelper
       [['NIF', 'code_id', '2_3'], ['Nombre', 'name', '3'],
        ['Teléfono', 'contact_info.phone', '3_2'], ['Email', 'contact_info.email', '3_2'],
        ['% Dto.', 'discount_value', '1_3 right'], ['Activo', 'active', '1_3 right']]
+    when 'client_notes'
+      [['Fecha', 'date', '1'], ['Cliente', 'client.name', '3']]
     when 'configs'
       [['Nombre', 'name', '3_2'], ['Valor', 'value', '3']]
     when 'payment_types'

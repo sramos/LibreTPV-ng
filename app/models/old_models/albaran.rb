@@ -8,7 +8,7 @@ class OldModels::Albaran < OldModels
     all.each do |obj|
       invoice = OldModelsMap.find_by(old_object: obj.factura)
       if invoice.nil?
-        Rails.logger.error "No se ha encontrado la factura para #{obj.factura_id} - #{obj.factura&.codigo}"
+        Rails.logger.error "No se ha encontrado la factura #{obj.factura_id} - #{obj.factura&.codigo}"
         next
       end
       new_obj_data = {

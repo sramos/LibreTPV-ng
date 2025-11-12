@@ -1,0 +1,6 @@
+<% header ||= 'Formulario' unless defined?(header) %>
+<%= form_beginning model: [:sales, @note], header: header %>
+  <%= form_errors @note %>
+  <%= texto 'Nombre', 'note', 'name' %>
+  <%= _checkbox 'Activo', 'note', 'active', {elemento: 'elemento_x05', izquierda: true, abajo: true, checked: @note.active} %>
+<%= form_end %>

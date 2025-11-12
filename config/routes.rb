@@ -21,6 +21,7 @@ Rails.application.routes.draw do
     #  get :show_lines, on: :member
     #  resources :note_lines, path: :lines
     #end
+    resources :notes, path: :notes
     resources :clients, path: :clients do
       collection { post :filter }
     end

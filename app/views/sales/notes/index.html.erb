@@ -1,0 +1,8 @@
+<!--- Client Notes --->
+<div id="client_notes">
+  <%= index_header 'client_notes' %>
+    <% for note in @notes %>
+      <%= render partial: 'item', locals: {note: note} %>
+    <% end %>
+  <%= index_footer @notes %>
+</div>

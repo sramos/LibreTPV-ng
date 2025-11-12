@@ -1,0 +1,9 @@
+<div id="client_note_<%= note.id %>" class="listadofila<%= ' flash-highlight' if local_assigns[:highlight] %>">
+  <%= index_line note, 'client_notes' %>
+  <div class="listado_derecha">
+    <%= object_edition url: edit_sales_note_path(note.id), title: "Editar venta '#{note.name}'" %>
+    <%= object_destroy url: sales_note_path(note.id),
+                       title: "Eliminar venta '#{note.name}'",
+                       confirmation: "¿Está seguro de querer eliminar la venta '#{note.name}'?" %>
+  </div>
+</div>
