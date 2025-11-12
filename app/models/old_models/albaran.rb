@@ -8,17 +8,16 @@ class OldModels::Albaran < OldModels
     default_client_id = Client.first.id
     all.each do |obj|
       invoice = OldModelsMap.find_by(old_object: obj.factura)
-      if invoice.nil?
+      if obj.factura_id && invoice.nil?
         OldModels.log_error(obj, "No se ha encontrado la factura #{obj.factura_id} - #{obj.factura&.codigo}")
         next
       end
       new_obj_data = {
         code: obj.codigo,
-        date: obj.fecha,
+        date: obj.fecha||obj.created_at,
         closed: obj.cerrado,
         deposit: obj.deposito,
-        type: obj.cliente_id ? 'ClientNote' : 'SupplierNote',
-        invoice_id: invoice.new_object_id,
+        invoice_id: invoice&.new_object_id,
         devolution_date: obj.fecha_devolucion,
         created_at: obj.created_at,
         updated_at: obj.updated_at

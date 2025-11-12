@@ -22,13 +22,11 @@ class OldModels < ApplicationRecord
     OldModels::Proveedor.migrate unless Supplier.any?
     OldModels::Cliente.migrate unless Client.any?
     OldModels::Producto.migrate unless Product.any?
-    #OldModels::Factura.migrate unless Invoice.any?
-    #OldModels::Pago.migrate unless Payment.any?
-    #OldModels::Albaran.migrate unless Note.any?
-    #OldModels::AlbaranLinea.migrate unless NoteLine.any?
+    OldModels::Factura.migrate unless Invoice.any?
+    OldModels::Pago.migrate unless Payment.any?
+    OldModels::Albaran.migrate unless Note.any?
+    OldModels::AlbaranLinea.migrate unless NoteLine.any?
   
-    # "Error OldModels::Proveedor 533: #<ActiveModel::Errors [#<ActiveModel::Error attribute=discount, type=less_than_or_equal_to, options={value: 0.28e1, count: 1}>]>"] 
-
     puts "**** Tenemos #{@old_models_logs.count} errores en la migración" if @old_models_logs.count > 0
     @old_models_logs.each { |log| puts log }
   end

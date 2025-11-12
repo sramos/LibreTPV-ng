@@ -31,7 +31,7 @@ class OldModels::Producto < OldModels
       product_subtype = OldModelsMap.find_by(old_object: obj.materia)
       if product_subtype.nil?
         Rails.logger.warn "No se ha encontrado el subtipo de producto para materia #{obj.materia_id} - #{obj.materia&.nombre}"
-        product_subtype = product_type.product_subtypes.first
+        product_subtype = OldModelsMap.find_by(old_object: obj.familia.materia.find_by(valor_defecto: true))
       end
       if obj.editorial
         publisher = OldModelsMap.find_by(old_object: obj.editorial)
@@ -46,7 +46,7 @@ class OldModels::Producto < OldModels
         code: code,
         description: obj.descripcion,
         product_type_id: product_type.new_object_id,
-        product_subtype_id: product_subtype.new_object_id,
+        product_subtype_id: product_subtype&.new_object_id,
         price: obj.precio,
         stock: obj.cantidad,
         publisher_id: publisher&.new_object_id,
@@ -71,7 +71,6 @@ class OldModels::Producto < OldModels
   end
   def self.check_code(code)
     if Product.find_by(code: code)
-      code += " (D/#{obj.id})"
       code = self.check_code("D/#{code}")
     end
     return code

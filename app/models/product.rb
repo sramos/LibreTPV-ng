@@ -39,7 +39,7 @@ class Product < ApplicationRecord
       errors.add :base, I18n.t('errors.products.removal_with_existing_notes')
     end
     if stock > 0
-      #errors.add :base, I18n.t('errors.products.removal_with_stock')
+      errors.add :base, I18n.t('errors.products.removal_with_stock')
     end
     throw :abort unless errors.empty?
   end
