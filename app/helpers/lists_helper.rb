@@ -34,9 +34,16 @@ module ListsHelper
        ['Teléfono', 'contact_info.phone', '3_2'], ['Email', 'contact_info.email', '3_2'],
        ['% Dto.', 'discount_value', '1_3 right'], ['Activo', 'active', '1_3 right']]
     when 'client_notes'
-      [['Fecha', 'date', '1'], ['Cliente', 'client.name', '3']]
+      [['Fecha', 'date.to_date', '1'], ['Cliente', 'client.name', '3']]
     when 'configs'
       [['Nombre', 'name', '3_2'], ['Valor', 'value', '3']]
+    when 'note_lines'
+      [['Cant.', 'quantity', '1_3 right'], ['Código', 'product.code', '1'],
+       ['Nombre/Título', 'product_name', '3'],
+       ['Precio', 'product_price', '1_3 right'],
+       ['Subtotal', 'tax_base', '1_3 right'],
+       ['IVA', 'product_vat', '1_3 right'],
+       ['Total', 'total_amount', '1_3 right']]
     when 'payment_types'
       [['Nombre', 'name', '3_2'], ['Caja', 'cash', '1_3 right'], ['Activo', 'active', '1_3 right']]
     when 'products'

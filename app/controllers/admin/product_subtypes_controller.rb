@@ -2,7 +2,6 @@ module Admin
   class ProductSubtypesController < ApplicationController
     before_action :set_product_type
     before_action :set_product_subtype, only: [:edit, :update, :destroy]
-    before_action :form_values, only: [:new, :edit]
 
     def index
       @product_subtypes = @product_type.product_subtypes.order(:name).page(params[:page]).per(session[:per_page])
@@ -104,10 +103,6 @@ module Admin
       @product_subtype = @product_type.product_subtypes.find(params[:id])
     end
 
-    def form_values
-      @product_types = ProductType.active.collect { |product_type| [product_type.name, product_type.id] }
-    end
-    
     def product_subtype_params
       params.require(:product_subtype).permit(:name, :description, :active)
     end

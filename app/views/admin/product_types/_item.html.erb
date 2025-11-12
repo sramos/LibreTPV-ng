@@ -9,14 +9,5 @@
                        title: "Eliminar tipo de producto '#{product_type.name}'",
                        confirmation: "¿Está seguro de querer eliminar el tipo de producto '#{product_type.name}'?" %>
   </div>
-  <%= turbo_frame_tag "product_subtype_sub_#{product_type.id}" do %>
-    <div class="linea">
-      <div class="listado_derecha">
-        <%#= link_to icon('xmark', title: 'Cerrar'), '#',
-                    onclick: "document.getElementById('product_subtype_sub_#{product_type.id}').innerHTML=''; return false;",
-                    class: 'link-delete' %>
-      </div>
-    </div>
-    <div class="product_subtype-container"></div>
-  <% end %>
+  <%= turbo_frame_tag "product_subtype_sub_#{product_type.id}" %>
 </div>

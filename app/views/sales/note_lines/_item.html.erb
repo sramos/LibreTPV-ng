@@ -1,0 +1,9 @@
+<div id="note_line_<%= note_line.id %>" class="listadofila<%= ' flash-highlight' if local_assigns[:highlight] %>">
+  <%= index_line note_line, 'note_lines' %>
+  <div class="listado_derecha">
+    <%= object_edition url: edit_sales_note_note_line_path(@note.id, note_line.id), title: 'Editar linea de albarán' %>
+    <%= object_destroy url: sales_note_note_line_path(@note.id, note_line.id),
+                       title: 'Eliminar linea de albarán',
+                       confirmation: '¿Está seguro de querer eliminar la linea de albarán?' %>
+  </div>
+</div>

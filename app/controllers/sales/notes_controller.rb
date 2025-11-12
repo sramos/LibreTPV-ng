@@ -4,7 +4,7 @@ module Sales
 
     def index
       @note = ClientNote.new(date: Date.today, client_id: Client.first.id)
-      @notes = ClientNote.open.order(:date).page(params[:page]).per(session[:per_page])
+      @notes = ClientNote.open.order(date: :desc).page(params[:page]).per(session[:per_page])
       @format_xls = true
 
       respond_to do |format|
