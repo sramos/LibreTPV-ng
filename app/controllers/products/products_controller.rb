@@ -4,6 +4,17 @@ module Products
 
     def index
       index_filtered
+      @format_xls = true
+
+      respond_to do |format|
+        format.xlsx do
+          @xlsx_output = {type: 'products', objects: @products.except(:limit, :offset),
+                          title: 'Productos', filter_scope: filter_scope }
+          nom_fich = 'productos_' + Time.now.strftime("%Y-%m-%d")
+          render 'common_xlsx/index', xlsx: nom_fich, layout: false
+        end
+        format.html
+      end
     end
 
     def filter

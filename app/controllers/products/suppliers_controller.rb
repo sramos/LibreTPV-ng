@@ -4,6 +4,17 @@ module Products
 
     def index
       index_filtered
+      @format_xls = true
+
+      respond_to do |format|
+        format.xlsx do
+          @xlsx_output = {type: 'suppliers', objects: @suppliers.except(:limit, :offset),
+                          title: 'Proveedores', filter_scope: filter_scope }
+          nom_fich = 'proveedores_' + Time.now.strftime("%Y-%m-%d")
+          render 'common_xlsx/index', xlsx: nom_fich, layout: false
+        end
+        format.html
+      end
     end
 
     def new
@@ -96,8 +107,12 @@ module Products
                          ['Email','email','string'],
                          ['NIF','code_id','string'] ]
       @suppliers = Supplier.order(:name)
-      value = session[filter_scope]['value']
-      if session[filter_scope] && value.present?
+
+      puts "****** #{filter_scope}"
+      puts "****** session[filter_scope]: #{session[filter_scope]}"
+      session[filter_scope] ||= {}
+      value = session[filter_scope]['value'] if session[filter_scope]
+      if value.present?
         case session[filter_scope]['type']
         when 'name'
           @suppliers = @suppliers.where("name LIKE ?", "%#{value}%")

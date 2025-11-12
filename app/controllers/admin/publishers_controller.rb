@@ -4,6 +4,17 @@ module Admin
 
     def index
       index_filtered
+      @format_xls = true
+
+      respond_to do |format|
+        format.xlsx do
+          @xlsx_output = {type: 'publishers', objects: @publishers.except(:limit, :offset),
+                          title: 'Editoriales' }
+          nom_fich = 'editoriales_' + Time.now.strftime("%Y-%m-%d")
+          render 'common_xlsx/index', xlsx: nom_fich, layout: false
+        end
+        format.html
+      end
     end
 
     def new

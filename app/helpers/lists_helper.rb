@@ -53,7 +53,7 @@ module ListsHelper
     when 'users'
       [['Nombre', 'name', '2'], ['Email', 'email', '2'], ['Activo', 'active', '1_3 right']]
     when 'vats'
-      [['Nombre', 'name', '3_2'], ['% IVA', 'rate_value', '1_3 right'], ['&nbsp', '', '1_5'], ['Activo', 'active', '1_3 right']]
+      [['Nombre', 'name', '3_2'], ['% IVA', 'rate_value', '1_3 right'], ['Activo', 'active', '1_2 right']]
     end
   end
 

@@ -4,6 +4,17 @@ module Admin
 
     def index
       @vats = Vat.order(:name).page(params[:page]).per(session[:per_page])
+      @format_xls = true
+
+      respond_to do |format|
+        format.xlsx do
+          @xlsx_output = {type: 'vats', objects: @vats.except(:limit, :offset),
+                          title: 'Tipos de IVA'}
+          nom_fich = 'ivas_' + Time.now.strftime("%Y-%m-%d")
+          render 'common_xlsx/index', xlsx: nom_fich, layout: false
+        end
+        format.html
+      end
     end
 
     def new

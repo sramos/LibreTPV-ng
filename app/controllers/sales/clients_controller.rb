@@ -4,6 +4,17 @@ module Sales
 
     def index
       index_filtered
+      @format_xls = true
+
+      respond_to do |format|
+        format.xlsx do
+          @xlsx_output = {type: 'clients', objects: @clients.except(:limit, :offset),
+                          title: 'Clientes', filter_scope: filter_scope }
+          nom_fich = 'clientes_' + Time.now.strftime("%Y-%m-%d")
+          render 'common_xlsx/index', xlsx: nom_fich, layout: false
+        end
+        format.html
+      end
     end
 
     def new

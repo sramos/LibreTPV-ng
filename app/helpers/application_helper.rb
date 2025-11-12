@@ -14,7 +14,7 @@ module ApplicationHelper
       output += "<div class='index_field element_#{field[2]}'>" + field[0] + "</div>"
     end
     output += "<div class='listado_derecha'>"
-    output += link_to( icon('download', title: 'Exportar a XLS'), request.parameters.merge({format: :xls, format_xls_count: (@format_xls.to_i+1)}) ) if @format_xls    
+    output += link_to( icon('download', title: 'Exportar a XLS'), request.parameters.merge({format: :xlsx})) if @format_xls    
     output += link_to( icon('plus', title: attrs[:title]||'Añadir nuevo'),
                        attrs[:new_url] || '#',
                        data: { turbo_method: :get, turbo_frame: 'modal' },

@@ -4,6 +4,17 @@ module Admin
 
     def index
       index_filtered
+      @format_xls = true
+
+      respond_to do |format|
+        format.xlsx do
+          @xlsx_output = {type: 'authors', objects: @authors.except(:limit, :offset),
+                          title: 'Autores', filter_scope: filter_scope }
+          nom_fich = 'autores_' + Time.now.strftime("%Y-%m-%d")
+          render 'common_xlsx/index', xlsx: nom_fich, layout: false
+        end
+        format.html
+      end
     end
 
     def new

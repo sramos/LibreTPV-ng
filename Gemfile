@@ -52,9 +52,9 @@ gem 'kaminari'
 gem "devise", "~> 4.9.4"
 gem 'devise-i18n'
 
-# Export to XLS
-gem 'spreadsheet'
-gem 'spreadsheet_on_rails'
+# Export to XLSX
+gem 'caxlsx'
+gem 'caxlsx_rails'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
