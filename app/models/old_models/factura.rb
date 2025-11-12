@@ -21,7 +21,7 @@ class OldModels::Factura < OldModels
         new_obj_data[:income_retention] = (obj.valor_irpf||0.0)/100
         supplier = OldModelsMap.find_by(old_object: obj.proveedor)
         if supplier.nil?
-          Rails.logger.error "No se ha encontrado el proveedor #{obj.proveedor_id} - #{obj.proveedor&.nombre}"
+          OldModels.log_error(obj, "No se ha encontrado el proveedor #{obj.proveedor_id} - #{obj.proveedor&.nombre}")
           next
         end
         new_obj_data[:supplier_id] = supplier.new_object_id

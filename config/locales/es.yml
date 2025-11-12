@@ -17,7 +17,7 @@ es:
       reopen_with_invoice: No se puede reabrir un albarán que tenga factura emitida
     products:
       removal_with_existing_notes: No se puede eliminar un producto incluído en albaranes
-      removal_with_non_zero_stock: No se puede eliminar un producto cuyo stock no sea cero
+      removal_with_stock: No se puede eliminar un producto con stock
     publishers:
       removal_with_existing_products: No se puede eliminar un editor que tenga productos en el catálogo
     supplier_invoices:

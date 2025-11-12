@@ -19,7 +19,7 @@ en:
       removal_with_existing_products: Cannot remove an editor with products in the catalog
     products:
       removal_with_existing_notes: Cannot remove a product included in invoices
-      removal_with_non_zero_stock: Cannot remove a product with non-zero stock
+      removal_with_stock: Cannot remove a product with non-zero stock
     supplier_invoices:
       unique_for_supplier: must be unique for the supplier
     suppliers:

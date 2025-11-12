@@ -4,26 +4,29 @@ class OldModels::Proveedor < OldModels
 
   def self.migrate
     all.each do |obj|
-      new_obj = Supplier.create(
-        name: obj.nombre,
-        code_id: obj.cif || '',
-        discount: obj.descuento || 0,
-        active: true,
-        created_at: obj.created_at,
-        updated_at: obj.updated_at
-      )
-      if new_obj.errors.empty?
-        ContactInfo.create(
-          contactable: new_obj,
-          email: obj.email || '',
-          phone: obj.telefono || '',
-          address: obj.direccion || '',
-          created_at: obj.created_at,
-          updated_at: obj.updated_at
-        )
-      end
-      OldModels.log_migration(obj, new_obj)
+      obj.migrate_object
     end
+  end
+  def migrate_object
+    new_obj = Supplier.create(
+      name: nombre,
+      code_id: cif || '',
+      discount: [(descuento || 0)/100.0, 1.0].min,
+      active: true,
+      created_at: created_at,
+      updated_at: updated_at
+    )
+    if new_obj.errors.empty?
+      ContactInfo.create(
+        contactable: new_obj,
+        email: email || '',
+        phone: telefono || '',
+        address: direccion || '',
+        created_at: created_at,
+        updated_at: updated_at
+      )
+    end
+    OldModels.log_migration(self, new_obj)
   end
 
   # Devuelve un array de las líneas de albaran compradas

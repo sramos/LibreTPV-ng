@@ -25,24 +25,25 @@ class OldModels::Producto < OldModels
     all.each do |obj|
       product_type = OldModelsMap.find_by(old_object: obj.familia)
       if product_type.nil?
-        Rails.logger.error "No se ha encontrado el tipo de producto para #{obj.familia_id} - #{obj.familia&.nombre}"
+        OldModels.log_error(obj, "No se ha encontrado el tipo de producto #{obj.id} - #{obj.familia&.nombre}")
         next
       end
       product_subtype = OldModelsMap.find_by(old_object: obj.materia)
       if product_subtype.nil?
-        Rails.logger.error "No se ha encontrado el subtipo de producto para materia #{obj.materia_id} - #{obj.materia&.nombre}"
-        next
+        Rails.logger.warn "No se ha encontrado el subtipo de producto para materia #{obj.materia_id} - #{obj.materia&.nombre}"
+        product_subtype = product_type.product_subtypes.first
       end
       if obj.editorial
         publisher = OldModelsMap.find_by(old_object: obj.editorial)
         if publisher.nil?
-          Rails.logger.error "No se ha encontrado la editorial para editorial #{obj.editorial_id} - #{obj.editorial&.nombre}"
+          OldModels.log_error(obj, "No se ha encontrado la editorial #{obj.editorial_id} - #{obj.editorial&.nombre}")
           next
         end
       end
+      code = OldModels::Producto.check_code(obj.codigo)
       new_obj = Product.create(
         name: obj.nombre,
-        code: obj.codigo,
+        code: code,
         description: obj.descripcion,
         product_type_id: product_type.new_object_id,
         product_subtype_id: product_subtype.new_object_id,
@@ -57,7 +58,7 @@ class OldModels::Producto < OldModels
         obj.autor_x_producto.each do |autor_x_producto|
           autor = OldModelsMap.find_by(old_object: autor_x_producto.autor)
           if autor.nil?
-            Rails.logger.error "No se ha encontrado el autor para #{autor_x_producto.autor.nombre}"
+            OldModels.log_error(obj, "No se ha encontrado el autor #{autor_x_producto.autor_id} - #{autor_x_producto.autor&.nombre}")
             next
           end
           new_obj.product_authors.create(
@@ -67,6 +68,13 @@ class OldModels::Producto < OldModels
       end
       OldModels.log_migration(obj, new_obj)
     end
+  end
+  def self.check_code(code)
+    if Product.find_by(code: code)
+      code += " (D/#{obj.id})"
+      code = self.check_code("D/#{code}")
+    end
+    return code
   end
 
   # Creamos un attr_writer para guardar en @editor el valor (y luego relacionarlo con el modelo)=

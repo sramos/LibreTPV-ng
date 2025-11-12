@@ -6,7 +6,7 @@ class OldModels::Materia < OldModels
     all.each do |obj|
       product_type = OldModelsMap.find_by(old_object: obj.familia)
       if product_type.nil?
-        Rails.logger.error "No se ha encontrado el tipo de producto para #{obj.familia.nombre}"
+        OldModels.log_error(obj, "No se ha encontrado el tipo de producto #{obj.id} - #{obj.familia&.nombre}")
         next
       end
       new_obj = ProductSubtype.create(

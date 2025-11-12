@@ -11,6 +11,7 @@ class NoteLine < ApplicationRecord
   #validate :avoid_changes_on_disabled_note
 
   before_validation :set_product_values
+  before_destroy :validate_destroy, prepend: true
 
   def total_amount
     base = product_price * quantity
@@ -38,8 +39,15 @@ class NoteLine < ApplicationRecord
   end
 
   def avoid_changes_on_disabled_note
-    if note&.closed == true
+    if note&.closed
       errors.add(:base, I18n.t('errors.notes.closed_note'))
+    end
+  end
+
+  def validate_destroy
+    if note&.closed
+      errors.add(:base, I18n.t('errors.notes.removal_closed_note'))
+      throw :abort
     end
   end
 end

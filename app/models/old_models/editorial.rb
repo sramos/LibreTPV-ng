@@ -3,14 +3,18 @@ class OldModels::Editorial < OldModels
 
   def self.migrate
     all.each do |obj|
-      new_obj = Publisher.create(
-        name: obj.nombre || 'N/A',
-        active: true,
-        created_at: obj.created_at,
-        updated_at: obj.updated_at
-      )
-      OldModels.log_migration(obj, new_obj)
+      obj.migrate_object
     end
+  end
+
+  def migrate_object
+    new_obj = Publisher.create(
+      name: self.nombre.blank? ? 'N/A' : self.nombre,
+      active: true,
+      created_at: self.created_at,
+      updated_at: self.updated_at
+    )
+    OldModels.log_migration(self, new_obj)
   end
 
   # Renombra una editorial (si ya existe alguno con el nombre propuesto, mueve los libros al nuevo)

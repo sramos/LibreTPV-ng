@@ -7,12 +7,12 @@ class OldModels::Pago < OldModels
     all.each do |obj|
       invoice = OldModelsMap.find_by(old_object: obj.factura)
       if invoice.nil?
-        Rails.logger.error "No se ha encontrado la factura para #{obj.factura_id} - #{obj.factura&.codigo}"
+        OldModels.log_error(obj, "No se ha encontrado la factura #{obj.factura_id} - #{obj.factura&.codigo}")
         next
       end
       payment_type = OldModelsMap.find_by(old_object: obj.forma_pago)
       if payment_type.nil?
-        Rails.logger.error "No se ha encontrado la forma de pago para #{obj.forma_pago_id} - #{obj.forma_pago&.nombre}"
+        OldModels.log_error(obj, "No se ha encontrado la forma de pago #{obj.forma_pago_id} - #{obj.forma_pago&.nombre}")
         next
       end
       new_obj = Payment.create(

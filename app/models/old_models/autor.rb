@@ -4,14 +4,21 @@ class OldModels::Autor < OldModels
 
   def self.migrate
     all.each do |obj|
-      new_obj = Author.create(
-        name: obj.nombre,
-        active: true,
-        created_at: obj.created_at,
-        updated_at: obj.updated_at
-      )
-      OldModels.log_migration(obj, new_obj)
+      obj.migrate_object
     end
+  end
+
+  def migrate_object
+    new_obj = Author.create(
+      name: self.nombre,
+      active: true,
+      created_at: self.created_at,
+      updated_at: self.updated_at
+    )
+    if self.nombre && new_obj.errors[:name].present?
+      new_obj = Author.find_by(name: self.nombre)
+    end
+    OldModels.log_migration(self, new_obj)
   end
   
   # Renombra a un autor (si ya existe alguno con el nombre propuesto, mueve los libros al nuevo)

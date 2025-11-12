@@ -5,10 +5,11 @@ class OldModels::Albaran < OldModels
   belongs_to :factura
 
   def self.migrate
+    default_client_id = Client.first.id
     all.each do |obj|
       invoice = OldModelsMap.find_by(old_object: obj.factura)
       if invoice.nil?
-        Rails.logger.error "No se ha encontrado la factura #{obj.factura_id} - #{obj.factura&.codigo}"
+        OldModels.log_error(obj, "No se ha encontrado la factura #{obj.factura_id} - #{obj.factura&.codigo}")
         next
       end
       new_obj_data = {
@@ -26,15 +27,16 @@ class OldModels::Albaran < OldModels
         new_obj_data[:type] = 'ClientNote'
         cliente = OldModelsMap.find_by(old_object: obj.cliente)
         if cliente.nil?
-          Rails.logger.error "No se ha encontrado el cliente para #{obj.cliente_id} - #{obj.cliente&.nombre}"
-          next
+          Rails.logger.warn "No se ha encontrado el cliente #{obj.cliente_id} - #{obj.cliente&.nombre}"
+          new_obj_data[:client_id] = default_client_id
+        else
+          new_obj_data[:client_id] = cliente.new_object_id
         end
-        new_obj_data[:client_id] = cliente.new_object_id
       else
         new_obj_data[:type] = 'SupplierNote'
         proveedor = OldModelsMap.find_by(old_object: obj.proveedor)
         if proveedor.nil?
-          Rails.logger.error "No se ha encontrado el proveedor para #{obj.proveedor_id} - #{obj.proveedor&.nombre}"
+          OldModels.log_error(obj, "No se ha encontrado el proveedor #{obj.proveedor_id} - #{obj.proveedor&.nombre}")
           next
         end
         new_obj_data[:supplier_id] = proveedor.new_object_id
