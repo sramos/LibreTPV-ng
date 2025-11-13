@@ -273,7 +273,7 @@ module OldApplicationHelper
         controladores = [ #{ label: 'Pedidos', controlador: 'pedidos' },
                           { label: 'Facturas Clientes', controlador: 'sales/client_invoices' },
                           { label: 'Clientes', controlador: 'sales/clients' },
-                          #{ label: 'Entradas/Salidas de Caja', controlador: 'caja' },
+                          { label: 'Entradas/Salidas de Caja', controlador: 'sales/cash' },
                           { label: 'Ventas/Devoluciones', controlador: 'sales/client_notes' }
                         ]
       when :products

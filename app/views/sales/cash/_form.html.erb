@@ -1,0 +1,10 @@
+<% header ||= 'Formulario' unless defined?(header) %>
+<%= form_beginning model: [:sales, @cash], header: header %>
+  <%= form_errors @cash %>
+  <%= texto 'Importe (€)', 'cash', 'amount', 0.0 %>
+  <%= texto 'Observaciones', 'cash', 'comments' %>
+  <div class="linea"><br></div>
+  <div class="linea">
+    <%= 'NOTA: Importe positivo para entrada de efectivo en caja, negativo para retirada.' %>
+  </div>
+<%= form_end %>

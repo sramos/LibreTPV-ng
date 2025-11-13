@@ -1,0 +1,8 @@
+<!--- Cash --->
+<div id="cash">
+  <%= index_header 'cash', {new_url: new_sales_cash_path, title: 'Nueva entrada/salida de caja' } %>
+    <% for cash in @cashs %>
+      <%= render partial: 'item', locals: {cash: cash} %>
+    <% end %>
+  <%= index_footer @cashs %>
+</div>

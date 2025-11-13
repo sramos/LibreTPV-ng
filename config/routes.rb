@@ -26,13 +26,14 @@ Rails.application.routes.draw do
       resources :note_lines, path: :note_lines, only: [:index, :edit, :update, :destroy]
       resources :client_invoices, path: :invoices, only: [:new, :create]
     end
+    resources :client_invoices, path: :invoices, except: [:new, :create] do
+      collection { post :filter }
+    end
     resources :clients, path: :clients do
       collection { post :filter }
       member { get :add_credit }
     end
-    resources :client_invoices, path: :invoices, except: [:new, :create] do
-      collection { post :filter }
-    end
+    resources :cash, path: :cash, only: [:index, :new, :create]
   end
   namespace :products, section: :products do
     resources :products, path: :products do

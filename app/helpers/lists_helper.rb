@@ -29,6 +29,8 @@ module ListsHelper
     case object_type.to_s
     when 'authors'
       [['Nombre', 'name', '4'], ['Activo', 'active', '1_3 right']]
+    when 'cash'
+      [['Fecha', 'date.to_date', '1'], ['Importe', 'amount', '2_3 right'], ['Observaciones', 'comments', '5']]
     when 'clients'
       [['NIF', 'code_id', '2_3'], ['Nombre', 'name', '3'],
        ['Email', 'contact_info.email', '2'],

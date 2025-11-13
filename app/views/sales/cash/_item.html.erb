@@ -1,0 +1,6 @@
+<div id="cash_<%= cash.id %>" class="listadofila<%= ' flash-highlight' if local_assigns[:highlight] %>">
+  <%= index_line cash, 'cash' %>
+  <div class="listado_derecha">
+    <%= icon('exclamation', title: 'Anotación de cierre de caja') if cash.cash_count %>
+  </div>
+</div>
