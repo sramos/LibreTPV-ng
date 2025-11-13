@@ -274,7 +274,7 @@ module OldApplicationHelper
                           #{ label: 'Facturas Clientes', controlador: 'factura' },
                           { label: 'Clientes', controlador: 'sales/clients' },
                           #{ label: 'Entradas/Salidas de Caja', controlador: 'caja' },
-                          { label: 'Ventas/Devoluciones', controlador: 'sales/notes' }
+                          { label: 'Ventas/Devoluciones', controlador: 'sales/client_notes' }
                         ]
       when :products
         controladores = [ #{ label: 'Facturas Proveedores', controlador: 'factura' },

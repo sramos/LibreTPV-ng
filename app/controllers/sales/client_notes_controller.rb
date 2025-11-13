@@ -1,10 +1,11 @@
 module Sales
-  class NotesController < ApplicationController
+  class ClientNotesController < ApplicationController
     before_action :set_note, only: [:edit, :update, :destroy]
 
     def index
       @note = ClientNote.new(date: Date.today, client_id: Client.first.id)
       @notes = ClientNote.open.order(date: :desc).page(params[:page]).per(session[:per_page])
+      @clients = Client.active.order(:name)
       @format_xls = true
 
       respond_to do |format|
@@ -102,6 +103,10 @@ module Sales
     end
 
     private
+
+    def set_note
+      @note = ClientNote.find(params[:id])
+    end
 
     def note_params
       params.require(:note).permit(:name, :active)

@@ -155,10 +155,12 @@ i.fa, i.fas, i.far, i.fab {
 .element_8   { width:960px;  }
 .element_9   { width:1080px; }
 
+.left {
+  text-align: left;
+}
 .right {
   text-align: right;
 }
-
 .center {
   text-align: center;
 }

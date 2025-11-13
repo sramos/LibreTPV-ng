@@ -71,7 +71,7 @@ module Sales
     private
 
     def set_note
-      @note = Note.find(params[:note_id])
+      @note = ClientNote.find(params[:client_note_id])
     end
     
     def set_note_line
@@ -82,7 +82,7 @@ module Sales
     end
     
     def note_line_params
-      params.require(:note_line).permit(:product_id, :quantity, :price)
+      params.require(:note_line).permit(:quantity, :discount_value)
     end
   end
 end
