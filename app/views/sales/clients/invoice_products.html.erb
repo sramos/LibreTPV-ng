@@ -1,0 +1,8 @@
+<%= turbo_frame_tag "client_#{@client.id}_sub" do %>
+  <!--- Sold products --->
+  <%= subindex_header 'product_subtypes', {title: 'Productos vendidos', dom_id: "invoice_products_client_#{@client.id}"} %>
+    <% for line in @lines %>
+      <%= render partial: 'invoice_product', locals: {line: line} %>
+    <% end %>
+  <%= subindex_footer @lines %>
+<% end %>

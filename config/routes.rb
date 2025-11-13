@@ -31,7 +31,10 @@ Rails.application.routes.draw do
     end
     resources :clients, path: :clients do
       collection { post :filter }
-      member { get :add_credit }
+      member do
+        get :add_credit
+        get :invoice_products
+      end
     end
     resources :cash, path: :cash, only: [:index, :new, :create]
   end

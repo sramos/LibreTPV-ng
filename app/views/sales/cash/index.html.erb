@@ -1,6 +1,9 @@
 <!--- Cash --->
 <div id="cash">
   <%= index_header 'cash', {new_url: new_sales_cash_path, title: 'Nueva entrada/salida de caja' } %>
+    <%= turbo_frame_tag 'new_cash_tag' do %>
+      <div id='new_cash_tag'></div>
+    <% end %>
     <% for cash in @cashs %>
       <%= render partial: 'item', locals: {cash: cash} %>
     <% end %>

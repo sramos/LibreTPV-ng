@@ -46,7 +46,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_10_231918) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "cashes", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+  create_table "cash", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.decimal "amount", precision: 8, scale: 2, null: false
     t.datetime "date"
     t.boolean "cash_count", default: false, null: false
@@ -63,6 +63,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_10_231918) do
     t.boolean "active", default: true, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "acumulated_credit", precision: 8, scale: 2, default: "0.0", null: false
   end
 
   create_table "configs", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|

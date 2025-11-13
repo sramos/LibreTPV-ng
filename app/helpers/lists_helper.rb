@@ -46,6 +46,9 @@ module ListsHelper
       [['Fecha', 'date.to_date', '2_3'], ['Código', 'code', '4_3'], ['Cliente', 'client.name', '4'],
        ['Base Imp.', 'tax_base', '2_3 right'], ['IVA', 'total_vat', '1_2 right'],
        ['Importe', 'total_amount', '2_3 right']]
+    when 'invoice_products'
+      [['Fecha', 'note.date.to_date', '1'], ['Cant.', 'quantity', '1_3 right'], ['Código', 'product.code', '4_3'],
+       ['Nombre/Título', 'product_name', '3'], ['Factura', 'note.invoice.code', '4_3']]
     when 'note_lines'
       [['Cant.', 'quantity', '1_3 right'], ['Código', 'product.code', '3_4'],
        ['Nombre/Título', 'product_name', '5_2'],

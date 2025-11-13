@@ -4,6 +4,10 @@ class Client < ApplicationRecord
 
   has_one :contact_info, as: :contactable, required: false
   has_many :notes
+  has_many :client_invoices
+  has_many :client_notes, through: :client_invoices
+  has_many :note_lines, through: :client_notes
+  has_many :products, through: :note_lines
 
   validates :name, presence: true
   validates :discount, presence: true, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 1 }

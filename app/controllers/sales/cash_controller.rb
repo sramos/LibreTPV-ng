@@ -2,12 +2,12 @@ module Sales
   class CashController < ApplicationController
 
     def index
-      @cashs = Cash.order(date: :desc)
+      @cashs = Cash.order(date: :desc).page(params[:page]).per(session[:per_page])
       @format_xls = true
 
       respond_to do |format|
         format.xlsx do
-          @xlsx_output = {type: 'cashs', objects: @cashs.except(:limit, :offset),
+          @xlsx_output = {type: 'cash', objects: @cashs.except(:limit, :offset),
                           title: 'Movimientos de caja', filter_scope: filter_scope }
           nom_fich = 'movimientos_de_caja_' + Time.now.strftime("%Y-%m-%d")
           render 'common_xlsx/index', xlsx: nom_fich, layout: false
@@ -25,16 +25,15 @@ module Sales
     end
 
     def create
-      @cash = Cash.new(cash_params)
-      if @cash.save
+      @cash = Cash.new(date: DateTime.now, cash_count: false)
+      if @cash.update(cash_params)
         respond_to do |format|
           format.turbo_stream do
             render turbo_stream: helpers.update_object_turbo_stream(
-              container_dom_id: 'new_cashs_tag',
+              container_dom_id: 'new_cash_tag',
               stream_action: :after,
               stream_locals: { cash: @cash },
-              highlight_dom_id: "cash_#{@cash.id}",
-              show_section_id: 'new_cashs_section'
+              highlight_dom_id: "cash_#{@cash.id}"
             )
           end
           format.html { redirect_to sales_cash_path, notice: 'Movimiento de caja creado correctamente' }

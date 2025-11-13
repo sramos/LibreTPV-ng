@@ -192,7 +192,7 @@ module ApplicationHelper
   def form_beginning attrs={}
     attrs[:model] ||= '#'
     attrs[:header] ||= 'Formulario'
-    attrs[:turbo_frame] ||= '#'
+    attrs[:turbo_frame] ||= '_top'
     attrs[:html_class] ||= 'form-box'
     output  = '<div class="modal-overlay" onclick="document.getElementById(\'modal\').innerHTML=\'\'"></div>'
     output += '<div class="modal-panel" onclick="event.stopPropagation()">'

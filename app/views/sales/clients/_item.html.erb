@@ -1,6 +1,9 @@
 <div id="client_<%= client.id %>" class="listadofila<%= ' flash-highlight' if local_assigns[:highlight] %>">
   <%= index_line client, 'clients' %>
   <div class="listado_derecha">
+    <%= object_action icon: icon('cart-shopping', title: 'Productos vendidos'),
+                          turbo_frame: "client_#{client.id}_sub",
+                          url: invoice_products_sales_client_path(client.id) %>
     <%= object_edition icon: icon('euro', title: 'Añadir crédito'),
                        url: add_credit_sales_client_path(client.id), title: "Añadir crédito a '#{client.name}'" %> 
     <%= object_edition url: edit_sales_client_path(client.id), title: "Editar cliente '#{client.name}'" %>
@@ -8,4 +11,5 @@
                        title: "Eliminar cliente '#{client.name}'",
                        confirmation: "¿Está seguro de querer eliminar el cliente '#{client.name}'?" %>
   </div>
+  <%= turbo_frame_tag "client_#{client.id}_sub" %>
 </div>

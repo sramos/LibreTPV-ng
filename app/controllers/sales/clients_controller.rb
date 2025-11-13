@@ -1,6 +1,6 @@
 module Sales
   class ClientsController < ApplicationController
-    before_action :set_client, only: [:edit, :update, :destroy, :add_credit]
+    before_action :set_client, except: [:index, :new, :create]
 
     def index
       index_filtered
@@ -104,6 +104,22 @@ module Sales
 
     def add_credit
       respond_to do |format|
+        format.html { render layout: false }
+        format.turbo_stream
+      end
+    end
+
+    def invoice_products
+      @lines = @client.note_lines.page(params[:page]).per(session[:per_page])
+      @format_xls = true
+
+      respond_to do |format|
+        format.xlsx do
+          @xlsx_output = {type: 'invoice_products', objects: @lines.except(:limit, :offset),
+                          title: 'Productos vendidos' }
+          nom_fich = 'productos_vendidos_' + Time.now.strftime("%Y-%m-%d")
+          render 'common_xlsx/index', xlsx: nom_fich, layout: false
+        end
         format.html { render layout: false }
         format.turbo_stream
       end
