@@ -6,8 +6,16 @@ module Sales
 
     def index
       @note_lines = @note.note_lines.page(params[:page]).per(session[:per_page])
+      @format_xls = true
+
       respond_to do |format|
         format.html { render layout: false }
+        format.xlsx do
+          @xlsx_output = {type: 'note_lines', objects: @note_lines.except(:limit, :offset),
+                          title: 'Productos de venta', filter_scope: filter_scope }
+          nom_fich = 'productos_venta_' + Time.now.strftime("%Y-%m-%d")
+          render 'common_xlsx/index', xlsx: nom_fich, layout: false
+        end
         format.turbo_stream
       end
     end

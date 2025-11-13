@@ -99,6 +99,7 @@ module ApplicationHelper
     fields = object_type.is_a?(Array) ? object_type : index_fields(object_type)
     output  = '<br><fieldset class="sublistado">'
     output += "<legend>#{attrs[:title]}</legend><div class='listado_derecha'>"
+    output += link_to( icon('download', title: 'Exportar a XLS'), request.parameters.merge({format: :xlsx})) if @format_xls
     output += link_to icon('xmark', title: 'Cerrar'), '#',
                       onclick: "document.getElementById('#{attrs[:dom_id]}').innerHTML=''; return false;",
                       class: 'link-delete'
@@ -106,7 +107,7 @@ module ApplicationHelper
 
     output += '<div class="listadocabecera">'
     for field in fields
-      output += "<div class='listado_campo_#{field[2]}' id='listado_campo_etiqueta_#{field[1]}'>" + field[0] + "</div>"
+      output += "<div class='index_field element_#{field[2]}'>" + field[0] + "</div>"
     end
     if attrs[:new_url]
       output += '<div class="listado_derecha">'
