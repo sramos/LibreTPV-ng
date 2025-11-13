@@ -89,6 +89,13 @@ i.fa, i.fas, i.far, i.fab {
   background: #f9fafb; /* gray-50 */
 }
 
+/* Consistent 16x16 icon box for Font Awesome icons */
+i.fa-2x {
+  width: 32px;
+  height: 32px;
+  font-size: 24px; /* fits well in 32px box */
+}
+
 /* Slightly darker border on hover for visibility */
 .link-edit:hover i.fa, .link-edit:hover i.fas, .link-edit:hover i.far, .link-edit:hover i.fab,
 .link-delete:hover i.fa, .link-delete:hover i.fas, .link-delete:hover i.far, .link-delete:hover i.fab {
@@ -163,4 +170,13 @@ i.fa, i.fas, i.far, i.fab {
 }
 .center {
   text-align: center;
+}
+
+/* Flash success fade-out */
+.flash-fade {
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.flash-fade.hide {
+  opacity: 0;
+  transform: translateY(-4px);
 }

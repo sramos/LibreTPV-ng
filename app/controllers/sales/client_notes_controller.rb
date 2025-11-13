@@ -83,13 +83,21 @@ module Sales
       else
         msg = 'Se han producido errores eliminando la cesta de venta: ' + @note.errors.inspect
       end
+      # If coming from edit page with redirect flag, force full redirect to index
+      if params[:redirect].present?
+        flash[:mensaje_ok] = msg
+        return redirect_to sales_client_notes_path
+      end
       respond_to do |format|
         format.turbo_stream do
           render turbo_stream: helpers.remove_object_turbo_stream(
             container_dom_id: "client_note_#{@note.id}", message: msg
           )
         end
-        format.html { redirect_to sales_client_notes_path, notice: msg }
+        format.html do
+          flash[:mensaje_ok] = msg
+          redirect_to sales_client_notes_path
+        end
       end
     rescue => e
       redirect_to sales_client_notes_path, alert: "Error al eliminar la nota: #{e.message}"

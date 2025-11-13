@@ -8,15 +8,10 @@
     <% end %>
     <br/>
     <% confirmation_text = "¿Estás seguro de eliminar la cesta?" %>
-    <%= object_action icon: icon('trash-can', title: 'Eliminar cesta'),
-                      turbo_frame: "client_note_#{@note.id}_sub",
-                      url: sales_client_note_note_lines_path(@note.id) %>
-    <%#= link_to icono('Trash', {title: 'Eliminar compra', size: 'grande'}), 
-      client_note_path(@note.id), 
-      data: { 
-        turbo_method: :delete,
-        turbo_confirm: confirmation_text,
-        turbo_frame: '_top'  # Esto fuerza a recargar toda la página
-      } %>
+    <%= link_to sales_client_note_path(@note.id, redirect: 1),
+                data: { turbo_method: :delete, turbo_confirm: confirmation_text, disable_turbo_frame: true },
+                class: 'link-delete' do %>
+      <%= icon('trash-can', size: '2x', title: 'Eliminar cesta') %>
+    <% end %>
   </div>
 </div>

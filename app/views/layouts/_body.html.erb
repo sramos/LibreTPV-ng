@@ -1,7 +1,23 @@
 <!-- CONTENIDO DE LAS ACCIONES -->
 <div id="centro" class="centro <%= 'unsigned-user' unless user_signed_in? %>">
   <!-- Mensajes de informacion -->
-  <%= mensaje_ok flash[:mensaje_ok] if flash[:mensaje_ok] %>
+  <% if flash[:mensaje_ok] %>
+    <div id="flash_ok_wrapper" class="flash-fade">
+      <%= mensaje_ok flash[:mensaje_ok] %>
+    </div>
+    <script>
+      (function(){
+        var el = document.getElementById('flash_ok_wrapper');
+        if (!el) return;
+        setTimeout(function(){
+          el.classList.add('hide');
+        }, 2500);
+        setTimeout(function(){
+          if (el && el.parentNode) { el.parentNode.removeChild(el); }
+        }, 3200);
+      })();
+    </script>
+  <% end %>
   <%= mensaje_error(flash[:error]) if flash[:error]%>
   <%= render partial: 'common/index_filter' if @filter_fields %>
   <!-- Contenido de cada accion -->
