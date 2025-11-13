@@ -79,15 +79,15 @@ module Sales
 
     def destroy
       if @note.destroy
-        msg = 'Nota eliminada correctamente'
+        msg = 'Cesta de venta eliminada correctamente'
       else
-        msg = 'Se han producido errores eliminando la nota: ' + @note.errors.inspect
+        msg = 'Se han producido errores eliminando la cesta de venta: ' + @note.errors.inspect
       end
       respond_to do |format|
         format.turbo_stream do
-          render turbo_stream: [
-            turbo_stream.remove("client_note_#{@note&.id}")
-          ]
+          render turbo_stream: helpers.remove_object_turbo_stream(
+            container_dom_id: "client_note_#{@note.id}", message: msg
+          )
         end
         format.html { redirect_to sales_client_notes_path, notice: msg }
       end

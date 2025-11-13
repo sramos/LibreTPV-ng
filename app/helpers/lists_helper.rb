@@ -38,8 +38,8 @@ module ListsHelper
     when 'configs'
       [['Nombre', 'name', '3_2'], ['Valor', 'value', '3']]
     when 'note_lines'
-      [['Cant.', 'quantity', '1_3 right'], ['Código', 'product.code', '1'],
-       ['Nombre/Título', 'product_name', '3'],
+      [['Cant.', 'quantity', '1_3 right'], ['Código', 'product.code', '3_4'],
+       ['Nombre/Título', 'product_name', '5_2'],
        ['Precio', 'product_price', '2_3 right'], ['Subtotal', 'tax_base', '2_3 right'],
        ['IVA', 'product_vat', '2_3 right'], ['Total', 'total_amount', '2_3 right']]
     when 'payment_types'

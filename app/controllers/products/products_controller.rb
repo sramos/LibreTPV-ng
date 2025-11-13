@@ -100,9 +100,9 @@ module Products
       end
       respond_to do |format|
         format.turbo_stream do
-          render turbo_stream: [
-            turbo_stream.remove("product_#{@product&.id}")
-          ]
+          render turbo_stream: helpers.remove_object_turbo_stream(
+            container_dom_id: "product_#{@product.id}", message: msg
+          )
         end
         format.html { redirect_to products_products_path, notice: msg }
       end

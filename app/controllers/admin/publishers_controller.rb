@@ -90,9 +90,9 @@ module Admin
       end
       respond_to do |format|
         format.turbo_stream do
-          render turbo_stream: [
-            turbo_stream.remove("publisher_#{@publisher&.id}")
-          ]
+          render turbo_stream: helpers.remove_object_turbo_stream(
+            container_dom_id: "publisher_#{@publisher.id}", message: msg
+          )
         end
         format.html { redirect_to admin_publishers_path, notice: msg }
       end

@@ -83,9 +83,9 @@ module Admin
       end
       respond_to do |format|
         format.turbo_stream do
-          render turbo_stream: [
-            turbo_stream.remove("product_subtype_#{@product_subtype&.id}")
-          ]
+          render turbo_stream: helpers.remove_object_turbo_stream(
+            container_dom_id: "product_subtype_#{@product_subtype.id}", message: msg
+          )
         end
         format.html { redirect_to admin_product_subtypes_path, notice: msg }
       end

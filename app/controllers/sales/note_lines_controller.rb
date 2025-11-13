@@ -58,9 +58,9 @@ module Sales
       end
       respond_to do |format|
         format.turbo_stream do
-          render turbo_stream: [
-            turbo_stream.remove("note_line_#{@note_line&.id}")
-          ]
+          render turbo_stream: helpers.remove_object_turbo_stream(
+            container_dom_id: "note_line_#{@note_line.id}", message: msg
+          )
         end
         format.html { redirect_to sales_note_path(@note), notice: msg }
       end

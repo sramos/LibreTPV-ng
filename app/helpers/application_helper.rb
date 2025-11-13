@@ -260,6 +260,10 @@ module ApplicationHelper
     streams + toast_turbo_stream(message)
   end
 
+  def remove_object_turbo_stream container_dom_id:, message: nil
+    [ turbo_stream.remove(container_dom_id) ] + toast_turbo_stream(message || 'Objeto eliminado correctamente')
+  end
+
   # Renders a transient centered toast message that disappears after 2 seconds
   def toast_turbo_stream message=nil
     message ||= 'Actualizado correctamente'

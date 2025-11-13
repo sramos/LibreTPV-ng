@@ -90,9 +90,9 @@ module Sales
       end
       respond_to do |format|
         format.turbo_stream do
-          render turbo_stream: [
-            turbo_stream.remove("client_#{@client&.id}")
-          ]
+          render turbo_stream: helpers.remove_object_turbo_stream(
+            container_dom_id: "client_#{@client.id}", message: msg
+          )
         end
         format.html { redirect_to sales_clients_path, notice: msg }
       end
