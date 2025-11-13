@@ -1,5 +1,6 @@
 class ClientNote < Note
   belongs_to :client
+  belongs_to :invoice, optional: true
 
   validates :client, presence: true
   validates :deposit, presence: false
@@ -7,6 +8,18 @@ class ClientNote < Note
 
   scope :open, -> { where(closed: false) }
   scope :closed, -> { where(closed: true) }
+
+  def total_amount
+    note_lines.sum('product_price * quantity * (1 - discount)')
+  end
+
+  def tax_base
+    note_lines.sum('product_price * quantity * (1 - discount) / (1 + product_vat)')
+  end
+
+  def total_vat
+    total_amount - tax_base
+  end
 
   private
 

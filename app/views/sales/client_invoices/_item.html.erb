@@ -1,0 +1,13 @@
+<div id="invoice_<%= invoice.id %>" class="listadofila<%= ' flash-highlight' if local_assigns[:highlight] %>">
+  <%= index_line invoice, 'client_invoices' %>
+  <div class="listado_derecha">
+    <%= object_action icon: icon('cart-shopping', title: 'Productos'),
+                        turbo_frame: "client_note_#{invoice.client_note.id}_sub",
+                        url: sales_client_note_note_lines_path(invoice.client_note.id) if invoice.client_note %>
+    <%= object_edition url: edit_sales_client_invoice_path(invoice.id), title: 'Editar factura' %>
+    <%= object_destroy url: sales_client_invoice_path(invoice.id),
+                       title: 'Eliminar factura',
+                       confirmation: '¿Está seguro de querer eliminar la factura?' %>
+  </div>
+  <%= turbo_frame_tag "client_note_#{invoice.client_note.id}_sub" if invoice.client_note %>
+</div>

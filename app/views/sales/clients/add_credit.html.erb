@@ -1,0 +1,2 @@
+<% header = "Añadir crédito a '#{@client.name}' - Credito actual: #{@client.credit||0.00}€" %>
+<%= render partial: 'add_credit', locals: { header: header, client: @client } %>

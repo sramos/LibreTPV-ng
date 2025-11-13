@@ -271,7 +271,7 @@ module OldApplicationHelper
     case params[:section]&.to_sym
       when :sales
         controladores = [ #{ label: 'Pedidos', controlador: 'pedidos' },
-                          #{ label: 'Facturas Clientes', controlador: 'factura' },
+                          { label: 'Facturas Clientes', controlador: 'sales/client_invoices' },
                           { label: 'Clientes', controlador: 'sales/clients' },
                           #{ label: 'Entradas/Salidas de Caja', controlador: 'caja' },
                           { label: 'Ventas/Devoluciones', controlador: 'sales/client_notes' }

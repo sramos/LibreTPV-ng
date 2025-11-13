@@ -1,0 +1,9 @@
+<% header ||= 'Formulario' unless defined?(header) %>
+<%= form_beginning model: [:sales, @client], header: header %>
+  <%= form_errors @client %>
+  <%= texto 'Incremento de crédito (€)', '', 'credit', 0.0 %>
+  <div class="linea"><br></div>
+  <div class="linea">
+    <%= 'NOTA: Se generará un cobro de caja por el importe incrementado' %>
+  </div>
+<%= form_end %>

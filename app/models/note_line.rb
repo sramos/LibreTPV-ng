@@ -14,8 +14,7 @@ class NoteLine < ApplicationRecord
   before_destroy :validate_destroy, prepend: true
 
   def total_amount
-    base = product_price * quantity
-    base * (1 - discount)
+    product_price * quantity * (1 - discount)
   end
 
   def tax_base

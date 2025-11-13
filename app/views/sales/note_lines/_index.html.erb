@@ -1,12 +1,13 @@
 <%= turbo_frame_tag "client_note_#{@note.id}_sub" do %>
   <!--- Note lines --->
   <div id="note_lines">
+    <% read_only = @note.invoice.present? %>  
     <% fieldset_class ||= 'sublistado' %>
     <%= subindex_header 'note_lines', {title: 'Lineas de albarán',
                                        dom_id: "client_note_#{@note.id}_sub_lines",
                                        fieldset_class: fieldset_class} %>
       <% for note_line in @note_lines %>
-        <%= render partial: 'sales/note_lines/item', locals: {note_line: note_line} %>
+        <%= render partial: 'sales/note_lines/item', locals: {note_line: note_line, read_only: read_only} %>
       <% end %>
     <%= subindex_footer @note_lines %>
   </div>

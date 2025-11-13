@@ -4,14 +4,16 @@
   </div>
   <div class='elemento_derecha'>
     <% unless @note.closed %>
-      <%#= modal icono('Currency Euro', {title: 'Efectuar cobro', size: 'grande'}), { controller: 'factura', action: 'new', note_id: @note_id, importe: format("%0.2f",@total_amount)}, 'Efectuar Cobro' %>
+      <% disabled = @note.total_amount.zero? %>
+      <%= object_edition icon: icon('euro', size: '2x', title: 'Efectuar cobro'),
+                         url: new_sales_client_note_invoice_path(@note.id),
+                         disabled: disabled %>
     <% end %>
     <br/>
     <% confirmation_text = "¿Estás seguro de eliminar la cesta?" %>
-    <%= link_to sales_client_note_path(@note.id, redirect: 1),
-                data: { turbo_method: :delete, turbo_confirm: confirmation_text, disable_turbo_frame: true },
-                class: 'link-delete' do %>
-      <%= icon('trash-can', size: '2x', title: 'Eliminar cesta') %>
-    <% end %>
+    <%= object_destroy icon: icon('trash-can', size: '2x', title: 'Eliminar cesta'),
+                       url: sales_client_note_path(@note.id, redirect: 1),
+                       confirmation: confirmation_text,
+                       disable_turbo_frame: true %>
   </div>
 </div>

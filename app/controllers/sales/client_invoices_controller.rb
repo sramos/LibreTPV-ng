@@ -1,6 +1,6 @@
 module Sales
-  class ClientsController < ApplicationController
-    before_action :set_client, only: [:edit, :update, :destroy, :add_credit]
+  class ClientInvoicesController < ApplicationController
+    before_action :set_invoice, only: [:edit, :update, :destroy]
 
     def index
       index_filtered
@@ -8,9 +8,9 @@ module Sales
 
       respond_to do |format|
         format.xlsx do
-          @xlsx_output = {type: 'clients', objects: @clients.except(:limit, :offset),
-                          title: 'Clientes', filter_scope: filter_scope }
-          nom_fich = 'clientes_' + Time.now.strftime("%Y-%m-%d")
+          @xlsx_output = {type: 'invoices', objects: @invoices.except(:limit, :offset),
+                          title: 'Facturas de Venta', filter_scope: filter_scope }
+          nom_fich = 'facturas_venta_' + Time.now.strftime("%Y-%m-%d")
           render 'common_xlsx/index', xlsx: nom_fich, layout: false
         end
         format.html
@@ -18,7 +18,8 @@ module Sales
     end
 
     def new
-      @client = Client.new
+      @note = ClientNote.find(params[:client_note_id])
+      @invoice = Invoice.new
       respond_to do |format|
         format.html { render layout: false }
         format.turbo_stream
@@ -26,19 +27,19 @@ module Sales
     end
 
     def create
-      @client = Client.new(client_params)
-      if @client.save
+      @invoice = Invoice.new(invoice_params)
+      if @invoice.save
         respond_to do |format|
           format.turbo_stream do
             render turbo_stream: helpers.update_object_turbo_stream(
-              container_dom_id: 'new_clients_tag',
+              container_dom_id: 'new_invoices_tag',
               stream_action: :after,
-              stream_locals: { client: @client },
-              highlight_dom_id: "client_#{@client.id}",
-              show_section_id: 'new_clients_section'
+              stream_locals: { invoice: @invoice },
+              highlight_dom_id: "invoice_#{@invoice.id}",
+              show_section_id: 'new_invoices_section'
             )
           end
-          format.html { redirect_to sales_clients_path, notice: 'Cliente creado correctamente' }
+          format.html { redirect_to sales_invoices_path, notice: 'Factura creada correctamente' }
         end
       else
         respond_to do |format|
@@ -60,23 +61,21 @@ module Sales
     end
 
     def update
-      @client.update(client_params) if params[:client]
-      if @client.errors.empty?
-        ClientCreditIncrementService.call(@client, params[:credit].to_f) if params[:credit]
+      if @invoice.update(invoice_params)
         respond_to do |format|
           format.turbo_stream do
             render turbo_stream: helpers.update_object_turbo_stream(
-              container_dom_id: "client_#{@client.id}",
-              stream_locals: { client: @client },
+              container_dom_id: "invoice_#{@invoice.id}",
+              stream_locals: { invoice: @invoice },
             )
           end
-          format.html { redirect_to sales_clients_path, notice: 'Cliente actualizado correctamente' }
+          format.html { redirect_to sales_invoices_path, notice: 'Factura actualizada correctamente' }
         end
       else
         respond_to do |format|
           format.turbo_stream do
             render turbo_stream: [
-              turbo_stream.replace('modal', partial: 'form', locals: { client: @client })
+              turbo_stream.replace('modal', partial: 'form', locals: { invoice: @invoice })
             ]
           end
           format.html { render :edit, status: :unprocessable_entity, layout: false }
@@ -85,28 +84,21 @@ module Sales
     end
 
     def destroy
-      if @client.destroy
-        msg = 'Cliente eliminado correctamente'
+      if @invoice.destroy
+        msg = 'Factura eliminada correctamente'
       else
-        msg = 'Se han producido errores eliminando el cliente: ' + @client.errors.inspect
+        msg = 'Se han producido errores eliminando la factura: ' + @invoice.errors.inspect
       end
       respond_to do |format|
         format.turbo_stream do
           render turbo_stream: helpers.remove_object_turbo_stream(
-            container_dom_id: "client_#{@client.id}", message: msg
+            container_dom_id: "invoice_#{@invoice.id}", message: msg
           )
         end
-        format.html { redirect_to sales_clients_path, notice: msg }
+        format.html { redirect_to sales_invoices_path, notice: msg }
       end
     rescue => e
-      redirect_to sales_clients_path, alert: "Error al eliminar el cliente: #{e.message}"
-    end
-
-    def add_credit
-      respond_to do |format|
-        format.html { render layout: false }
-        format.turbo_stream
-      end
+      redirect_to sales_invoices_path, alert: "Error al eliminar la factura: #{e.message}"
     end
 
     private
@@ -115,29 +107,29 @@ module Sales
       @filter_fields = [ ['Nombre','name','string'],
                          ['Email','email','string'],
                          ['NIF','code_id','string'] ]
-      @clients = Client.order(:name)
+      @invoices = Invoice.order(date: :desc)
       
       session[filter_scope] ||= {}
       value = session[filter_scope]['value'] if session[filter_scope]
       if value.present?
         case session[filter_scope]['type']
         when 'name'
-          @clients = @clients.where("name LIKE ?", "%#{value}%")
+          @invoices = @invoices.where("name LIKE ?", "%#{value}%")
         when 'email'
-          @clients = @clients.joins(:contact_info).where("contact_infos.email LIKE ?", "%#{value}%")
+          @invoices = @invoices.joins(:contact_info).where("contact_infos.email LIKE ?", "%#{value}%")
         when 'code_id'
-          @clients = @clients.where("code_id LIKE ?", "%#{value}%")
+          @invoices = @invoices.where("code_id LIKE ?", "%#{value}%")
         end
       end
-      @clients = @clients.page(params[:page]).per(session[:per_page])
+      @invoices = @invoices.page(params[:page]).per(session[:per_page])
     end
     
-    def set_client
-      @client = Client.find(params[:id])
+    def set_invoice
+      @invoice = Invoice.find(params[:id])
     end
 
-    def client_params
-      params.require(:client).permit(:name, :active, :credit, :code, :discount)
+    def invoice_params
+      params.require(:invoice).permit(:name, :active)
     end
   end
 end

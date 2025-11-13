@@ -1,0 +1,6 @@
+<% header ||= 'Formulario' unless defined?(header) %>
+<%= form_beginning model: [:sales, @invoice], header: header %>
+  <%= form_errors @invoice %>
+  <%= fecha 'Fecha', 'invoice', 'date' %>
+  <%= selector 'Cliente', 'invoice', 'client_id', Client.active.order(:name).map{|c| [c.name,c.id]}, enriquecido: true %>
+<%= form_end %>

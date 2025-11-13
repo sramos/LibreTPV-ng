@@ -71,7 +71,7 @@ module ApplicationHelper
   end
   def index_paginator objects
     output = ''
-    if objects.present? && objects.respond_to?(:paginate)
+    if objects.present? && objects.respond_to?(:total_pages)
       output += '<div class="listadofila" id="paginado">' + (paginate(objects, class: 'listado_campo_2') || ' ')
       output += '<div class="listado_derecha"> '+ index_pagination_info(objects)  + '</div>'
       output += '<div class="linea"></div></div>'
@@ -133,10 +133,10 @@ module ApplicationHelper
 
   # Action buttons
   def object_action attrs={}
+    data_attrs = { turbo_method: attrs[:method]||:get }
+    data_attrs[:turbo_confirm] = attrs[:confirmation] if attrs[:confirmation]
     unless attrs[:disable_turbo_frame]
-      data_attrs = { turbo_method: attrs[:method]||:get }
       data_attrs[:turbo_frame] = attrs[:turbo_frame] if attrs[:turbo_frame]
-      data_attrs[:turbo_confirm] = attrs[:confirmation] if attrs[:confirmation]
     end
     
     link_to(attrs[:url] || '#',

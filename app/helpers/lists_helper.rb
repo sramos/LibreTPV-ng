@@ -31,12 +31,19 @@ module ListsHelper
       [['Nombre', 'name', '4'], ['Activo', 'active', '1_3 right']]
     when 'clients'
       [['NIF', 'code_id', '2_3'], ['Nombre', 'name', '3'],
-       ['Teléfono', 'contact_info.phone', '3_2'], ['Email', 'contact_info.email', '3_2'],
-       ['% Dto.', 'discount_value', '1_3 right'], ['Activo', 'active', '1_3 right']]
+       ['Email', 'contact_info.email', '2'],
+       ['% Dto.', 'discount_value', '1_3 right'],
+       ['Crédito', 'credit', '2_3 right'], ['Acumulado', 'acumulated_credit', '2_3 right'],
+       ['Activo', 'active', '1_3 right']]
     when 'client_notes'
-      [['Fecha', 'date.to_date', '1'], ['Cliente', 'client.name', '3']]
+      [['Fecha', 'date.to_date', '1'], ['Cliente', 'client.name', '4'],
+       ['Items', 'note_lines_count', '1_3 right'], ['Importe', 'total_amount', '2_3 right']]
     when 'configs'
       [['Nombre', 'name', '3_2'], ['Valor', 'value', '3']]
+    when 'client_invoices'
+      [['Fecha', 'date.to_date', '2_3'], ['Código', 'code', '4_3'], ['Cliente', 'client.name', '4'],
+       ['Base Imp.', 'tax_base', '2_3 right'], ['IVA', 'total_vat', '1_2 right'],
+       ['Importe', 'total_amount', '2_3 right']]
     when 'note_lines'
       [['Cant.', 'quantity', '1_3 right'], ['Código', 'product.code', '3_4'],
        ['Nombre/Título', 'product_name', '5_2'],

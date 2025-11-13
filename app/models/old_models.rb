@@ -26,6 +26,7 @@ class OldModels < ApplicationRecord
     OldModels::Pago.migrate unless Payment.any?
     OldModels::Albaran.migrate unless Note.any?
     OldModels::AlbaranLinea.migrate unless NoteLine.any?
+    OldModels::Caja.migrate unless Cash.any?
   
     puts "**** Tenemos #{@old_models_logs.count} errores en la migración" if @old_models_logs.count > 0
     @old_models_logs.each { |log| puts log }

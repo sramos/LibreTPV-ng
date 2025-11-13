@@ -29,6 +29,10 @@ class Note < ApplicationRecord
     note_lines.map(&:total_vat).inject(0, &:+)
   end
 
+  def note_lines_count
+    note_lines.count
+  end
+
   private
 
   # Returns -1 for sales notes and 1 for purchases notes

@@ -5,6 +5,7 @@ module Sales
     before_action :form_values, only: [:edit]
 
     def index
+      puts "***** Estamos con @note = #{@note.id}"
       @note_lines = @note.note_lines.page(params[:page]).per(session[:per_page])
       @format_xls = true
 
