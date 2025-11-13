@@ -142,7 +142,7 @@ margin-top:15px;
  /*border-bottom:dotted 1px #ccc;*/
 }
 
-.sublistado .fila, .sublistado_entradas .fila {
+.sublistado .listadofila, .sublistado_entradas .listadofila {
     padding: 3 3 0 3;
     border-bottom:dotted 1px #ccc;
     min-height: 20px;
