@@ -71,7 +71,7 @@ module ApplicationHelper
   end
   def index_paginator objects
     output = ''
-    if objects.present?
+    if objects.present? && objects.respond_to?(:paginate)
       output += '<div class="listadofila" id="paginado">' + (paginate(objects, class: 'listado_campo_2') || ' ')
       output += '<div class="listado_derecha"> '+ index_pagination_info(objects)  + '</div>'
       output += '<div class="linea"></div></div>'
@@ -97,7 +97,8 @@ module ApplicationHelper
   def subindex_header object_type, attrs={}
     # Sacamos los campos a mostrar bien vengan como array (posicion global) o como tipo
     fields = object_type.is_a?(Array) ? object_type : index_fields(object_type)
-    output  = '<br><fieldset class="sublistado">'
+    attrs[:fieldset_class] ||= 'sublistado'
+    output  = "<br><fieldset class='#{attrs[:fieldset_class]}'>"
     output += "<legend>#{attrs[:title]}</legend><div class='listado_derecha'>"
     output += link_to( icon('download', title: 'Exportar a XLS'), request.parameters.merge({format: :xlsx})) if @format_xls
     output += link_to icon('xmark', title: 'Cerrar'), '#',
@@ -132,9 +133,11 @@ module ApplicationHelper
 
   # Action buttons
   def object_action attrs={}
-    data_attrs = { turbo_method: attrs[:method]||:get }
-    data_attrs[:turbo_frame] = attrs[:turbo_frame] if attrs[:turbo_frame]
-    data_attrs[:turbo_confirm] = attrs[:confirmation] if attrs[:confirmation]
+    unless attrs[:disable_turbo_frame]
+      data_attrs = { turbo_method: attrs[:method]||:get }
+      data_attrs[:turbo_frame] = attrs[:turbo_frame] if attrs[:turbo_frame]
+      data_attrs[:turbo_confirm] = attrs[:confirmation] if attrs[:confirmation]
+    end
     
     link_to(attrs[:url] || '#',
             data: data_attrs,

@@ -1,10 +1,3 @@
 <%= turbo_frame_tag "client_note_#{@note.id}_sub" do %>
-  <!--- Note lines --->
-  <div id="note_lines">
-    <%= subindex_header 'note_lines', {title: 'Lineas de albarán', dom_id: "client_note_#{@note.id}_sub_lines"} %>
-      <% for note_line in @note_lines %>
-        <%= render partial: 'item', locals: {note_line: note_line} %>
-      <% end %>
-    <%= subindex_footer @note_lines %>
-  </div>
+  <%= render partial: 'index' %>
 <% end %>

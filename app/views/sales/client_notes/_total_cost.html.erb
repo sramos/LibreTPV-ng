@@ -1,0 +1,22 @@
+<div id="importe_total">
+  <div class="importe_grande">
+    Total<br/><%= format('%0.2f',@note.total_amount) %> €
+  </div>
+  <div class='elemento_derecha'>
+    <% unless @note.closed %>
+      <%#= modal icono('Currency Euro', {title: 'Efectuar cobro', size: 'grande'}), { controller: 'factura', action: 'new', note_id: @note_id, importe: format("%0.2f",@total_amount)}, 'Efectuar Cobro' %>
+    <% end %>
+    <br/>
+    <% confirmation_text = "¿Estás seguro de eliminar la cesta?" %>
+    <%= object_action icon: icon('trash-can', title: 'Eliminar cesta'),
+                      turbo_frame: "client_note_#{@note.id}_sub",
+                      url: sales_client_note_note_lines_path(@note.id) %>
+    <%#= link_to icono('Trash', {title: 'Eliminar compra', size: 'grande'}), 
+      client_note_path(@note.id), 
+      data: { 
+        turbo_method: :delete,
+        turbo_confirm: confirmation_text,
+        turbo_frame: '_top'  # Esto fuerza a recargar toda la página
+      } %>
+  </div>
+</div>

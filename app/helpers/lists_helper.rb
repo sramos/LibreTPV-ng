@@ -25,7 +25,7 @@
 module ListsHelper
 
   def index_fields object_type
-    puts "**** Nos piden tipo #{object_type.inspect}"
+    #puts "**** Nos piden tipo #{object_type.inspect}"
     case object_type.to_s
     when 'authors'
       [['Nombre', 'name', '4'], ['Activo', 'active', '1_3 right']]

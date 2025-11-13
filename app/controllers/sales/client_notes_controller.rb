@@ -5,7 +5,6 @@ module Sales
     def index
       @note = ClientNote.new(date: Date.today, client_id: Client.first.id)
       @notes = ClientNote.open.order(date: :desc).page(params[:page]).per(session[:per_page])
-      @clients = Client.active.order(:name)
       @format_xls = true
 
       respond_to do |format|
@@ -20,15 +19,12 @@ module Sales
     end
 
     def new
-      @note = Note.new
-      respond_to do |format|
-        format.html { render layout: false }
-        format.turbo_stream
-      end
+      @note = ClientNote.create(note_params)
+      @note_lines = @note.note_lines
     end
 
     def create
-      @note = Note.new(note_params)
+      @note = ClientNote.new(note_params)
       if @note.save
         respond_to do |format|
           format.turbo_stream do
@@ -40,7 +36,7 @@ module Sales
               show_section_id: 'new_notes_section'
             )
           end
-          format.html { redirect_to sales_notes_path, notice: 'Nota creada correctamente' }
+          format.html { redirect_to sales_client_notes_path, notice: 'Nota creada correctamente' }
         end
       else
         respond_to do |format|
@@ -55,10 +51,7 @@ module Sales
     end
 
     def edit
-      respond_to do |format|
-        format.html { render layout: false }
-        format.turbo_stream
-      end
+      @note_lines = @note.note_lines
     end
 
     def update
@@ -70,7 +63,7 @@ module Sales
               stream_locals: { note: @note },
             )
           end
-          format.html { redirect_to sales_notes_path, notice: 'Nota actualizada correctamente' }
+          format.html { redirect_to sales_client_notes_path, notice: 'Nota actualizada correctamente' }
         end
       else
         respond_to do |format|
@@ -93,13 +86,13 @@ module Sales
       respond_to do |format|
         format.turbo_stream do
           render turbo_stream: [
-            turbo_stream.remove("note_#{@note&.id}")
+            turbo_stream.remove("client_note_#{@note&.id}")
           ]
         end
-        format.html { redirect_to sales_notes_path, notice: msg }
+        format.html { redirect_to sales_client_notes_path, notice: msg }
       end
     rescue => e
-      redirect_to sales_notes_path, alert: "Error al eliminar la nota: #{e.message}"
+      redirect_to sales_client_notes_path, alert: "Error al eliminar la nota: #{e.message}"
     end
 
     private
@@ -109,7 +102,7 @@ module Sales
     end
 
     def note_params
-      params.require(:note).permit(:name, :active)
+      params.require(:note).permit(:date, :client_id)
     end
   end
 end
