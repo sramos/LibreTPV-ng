@@ -6,7 +6,8 @@ class ClientInvoice < Invoice
   validate :code_must_be_unique
   validate :avoid_vat_and_retentions
 
-  before_commit :set_invoice_code, on: :create
+  before_validation :set_invoice_code, on: :create
+  before_destroy :validate_client_invoice_destroy, prepend: true
 
   def total_vat
     Rails.logger.error "[ClientInvoice.total_vat] Could not find client_note for invoice #{id}" if client_note.nil?
@@ -34,5 +35,12 @@ class ClientInvoice < Invoice
 
   def set_invoice_code
     self.code = Config.next_invoice_code if code.blank?
+  end
+
+  def validate_client_invoice_destroy
+    if code.present?
+      errors.add(:base, I18n.t('errors.client_invoices.removal_with_code'))
+      throw :abort
+    end
   end
 end

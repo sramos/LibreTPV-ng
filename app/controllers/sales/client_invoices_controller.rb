@@ -19,7 +19,7 @@ module Sales
 
     def new
       @note = ClientNote.find(params[:client_note_id])
-      @invoice = Invoice.new
+      @invoice = ClientInvoice.new(client_id: @note.client_id, date: DateTime.now)
       respond_to do |format|
         format.html { render layout: false }
         format.turbo_stream
@@ -27,20 +27,12 @@ module Sales
     end
 
     def create
-      @invoice = Invoice.new(invoice_params)
-      if @invoice.save
-        respond_to do |format|
-          format.turbo_stream do
-            render turbo_stream: helpers.update_object_turbo_stream(
-              container_dom_id: 'new_invoices_tag',
-              stream_action: :after,
-              stream_locals: { invoice: @invoice },
-              highlight_dom_id: "invoice_#{@invoice.id}",
-              show_section_id: 'new_invoices_section'
-            )
-          end
-          format.html { redirect_to sales_invoices_path, notice: 'Factura creada correctamente' }
-        end
+      @note = ClientNote.find(params[:client_note_id])
+      @invoice = @note.create_and_pay_invoice(params[:payment_type_id])
+      if @invoice && @invoice.errors.blank?
+        flash[:ok_message] = "¡Asegúrese de cobrar la venta!: #{@invoice.total_amount}€"
+        PrintTicketService.call(@invoice) if params[:print_ticket] == '1'
+        redirect_to sales_client_notes_path
       else
         respond_to do |format|
           format.turbo_stream do
@@ -107,7 +99,7 @@ module Sales
       @filter_fields = [ ['Nombre','name','string'],
                          ['Email','email','string'],
                          ['NIF','code_id','string'] ]
-      @invoices = Invoice.order(date: :desc)
+      @invoices = Invoice.order(created_at: :desc)
       
       session[filter_scope] ||= {}
       value = session[filter_scope]['value'] if session[filter_scope]
@@ -129,7 +121,7 @@ module Sales
     end
 
     def invoice_params
-      params.require(:invoice).permit(:name, :active)
+      params.require(:invoice).permit(:date)
     end
   end
 end

@@ -74,7 +74,8 @@ if ProductSubtype.count == 0
   ])
 end
 
-Config.create([
+configs = [
+  { name: 'ALLWAYS_PRINT_TICKET', value: 'FALSE' },
   { name: 'COMPANY_SHORT_NAME', value: 'Librería de ejemplo' },
   { name: 'COMPANY_FULL_NAME', value: 'Librería asociativa de ejemplo' },
   { name: 'COMPANY_ADDRESS', value: 'Calle de ejemplo, 123' },
@@ -87,4 +88,9 @@ Config.create([
   { name: 'COMPANY_INVOICES_COUNT', value: '0' },
   { name: 'PAGINATE', value: '25' },
   { name: 'PRINT_COMMAND', value: 'lpr -P TM-T70 -o cpi=20', editable: false }
-]) if Config.count == 0
+]
+
+configs.each do |config|
+  new_config = Config.create(config) if Config.find_by(name: config[:name]).blank?
+  puts "[Seed] New config created: " + new_config.inspect if new_config
+end

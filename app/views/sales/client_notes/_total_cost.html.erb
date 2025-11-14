@@ -6,7 +6,7 @@
     <% unless @note.closed %>
       <% disabled = @note.total_amount.zero? %>
       <%= object_edition icon: icon('euro', size: '2x', title: 'Efectuar cobro'),
-                         url: new_sales_client_note_invoice_path(@note.id),
+                         url: new_sales_client_note_client_invoice_path(@note.id),
                          disabled: disabled %>
     <% end %>
     <br/>

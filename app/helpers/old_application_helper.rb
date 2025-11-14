@@ -162,7 +162,7 @@ module OldApplicationHelper
     otros[:min] = Date.new(year_range[0])
     otros[:max] = Date.new(year_range[1])
     otros[:size] = "10"
-    #otros[:value] = I18n.l(valor) if valor
+    otros[:value] = I18n.l(valor) if valor
     #cadena << calendar_date_select(objeto, atributo, otros)
     #puts "---> valor: " + valor.inspect
     cadena += date_field(objeto, atributo, otros)
@@ -209,7 +209,7 @@ module OldApplicationHelper
   end
 
   # dibuja un mensaje flash de exito
-  def mensaje_ok msg
+  def ok_message msg
     ("<div id = 'mensajeok'>" + msg + "</div>").html_safe if msg
   end
 

@@ -27,7 +27,11 @@ class ApplicationController < ActionController::Base
   end
 
   def set_pagination
-    session[:per_page] = params[:per_page] ||= 20
+    unless session[:per_page]
+      default_value = Config.value('PAGINATE')&.to_i
+      session[:per_page] = default_value && default_value > 0 ? default_value : 20
+    end
+    session[:per_page]   = params[:per_page] if params[:per_page]
   end
   
   def filter_scope

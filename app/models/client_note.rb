@@ -21,6 +21,25 @@ class ClientNote < Note
     total_amount - tax_base
   end
 
+  def initialize_invoice
+    ClientInvoice.new(client_id: client_id, date: DateTime.now,
+                      total_amount: total_amount)
+  end
+
+  def create_and_pay_invoice(attrs)
+    invoice = nil
+    payment_type = PaymentType.find_by(id: attrs[:payment_type_id], active: true) if attrs[:payment_type_id]
+    if payment_type && invoice_id.blank? && !closed?
+      invoice = ClientInvoice.create(client_id: client_id,
+                                     date: DateTime.now,
+                                     total_amount: total_amount)
+      invoice.payment.create(date: date,
+                             amount: total_amount,
+                             payment_type_id: attrs[:payment_type_id]) if invoice.errors.blank?
+    end
+    return invoice
+  end
+
   private
 
   # Returns -1 for sales notes

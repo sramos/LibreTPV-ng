@@ -2,7 +2,7 @@ class Payment < ApplicationRecord
   belongs_to :invoice
   belongs_to :payment_type
 
-  validates :amount, presence: true, numericality: { not_equal_to: 0 }
+  validates :amount, presence: true, numericality: true
   validates :date, presence: true
 
   after_commit :update_invoice_paid_status

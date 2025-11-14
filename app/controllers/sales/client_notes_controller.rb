@@ -85,7 +85,7 @@ module Sales
       end
       # If coming from edit page with redirect flag, force full redirect to index
       if params[:redirect].present?
-        flash[:mensaje_ok] = msg
+        flash[:ok_message_fade] = msg
         return redirect_to sales_client_notes_path
       end
       respond_to do |format|
@@ -95,7 +95,7 @@ module Sales
           )
         end
         format.html do
-          flash[:mensaje_ok] = msg
+          flash[:ok_message_fade] = msg
           redirect_to sales_client_notes_path
         end
       end

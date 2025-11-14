@@ -1,40 +1,77 @@
-
-<div id="importe_cobrar" class="importe_grande">
-  A Cobrar<br/><%= note.total_amount %> €
-</div>
-
-<div id="importe_devolver" class="devolver_grande">&nbsp;</div>
-
-<div class="formulario_dcha">
-
 <% header = 'Cobrar compra' %>
-<%= form_beginning model: [:sales, @invoice], header: header %>
+<% payments = PaymentType.active.order(:name) %>
+
+<%= form_beginning model: [:sales, @note, @invoice], header: header %>
   <%= form_errors @invoice %>
-  <%= date_select 'Fecha de pago', 'invoice', 'date' %>
-  <%= _checkbox 'Imprimir ticket', '', 'ticket', {elemento: 'elemento_x05', izquierda: true, abajo: true, checked: @client.active} %>
-<%= form_end %>
-
-
-<%= inicio_formulario( { :action => 'aceptar_cobro', :importe => params[:importe], :albaran_id => params[:albaran_id] }, false ) %>
-  <%= hidden_field 'factura', 'importe', :value => params[:importe] %>
-  <div class="linea">
-    Fecha de Pago<br/><%= date_select('factura', 'fecha') %>
+  <div class="formulario_izq">
+    <div id="to_be_charged" class="importe_grande">
+      <br>A Cobrar<br><%= note.total_amount %> €
+    </div>
+    <div id="to_be_returned" class="devolver_grande">
+      <br>A Devolver<br>
+      <div id="to_be_returned_value"></div>
+    </div>    
   </div>
-  <div class="linea"><br/></div>
-  <div class="linea">
-    <%= selector 'Forma de Pago', 'forma_pago', 'id', @formasdepago.map {|u| [u.nombre,u.id]} %>
-  </div>
-  <div class="linea"><br/></div>
-  <div class="linea">
-    <%= texto 'Recibido (€)', 'recibido', '' %>
-      <%= observe_field( "formulario_campo_recibido_" , :frequency => 1, :update => "importe_devolver", :with => "'recibido='+value", :url => {:action => :calcula_cambio, :importe => params[:importe]} ) %>
-  </div>
-  <div class="linea"><br/></div>
-  <div class="linea">
-    <div class='elemento'>
-      <%= check_box("imprimeticket", "imprimeticket", {:checked => true}, true, false) %> Imprimir ticket?
+  <div class="formulario_dcha">
+    <div class="linea">
+      <%= fecha 'Fecha de pago', 'invoice', 'date' %>
+    </div>
+    <div class="linea">
+      <%= selector 'Forma de pago', '', 'payment_type_id',
+                   payments.map{|c| [c.name,c.id]},
+                   {enriquecido: true, valor: payments.find_by(cash: true)&.id, id: 'payment_type_select'} %>
+    </div>
+    <div class="linea">
+      <%= texto 'Recibido (€)', '', 'received', nil, {id: 'received_input'} %>
+    </div>
+    <div class="linea">
+      <%= _checkbox 'Imprimir ticket', '', 'print_ticket', {elemento: 'elemento_x05', izquierda: true, abajo: true} %>
     </div>
   </div>
-<%= final_formulario({:etiqueta => "Cobrar"})%>
+<%= form_end send_label: 'Cobrar' %>
 
-</div>
+<script>
+  (function(){
+    var selectEl = document.getElementById('payment_type_select');
+    var inputEl = document.getElementById('received_input');
+    var toReturnBox = document.getElementById('to_be_returned');
+    var toReturnValueEl = document.getElementById('to_be_returned_value');
+    var formEl = inputEl ? inputEl.closest('form') : null;
+    var submitEl = formEl ? formEl.querySelector('input[type="submit"], button[type="submit"]') : null;
+    if (!selectEl || !inputEl || !toReturnBox || !toReturnValueEl) { return; }
+
+    // Build cash payment type id set from server data
+    var cashIds = new Set(<%= raw(payments.select(&:cash).map(&:id).to_json) %>);
+    var totalAmount = <%= @note.total_amount.to_f %>;
+
+    function updateReturn(){
+      var selectedId = parseInt(selectEl.value, 10);
+      var isCash = cashIds.has(selectedId);
+      if (!isCash) { toReturnBox.style.display = 'none'; return; }
+      var received = parseFloat(inputEl.value.replace(',', '.'));
+      if (isNaN(received)) { toReturnBox.style.display = 'none'; return; }
+      var diff = (received - totalAmount);
+      if (diff > 0) {
+        toReturnValueEl.textContent = diff.toFixed(2) + ' €';
+        toReturnBox.style.display = 'block';
+      } else {
+        toReturnBox.style.display = 'none';
+      }
+      updateSubmit(received);
+    }
+
+    function updateSubmit(received){
+      if (!submitEl) return;
+      var val = (typeof received === 'number') ? received : parseFloat(inputEl.value.replace(',', '.'));
+      var enable = !isNaN(val) && val >= totalAmount;
+      submitEl.disabled = !enable;
+      submitEl.classList.toggle('disabled', !enable);
+    }
+
+    selectEl.addEventListener('change', updateReturn);
+    inputEl.addEventListener('input', updateReturn);
+    // Initial paint
+    updateReturn();
+    updateSubmit();
+  })();
+</script>

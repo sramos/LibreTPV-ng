@@ -1,9 +1,10 @@
 <!-- CONTENIDO DE LAS ACCIONES -->
 <div id="centro" class="centro <%= 'unsigned-user' unless user_signed_in? %>">
   <!-- Mensajes de informacion -->
-  <% if flash[:mensaje_ok] %>
+  <%= ok_message flash[:ok_message] if flash[:ok_message] %>
+  <% if flash[:ok_message_fade] %>
     <div id="flash_ok_wrapper" class="flash-fade">
-      <%= mensaje_ok flash[:mensaje_ok] %>
+      <%= ok_message flash[:ok_message_fade] %>
     </div>
     <script>
       (function(){

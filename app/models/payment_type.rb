@@ -5,6 +5,7 @@ class PaymentType < ApplicationRecord
 
   before_destroy :validate_destroy, prepend: true
 
+  scope :active, -> { where(active: true) }
   private
 
   def validate_destroy
