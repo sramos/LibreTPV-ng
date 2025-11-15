@@ -101,9 +101,11 @@ module ApplicationHelper
     output  = "<br><fieldset class='#{attrs[:fieldset_class]}'>"
     output += "<legend>#{attrs[:title]}</legend><div class='listado_derecha'>"
     output += link_to( icon('download', title: 'Exportar a XLS'), request.parameters.merge({format: :xlsx})) if @format_xls
-    output += link_to icon('xmark', title: 'Cerrar'), '#',
-                      onclick: "document.getElementById('#{attrs[:dom_id]}').innerHTML=''; return false;",
-                      class: 'link-delete'
+    unless attrs[:disable_close_button]
+      output += link_to icon('xmark', title: 'Cerrar'), '#',
+                        onclick: "document.getElementById('#{attrs[:dom_id]}').innerHTML=''; return false;",
+                        class: 'link-delete'
+    end
     output += "</div><br>"
 
     output += '<div class="listadocabecera">'

@@ -21,23 +21,31 @@ class ClientNote < Note
     total_amount - tax_base
   end
 
-  def initialize_invoice
-    ClientInvoice.new(client_id: client_id, date: DateTime.now,
-                      total_amount: total_amount)
-  end
-
-  def create_and_pay_invoice(attrs)
+  def create_and_pay_invoice(payment_type_id)
     invoice = nil
-    payment_type = PaymentType.find_by(id: attrs[:payment_type_id], active: true) if attrs[:payment_type_id]
+    payment_type = PaymentType.find_by(id: payment_type_id, active: true)
+    invoice = ClientInvoice.new(date: DateTime.now)
     if payment_type && invoice_id.blank? && !closed?
-      invoice = ClientInvoice.create(client_id: client_id,
-                                     date: DateTime.now,
-                                     total_amount: total_amount)
-      invoice.payment.create(date: date,
-                             amount: total_amount,
-                             payment_type_id: attrs[:payment_type_id]) if invoice.errors.blank?
+      Invoice.transaction do
+        invoice.update(client_id: client_id,
+                       total_amount: total_amount)
+        payment = Payment.create(date: date, amount: total_amount,
+                                 invoice_id: invoice.id,
+                                 payment_type: payment_type) if invoice.errors.blank?
+        update(invoice_id: invoice.id, closed: true) if payment && payment.errors.blank?
+        if payment.nil? || self.errors.any?
+          self.errors.add(:base, 'Error al crear el pago')
+          raise ActiveRecord::Rollback
+        end
+      end
     end
     return invoice
+  end
+
+  def self.clear_empty_notes
+    ClientNote.where(closed: false).each do |note|
+      note.destroy if note.note_lines.empty?
+    end
   end
 
   private
@@ -47,9 +55,4 @@ class ClientNote < Note
     -1
   end
 
-  def self.clear_empty_notes
-    ClientNote.where(closed: false).each do |note|
-      note.destroy if note.note_lines.empty?
-    end
-  end
 end

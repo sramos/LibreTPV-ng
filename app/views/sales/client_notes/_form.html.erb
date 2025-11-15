@@ -10,6 +10,8 @@
     <% end %>
   </div>
   <div class='contenido'>
-    <%= render partial: 'sales/note_lines/index', locals: {allow_modify: true, fieldset_class: 'sublistado_entradas'} %>
+    <%= render partial: 'sales/note_lines/index', locals: {allow_modify: true,
+                                                           disable_close_button: true,
+                                                           fieldset_class: 'sublistado_entradas'} %>
   <div>
 </div>

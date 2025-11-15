@@ -3,7 +3,9 @@
   <div id="note_lines">
     <% read_only = @note.invoice.present? %>  
     <% fieldset_class ||= 'sublistado' %>
+    <% disable_close_button ||= false %>
     <%= subindex_header 'note_lines', {title: 'Lineas de albarán',
+                                       disable_close_button: disable_close_button,
                                        dom_id: "client_note_#{@note.id}_sub_lines",
                                        fieldset_class: fieldset_class} %>
       <% for note_line in @note_lines %>

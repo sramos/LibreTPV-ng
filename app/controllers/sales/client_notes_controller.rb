@@ -3,6 +3,7 @@ module Sales
     before_action :set_note, only: [:edit, :update, :destroy]
 
     def index
+      ClientNote.clear_empty_notes
       @note = ClientNote.new(date: Date.today, client_id: Client.first.id)
       @notes = ClientNote.open.order(date: :desc).page(params[:page]).per(session[:per_page])
       @format_xls = true
