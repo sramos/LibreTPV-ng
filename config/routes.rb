@@ -27,6 +27,7 @@ Rails.application.routes.draw do
         collection do
           post :create_by_concept
           post :create_by_code
+          post :create_by_name
         end
       end
       resources :client_invoices, path: :invoices, only: [:new, :create]

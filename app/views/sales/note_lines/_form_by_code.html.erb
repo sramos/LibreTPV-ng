@@ -27,3 +27,89 @@
               onclick: "document.getElementById('product_by_code_div').style.display='none'; document.getElementById('product_by_concept_div').style.display='block'; return false;" %>
   </div>
 </div>
+
+<script>
+  (function() {
+    var input = document.getElementById('formulario_campo_note_line_product_name');
+    if (!input) { return; }
+
+    var suggestionsContainer = document.getElementById('product_name_suggestions');
+    var timeoutId = null;
+    var floatingList = null; // capa flotante global
+
+    function clearSuggestions() {
+      if (floatingList && floatingList.parentNode) {
+        floatingList.parentNode.removeChild(floatingList);
+      }
+      floatingList = null;
+      if (suggestionsContainer) {
+        suggestionsContainer.innerHTML = '';
+      }
+    }
+
+    function buildSelect(products) {
+      clearSuggestions();
+      if (!products || products.length === 0) { return; }
+
+      // Crear capa flotante fuera de product_by_code_div
+      var rect = input.getBoundingClientRect();
+      var listWrapper = document.createElement('div');
+      listWrapper.className = 'product-name-suggestions-list';
+      listWrapper.style.top = (rect.bottom + window.scrollY) + 'px';
+      listWrapper.style.left = (rect.left - 40 + window.scrollX) + 'px';
+      listWrapper.style.minWidth = rect.width + 'px';
+
+      var ul = document.createElement('ul');
+
+      products.forEach(function(p) {
+        var li = document.createElement('li');
+        li.textContent = p.name + ' (stock: ' + p.stock + ')';
+        li.style.cursor = 'pointer';
+        li.addEventListener('click', function() {
+          input.value = p.name;
+          clearSuggestions();
+
+          var form = input.closest('form');
+          if (form) {
+            form.action = '<%= create_by_name_sales_client_note_note_lines_path(@note) %>';
+            if (form.requestSubmit) {
+              form.requestSubmit();
+            } else {
+              form.submit();
+            }
+          }
+        });
+        ul.appendChild(li);
+      });
+
+      listWrapper.appendChild(ul);
+      document.body.appendChild(listWrapper);
+      floatingList = listWrapper;
+    }
+
+    function fetchSuggestions(query) {
+      if (query.length < 4) { // sólo a partir de 4 caracteres
+        clearSuggestions();
+        return;
+      }
+
+      var url = '/sales/products/search_by_name?q=' + encodeURIComponent(query);
+
+      fetch(url, {
+        headers: { 'Accept': 'application/json' }
+      })
+        .then(function(response) { return response.json(); })
+        .then(function(data) { buildSelect(data); })
+        .catch(function() { clearSuggestions(); });
+    }
+
+    input.addEventListener('input', function() {
+      var value = this.value || '';
+      if (timeoutId) { clearTimeout(timeoutId); }
+      timeoutId = setTimeout(function() {
+        fetchSuggestions(value.trim());
+      }, 300);
+    });
+  })();
+</script>
+

@@ -52,6 +52,10 @@ module Sales
       
     end
 
+    def create_by_name
+
+    end
+
     def edit
       respond_to do |format|
         format.html { render layout: false }
