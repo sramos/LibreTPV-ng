@@ -42,10 +42,17 @@ Rails.application.routes.draw do
       end
     end
     resources :cash, path: :cash, only: [:index, :new, :create]
+
+    get 'products/search_by_code', to: 'products#search_by_code'
+    get 'products/search_by_name', to: 'products#search_by_name'
   end
   namespace :products, section: :products do
     resources :products, path: :products do
-      collection { post :filter }
+      collection do
+        post :filter
+        post :search_by_code
+        post :search_by_name
+      end 
     end
     resources :suppliers, path: :suppliers do
       collection { post :filter }

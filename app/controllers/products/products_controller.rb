@@ -1,5 +1,5 @@
 module Products 
-  class ProductsController < ApplicationController
+  class ProductsController < ::ProductsController
     before_action :set_product, only: [:edit, :update, :destroy]
 
     def index

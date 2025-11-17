@@ -1,21 +1,16 @@
 class ProductsController < ApplicationController
-  #before_action :set_product, only: [:show, :edit, :create, :update, :destroy]
 
-  def index
-    filter_products
+  # Methos used in both sales and products sections
+  def search_by_name
+    term = params[:q].to_s.strip
+    @products = Product.where("name LIKE ?", "%#{term}%").order(:name).limit(10) if term.present?
+
+    render json: @products.as_json(only: [:id, :name, :code, :stock, :price])
   end
+  def search_by_code
+    term = params[:q].to_s.strip
+    @product = Product.find_by(code: term).order(:code).limit(20) if term.present?
 
-  private
-
-  def filter_products
-    @products = Product.all
-  end
-
-  def set_product
-    @product = Product.find(params[:id])
-  end
-
-  def product_params
-    params.require(:product).permit(:name, :price, :stock, :product_type_id, :product_subtype_id, :editor_id)
+    render json: @product.as_json(only: [:id, :name, :code, :stock, :price])
   end
 end
