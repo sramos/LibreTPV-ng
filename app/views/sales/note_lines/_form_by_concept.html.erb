@@ -6,7 +6,7 @@
     <div class="linea"></div>
     <%= selector 'IVA', 'note_line', 'product_vat', Vat.active.order(:rate).collect{|o| [o.name, o.rate]}, tipo: 'texto' %>
     <div class="linea"></div>
-    <%= texto('PVP', 'note_line', 'product_price') unless params[:seccion] == 'productos' %>
+    <%= texto('PVP', 'note_line', 'product_price') %>
     <div class="linea"></div>
     <%= hidden_field 'note_line', 'quantity', value: '1' %>
     <%= hidden_field 'note_line', 'note_id', value: @note.id %>
