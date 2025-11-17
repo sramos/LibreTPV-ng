@@ -1,0 +1,21 @@
+<!--- Concept product note line form --->
+<div id="product_by_concept_div" class="formulario_izqda" style="display:none;">
+  <%= form_with url: create_by_concept_sales_client_note_note_lines_path(@note), local: false,
+                data: { turbo_frame: 'modal' }, html_class: 'formulario' %>
+    <%= texto 'Concepto', 'note_line', 'product_name' %>
+    <div class="linea"></div>
+    <%= selector 'IVA', 'note_line', 'product_vat', Vat.active.order(:rate).collect{|o| [o.name, o.rate]}, tipo: 'texto' %>
+    <div class="linea"></div>
+    <%= texto('PVP', 'note_line', 'product_price') unless params[:seccion] == 'productos' %>
+    <div class="linea"></div>
+    <%= hidden_field 'note_line', 'quantity', value: '1' %>
+    <%= hidden_field 'note_line', 'note_id', value: @note.id %>
+    <br><div class="linea elemento_derecha actions">
+      <%= submit_tag 'Añadir' %>
+    </div>
+  </form>
+
+  <div class='linea'><br>
+  <%= link_to 'Cambiar a entrada por código', '#', id: 'change_to_product_code', onclick: "document.getElementById('product_by_concept_div').style.display='none'; document.getElementById('product_by_code_div').style.display='block'; return false;" %>
+  </div>
+</div>

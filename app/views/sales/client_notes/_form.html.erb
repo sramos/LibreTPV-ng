@@ -1,14 +1,6 @@
 <%= render partial: 'new_note_form' %>
 <div id="client_note_#{@note.id}" class="linea">
-  <div class='lateral'>
-    <div class='caja_lateral'><%= render partial: 'total_cost' %></div>
-    <% unless @note.closed %>
-      <div class='caja_lateral'>
-        <%#= render partial: 'note_lines/form_product' %>
-        <%#= render partial: 'note_lines/form_concept' %>
-      </div>
-    <% end %>
-  </div>
+  <%= render partial: 'sales/client_notes/form_side' %>
   <div class='contenido'>
     <%= render partial: 'sales/note_lines/index', locals: {allow_modify: true,
                                                            disable_close_button: true,

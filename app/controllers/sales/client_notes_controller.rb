@@ -52,7 +52,7 @@ module Sales
     end
 
     def edit
-      @note_lines = @note.note_lines
+      @note_lines = @note.note_lines.order(created_at: :desc)
     end
 
     def update

@@ -29,6 +29,10 @@ class NoteLine < ApplicationRecord
     100.0 * product_vat.to_f
   end
 
+  def product_vat_value=new_value
+    self.product_vat = new_value.to_f / 100.0
+  end
+
   def discount_value
     100.0 * discount.to_f
   end
