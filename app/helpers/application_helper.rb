@@ -235,7 +235,7 @@ module ApplicationHelper
     return ('<div class="message">' + msg + '</div>').html_safe
   end
 
-  def update_object_turbo_stream container_dom_id:, stream_action: :replace, stream_partial: 'item', stream_locals: {}, highlight_dom_id: nil, show_section_id: nil, message: nil
+  def update_object_turbo_stream container_dom_id:, stream_action: :replace, stream_partial: 'item', stream_locals: {}, highlight_dom_id: nil, show_section_id: nil, message: 'Actualizado correctamente'
     highlight_dom_id ||= container_dom_id
     script = "(function(){\n"+
              (show_section_id ? "  var s=document.getElementById('#{show_section_id}'); if(s){ s.style.display='block'; }\n" : '') +
@@ -259,7 +259,7 @@ module ApplicationHelper
       streams << turbo_stream.update(container_dom_id, partial: stream_partial, locals: stream_locals.merge({highlight: true}))
     end
     streams << turbo_stream.update('modal', javascript_tag(script))
-    streams + toast_turbo_stream(message)
+    message ? streams + toast_turbo_stream(message) : streams
   end
 
   def remove_object_turbo_stream container_dom_id:, message: nil
@@ -267,8 +267,7 @@ module ApplicationHelper
   end
 
   # Renders a transient centered toast message that disappears after 2 seconds
-  def toast_turbo_stream message=nil
-    message ||= 'Actualizado correctamente'
+  def toast_turbo_stream message
     toast_html = content_tag(:div, message, class: 'toast-message show')
     auto_hide_js = "(function(){var t=document.getElementById('toast'); if(!t) return; t.innerHTML='" + j(toast_html) + "'; setTimeout(function(){ var m=t.querySelector('.toast-message'); if(m){ m.classList.remove('show'); setTimeout(function(){ t.innerHTML=''; }, 250); } }, 2000);})();"
     [ turbo_stream.update('toast', ''), turbo_stream.after('toast', javascript_tag(auto_hide_js)) ]
