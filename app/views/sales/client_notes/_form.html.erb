@@ -1,5 +1,5 @@
 <%= render partial: 'new_note_form' %>
-<div id="client_note_#{@note.id}" class="linea">
+<div id="client_note_<%= @note.id %>" class="linea">
   <%= render partial: 'sales/client_notes/form_side' %>
   <div class='contenido'>
     <%= render partial: 'sales/note_lines/index', locals: {allow_modify: true,

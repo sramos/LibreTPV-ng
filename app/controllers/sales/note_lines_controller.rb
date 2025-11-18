@@ -49,7 +49,8 @@ module Sales
     end
 
     def create_by_code
-      product = Product.find_by(code: params[:note_line][:product_code]) if params[:note_line].present?
+      product_code = params[:note_line][:product_code].delete('-') if params[:note_line].present?
+      product = Product.find_by(code: product_code)
       if product
         note_line = NoteLine.new(note_id: @note.id, product: product)
         if note_line.update(note_line_params)
@@ -79,12 +80,16 @@ module Sales
       # If product is not in stock
       else
         puts "**** No está en stock... buscamos en el servicio!!!"
+        result = FindProductService.call(product_code)
+        puts "**** " + result.inspect
+        puts "**** Lo ha encontrado! " if result.success?
+        
         respond_to do |format|
           format.turbo_stream do
             render turbo_stream: helpers.update_object_turbo_stream(
               container_dom_id: 'product_by_code_not_found',
               stream_partial: 'product_by_code_not_found',
-              stream_locals: { note_line: @note_line },
+              stream_locals: { note_line: @note_line, payload: result.payload },
               message: nil
             )
           end

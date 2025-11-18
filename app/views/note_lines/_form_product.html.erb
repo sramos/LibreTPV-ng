@@ -1,6 +1,6 @@
 <!--- Entrada de linea de albaran por codigo --->
 
-<div id="div_formulario_codigo" class="formulario_izqda">
+<div id="div_formulario_codigo" class="formulario_dcha">
   <%= inicio_formulario( { controller: :note_lines, action: :create, note_id: @note.id, update: params[:update] }, false, id: 'formulario_codigo' ) %>
     <div id="formulario_seleccion_codigo" class="elemento" data-visibility-target="hideable">
       <%= link_to 'Código/ISBN', '#', onclick: "visibilityController.toggleTargets(); return false" %>
@@ -20,7 +20,7 @@
     <div class='linea'><br>
       <%#= link_to_function("Cambiar a entrada por Concepto", nil, :id => "cambio_a_concepto") { |page| page.show 'div_formulario_concepto'; page.hide 'div_formulario_codigo'} %>
     </div>
-    <div id="propiedades_producto" class="formulario_izqda"></div>
+    <div id="propiedades_producto" class="formulario_dcha"></div>
   <%= final_formulario submit_disabled: true %>
 </div>
 

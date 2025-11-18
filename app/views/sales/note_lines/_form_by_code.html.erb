@@ -1,5 +1,5 @@
 <!--- Code product note line form --->
-<div id="product_by_code_div" class="formulario_izqda" style="display:block;">
+<div id="product_by_code_div" class="formulario_dcha" style="display:block;">
   <%= form_with url: create_by_code_sales_client_note_note_lines_path(@note), local: false,
                 data: { turbo_frame: 'modal' }, html_class: 'formulario' %>
     <% code_label = link_to 'Código/ISBN', '#', id: 'change_to_name_label',

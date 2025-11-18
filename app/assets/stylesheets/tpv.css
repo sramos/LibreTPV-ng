@@ -171,6 +171,8 @@ margin-top:15px;
 
 .sublistado_entradas {
   width: 920px;
+  min-height: 291px;
+  margin: 5px auto 10 auto;
 }
 
 .sublistado legend, .sublistado_entradas legend{
@@ -349,7 +351,7 @@ margin-top:15px;
     overflow-y: scroll;
 }
 
-.image_cover {
+.image_cover, .not_found_product {
     width: 200px;
 }
 
