@@ -3,6 +3,7 @@
   <div class="listado_derecha">
     <%= object_action icon: icon('cart-shopping', title: 'Productos'),
                         turbo_frame: "client_note_#{note.id}_sub",
+                        object_type: 'note_lines_wide',
                         url: sales_client_note_note_lines_path(note.id) %>
     <%= object_edition icon: icon('magnifying-glass', title: 'Editar venta'),
                        url: edit_sales_client_note_path(note.id), disable_turbo_frame: true, title: 'Editar venta' %>

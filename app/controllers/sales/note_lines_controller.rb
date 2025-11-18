@@ -6,6 +6,7 @@ module Sales
 
     def index
       @note_lines = @note.note_lines.page(params[:page]).per(session[:per_page])
+      object_type = params[:object_type] || 'note_lines_wide'
       @format_xls = true
 
       respond_to do |format|
@@ -53,7 +54,32 @@ module Sales
     end
 
     def create_by_name
-
+      product = Product.find_by(name: params[:note_line][:product_name]) if params[:note_line].present?
+      note_line = NoteLine.new(note_id: @note.id, product: product)
+      if product && note_line.update(note_line_params)
+        respond_to do |format|
+          format.turbo_stream do
+            render turbo_stream:
+              helpers.update_object_turbo_stream(
+                container_dom_id: "note_#{@note.id}_new_note_line_tag",
+                stream_action: :after,
+                stream_locals: { note: @note, note_line: note_line },
+                highlight_dom_id: "note_line_#{note_line.id}") +
+              [
+                turbo_stream.replace("note_#{@note.id}_side", partial: 'sales/client_notes/form_side')
+              ]
+          end
+        end
+      else
+        Rails.logger.error "[Sales::NoteLinesController#create_by_name] Error al crear la linea de albarán: #{note_line.errors.inspect}"
+        respond_to do |format|
+          format.turbo_stream do
+            render turbo_stream: [
+              turbo_stream.update('modal', html: render_to_string(:new, layout: false, status: :unprocessable_entity))
+            ]
+          end
+        end
+      end
     end
 
     def edit

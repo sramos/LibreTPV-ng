@@ -51,9 +51,9 @@ module ListsHelper
        ['Nombre/Título', 'product_name', '3'], ['Factura', 'note.invoice.code', '4_3']]
     when 'note_lines'
       [['Cant.', 'quantity', '1_3 right'], ['Código', 'product.code', '3_4'],
-       ['Nombre/Título', 'product_name', '5_2'],
-       ['Precio', 'product_price', '2_3 right'], ['Subtotal', 'tax_base', '2_3 right'],
-       ['IVA', 'product_vat_value', '2_3 right'], ['Total', 'total_amount', '2_3 right']]
+       ['Nombre/Título', 'product_name', '2'], ['Precio', 'product_price', '2_3 right'],
+       ['% Desc.', 'discount_value', '2_3 right'], ['Subtotal', 'tax_base', '2_3 right'],
+       ['% IVA', 'product_vat_value', '2_3 right'], ['Total', 'total_amount', '2_3 right']]
     when 'payment_types'
       [['Nombre', 'name', '3_2'], ['Caja', 'cash', '1_3 right'], ['Activo', 'active', '1_3 right']]
     when 'products'
