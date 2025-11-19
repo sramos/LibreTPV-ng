@@ -51,7 +51,11 @@ module Sales
     def create_by_code
       product_code = params[:note_line][:product_code].delete('-') if params[:note_line].present?
       product = Product.find_by(code: product_code)
-      if product
+      if product.nil? && params[:product_data].present?
+        product = Product.create_from_json(JSON.parse(params[:product_data]))
+      end
+
+      if product && product.errors.blank?
         note_line = NoteLine.new(note_id: @note.id, product: product)
         if note_line.update(note_line_params)
           respond_to do |format|
@@ -79,11 +83,9 @@ module Sales
         end
       # If product is not in stock
       else
-        puts "**** No está en stock... buscamos en el servicio!!!"
-        result = FindProductService.call(product_code)
-        puts "**** " + result.inspect
-        puts "**** Lo ha encontrado! " if result.success?
-        
+        # TODO: Check if product exists and has no errors
+        # TODO: Check product service response
+        result = FindProduct::TodosTusLibrosService.new.call(product_code)
         respond_to do |format|
           format.turbo_stream do
             render turbo_stream: helpers.update_object_turbo_stream(

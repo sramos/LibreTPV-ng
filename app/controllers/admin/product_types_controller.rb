@@ -105,7 +105,8 @@ module Admin
     end
     
     def product_type_params
-      params.require(:product_type).permit(:name, :vat_id, :description, :active)
+      params.require(:product_type).permit(:name, :vat_id, :description,
+                                           :default, :active)
     end
   end
 end

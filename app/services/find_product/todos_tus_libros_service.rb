@@ -7,7 +7,7 @@ class FindProduct::TodosTusLibrosService < ApplicationService
     host = 'www.todostuslibros.com'
     search = 'busquedas?isbn=' + isbn.to_s.strip
 
-    Rails.logger.info  "-----------------> Buscando en TTL: " + search
+    Rails.logger.info  "[FindProduct::TodosTusLibrosService] Buscando ISBN: #{isbn}"
 
     # Descargamos la página de resultados
     html = URI.open("#{protocol}://#{host}/#{search}").read
@@ -18,7 +18,6 @@ class FindProduct::TodosTusLibrosService < ApplicationService
 
     if result_link && result_link['href'].present?
       detail_url = result_link['href']
-      Rails.logger.info  "-----------------> Detalle TTL: #{detail_url}"
 
       # 2) Página de detalle: extraer título, autor, precio e imagen de portada
       detail_html = URI.open(detail_url).read
@@ -47,9 +46,9 @@ class FindProduct::TodosTusLibrosService < ApplicationService
       synopsis_paragraphs = detail_doc.css('div#collapseSynopsis p, div.collapseSynopsis p')
       synopsis_text = synopsis_paragraphs.map { |p| p.text.to_s.strip }.reject(&:blank?).join("\n\n")
 
-      data = {}
+      data = {code: isbn}
       data[:title]  = title_text  if title_text.present?
-      data[:author] = author_text if author_text.present?
+      data[:authors] = [ author_text ] if author_text.present?
       data[:price]  = price_value if price_value
       data[:image]  = cover_image if cover_image.present?
       data[:synopsis] = synopsis_text if synopsis_text.present?

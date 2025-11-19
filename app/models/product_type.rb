@@ -13,6 +13,10 @@ class ProductType < ApplicationRecord
 
   scope :active, -> { where(active: true).order(:name) }
 
+  def self.default
+    find_by(active: true, default: true)
+  end
+
   private
 
   def validate_destroy

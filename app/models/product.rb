@@ -1,3 +1,5 @@
+require 'open-uri'
+
 class Product < ApplicationRecord
   include ::Sanitizable
   stripable :name
@@ -30,6 +32,47 @@ class Product < ApplicationRecord
 
   def authors_names
     authors.collect{|a| a.name}.join('; ')
+  end
+
+  def self.create_from_json(json)
+    return if json.blank?
+
+    attrs = json.respond_to?(:deep_symbolize_keys) ? json.deep_symbolize_keys : json
+    Rails.logger.info "[Product.create_from_json] Called with json: #{attrs.inspect}"
+
+    product = Product.create(
+      name: attrs[:title],
+      code: attrs[:code],
+      price: attrs[:price],
+      stock: 0,
+      description: attrs[:synopsis],
+      image_url: attrs[:image],
+      product_type: default_product_type = ProductType.default || ProductType.first
+    )
+
+    return product if product.errors.present?
+
+    product.attach_remote_image(attrs[:image]) if attrs[:image].present?
+
+    Array(attrs[:authors]).each do |author|
+      next if author.blank?
+      product.authors << Author.find_or_create_by(name: author)
+    end
+
+    product
+  end
+
+  def attach_remote_image(url)
+    return if url.blank?
+
+    file = URI.open(url)
+    uri_path = URI.parse(url).path
+    filename = File.basename(uri_path.presence || 'cover.jpg')
+    image.attach(io: file, filename: filename)
+  rescue => e
+    msg = "Error fetching #{url}: #{e.message}"
+    Rails.logger.error "[Product.attach_remote_image] #{msg}"
+    errors.add(:base, msg)
   end
 
   private

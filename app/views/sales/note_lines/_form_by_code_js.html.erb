@@ -2,7 +2,9 @@
   (function() {
     var input = document.getElementById('formulario_campo_note_line_product_name');
     var codeInput = document.getElementById('formulario_campo_note_line_product_code');
-    if (!input && !codeInput) { return; }
+    var form = document.querySelector('#product_by_code_div form');
+    var productDataInput = form ? form.querySelector('input[name="product_data"]') : null;
+    if (!input && !codeInput && !form) { return; }
 
     var suggestionsContainer = document.getElementById('product_name_suggestions');
     var timeoutId = null;      // para autocomplete por nombre
@@ -87,10 +89,27 @@
 
     // --- Envío automático por Código/ISBN ---
 
-    function submitFormToCreateByCode() {
-      if (!codeInput) { return; }
-      var form = codeInput.closest('form');
+    function ensureProductDataInput(payload) {
       if (!form) { return; }
+
+      if (payload) {
+        if (!productDataInput || !form.contains(productDataInput)) {
+          productDataInput = document.createElement('input');
+          productDataInput.type = 'hidden';
+          productDataInput.name = 'product_data';
+          form.appendChild(productDataInput);
+        }
+        productDataInput.value = payload;
+      } else if (productDataInput && form.contains(productDataInput)) {
+        form.removeChild(productDataInput);
+        productDataInput = null;
+      }
+    }
+
+    function submitFormToCreateByCode(payload) {
+      if (!form) { return; }
+
+      ensureProductDataInput(payload);
 
       form.action = '<%= create_by_code_sales_client_note_note_lines_path(@note) %>';
       if (form.requestSubmit) {
@@ -111,6 +130,15 @@
         }, 1000); // 1 segundo
       });
     }
+
+    document.addEventListener('click', function(event) {
+      var button = event.target.closest('.include-payload-button');
+      if (!button) { return; }
+      var payload = button.dataset.productData;
+      if (!payload) { return; }
+
+      submitFormToCreateByCode(payload);
+    });
   })();
 </script>
 

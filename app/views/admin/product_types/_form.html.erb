@@ -4,7 +4,8 @@
   <div class="linea">
     <%= texto 'Nombre', 'product_type', 'name' %>
     <%= selector 'IVA', 'product_type', 'vat_id', @vats %>
-    <%= _checkbox 'Activo', 'product_type', 'active', {elemento: 'elemento_x05', izquierda: true, abajo: true, checked: @product_type.active} %>
+    <%= _checkbox 'Por defecto', 'product_type', 'default', {elemento: 'elemento_x03', izquierda: true, abajo: true, checked: @product_type.default} %>
+    <%= _checkbox 'Activo', 'product_type', 'active', {elemento: 'elemento_x03', izquierda: true, abajo: true, checked: @product_type.active} %>
   </div>
   <div class="linea">
     <%= texto_area 'Descripción', 'product_type', 'description' %>

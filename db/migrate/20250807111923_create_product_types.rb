@@ -4,6 +4,7 @@ class CreateProductTypes < ActiveRecord::Migration[8.0]
       t.string :name, null: false, default: ''
       t.string :description
       t.boolean :active, null: false, default: true
+      t.boolean :default, null: false, default: false
       t.references :vat, null: false, foreign_key: true
       t.timestamps
     end
