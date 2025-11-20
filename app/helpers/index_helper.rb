@@ -22,11 +22,15 @@
 #
 #++
 
-module ListsHelper
+module IndexHelper
 
   def index_fields object_type
     #puts "**** Nos piden tipo #{object_type.inspect}"
     case object_type.to_s
+    when 'author_products'
+      [['Código', 'code', '1'], ['Tipo', 'product_type.name', '2_3'],
+       ['Nombre/Título', 'name', '5'],
+       ['Cant.', 'stock', '1_4 right'], ['PVP', 'price', '1_3 right'] ]      
     when 'authors'
       [['Nombre', 'name', '4'], ['Activo', 'active', '1_3 right']]
     when 'cash'
@@ -65,7 +69,7 @@ module ListsHelper
     when 'product_subtypes'
       [['Nombre', 'name', '1'], ['Tipo', 'product_type.name', '1_2'], ['Activo', 'active', '1_3 right']]
     when 'publishers'
-      [['Nombre', 'name', '4'], ['Activo', 'active', '1_3 right']]
+      [['Nombre', 'name', '5'], ['Num.Libros', 'products.count', '2_3 right'], ['Activo', 'active', '1_2 right']]
     when 'suppliers'
       [['CIF', 'code_id', '2_3'], ['Nombre', 'name', '3'],
        ['Teléfono', 'contact_info.phone', '3_2'], ['Email', 'contact_info.email', '3_2'],

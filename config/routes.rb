@@ -62,6 +62,7 @@ Rails.application.routes.draw do
   namespace :admin, section: :admin do
     resources :authors, path: :authors do
       collection { post :filter }
+      member { get :products }
     end
     resources :configs, path: :configs, only: [:index, :edit, :update]
     resources :publishers, path: :publishers do

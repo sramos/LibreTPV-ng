@@ -1,0 +1,8 @@
+<%= turbo_frame_tag "author_#{@author.id}_sub" do %>
+  <!--- Sold products --->
+  <%= subindex_header 'author_products', {title: 'Productos del autor', dom_id: "author_#{@author.id}_products"} %>
+    <% for product in @products %>
+      <%= render partial: 'product', locals: {product: product} %>
+    <% end %>
+  <%= subindex_footer @products %>
+<% end %>

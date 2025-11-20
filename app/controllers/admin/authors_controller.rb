@@ -1,6 +1,6 @@
 module Admin
   class AuthorsController < ApplicationController
-    before_action :set_author, only: [:edit, :update, :destroy]
+    before_action :set_author, only: [:edit, :update, :destroy, :products]
 
     def index
       index_filtered
@@ -98,6 +98,14 @@ module Admin
       end
     rescue => e
       redirect_to admin_authors_path, alert: "Error al eliminar el autor: #{e.message}"
+    end
+
+    def products
+      @products = @author.products.order(:name).page(params[:page]).per(session[:per_page])
+      respond_to do |format|
+        format.html { render layout: false }
+        format.turbo_stream
+      end
     end
 
     private

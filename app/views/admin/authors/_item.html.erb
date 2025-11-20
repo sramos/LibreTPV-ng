@@ -1,9 +1,13 @@
 <div id="author_<%= author.id %>" class="listadofila<%= ' flash-highlight' if local_assigns[:highlight] %>">
   <%= index_line author, 'authors' %>
   <div class="listado_derecha">
+    <%= object_action icon: icon('cart-shopping', title: 'Productos'),
+                        turbo_frame: "author_#{author.id}_sub",
+                        url: products_admin_author_path(author.id) %>
     <%= object_edition url: edit_admin_author_path(author.id), title: "Editar autor '#{author.name}'" %>
     <%= object_destroy url: admin_author_path(author.id),
                        title: "Eliminar autor '#{author.name}'",
                        confirmation: "¿Está seguro de querer eliminar el autor '#{author.name}'?" %>
   </div>
+  <%= turbo_frame_tag "author_#{author.id}_sub" %>
 </div>
