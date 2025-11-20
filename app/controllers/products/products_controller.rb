@@ -1,6 +1,6 @@
 module Products 
   class ProductsController < ::ProductsController
-    before_action :set_product, only: [:edit, :update, :destroy]
+    before_action :set_product, only: [:edit, :update, :destroy, :purchases, :sales]
 
     def index
       index_filtered
@@ -108,6 +108,38 @@ module Products
       end
     rescue => e
       redirect_to products_products_path, alert: "Error al eliminar el producto: #{e.message}"
+    end
+
+    def purchases
+      @notes = @product.supplier_notes
+      @format_xls = true
+
+      respond_to do |format|
+        format.xlsx do
+          @xlsx_output = {type: 'purchase_notes', objects: @notes.except(:limit, :offset),
+                          title: 'Albaranes de compra' }
+          nom_fich = "albaranes_compra_producto_#{@product.id}" + Time.now.strftime("%Y-%m-%d")
+          render 'common_xlsx/index', xlsx: nom_fich, layout: false
+        end
+        format.html { render layout: false }
+        format.turbo_stream
+      end
+    end
+
+    def sales
+      @notes = @product.client_notes
+      @format_xls = true
+
+      respond_to do |format|
+        format.xlsx do
+          @xlsx_output = {type: 'sale_notes', objects: @notes.except(:limit, :offset),
+                          title: 'Albaranes de venta' }
+          nom_fich = "albaranes_venta_producto_#{@product.id}" + Time.now.strftime("%Y-%m-%d")
+          render 'common_xlsx/index', xlsx: nom_fich, layout: false
+        end
+        format.html { render layout: false }
+        format.turbo_stream
+      end
     end
 
     private

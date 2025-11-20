@@ -1,9 +1,16 @@
 <div id="product_<%= product.id %>" class="listadofila<%= ' flash-highlight' if local_assigns[:highlight] %>">
   <%= index_line product, 'products' %>
   <div class="listado_derecha">
+    <%= object_action icon: icon('cart-shopping', title: 'Ventas'),
+                          turbo_frame: "product_#{product.id}_sub",
+                          url: sales_products_product_path(product.id) %>
+    <%= object_action icon: icon('cart-flatbed', title: 'Compras'),
+                          turbo_frame: "product_#{product.id}_sub",
+                          url: purchases_products_product_path(product.id) %>
     <%= object_edition url: edit_products_product_path(product.id), title: "Editar producto '#{product.name}'" %>
     <%= object_destroy url: products_product_path(product.id),
                        title: "Eliminar producto '#{product.name}'",
                        confirmation: "¿Está seguro de querer eliminar el proveedor '#{product.name}'?" %>
   </div>
+    <%= turbo_frame_tag "product_#{product.id}_sub" %>
 </div>

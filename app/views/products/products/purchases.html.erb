@@ -1,0 +1,9 @@
+<%= turbo_frame_tag "product_#{@product.id}_sub" do %>
+  <!--- Purchse notes --->
+  <% note_type = 'purchase_notes' %>
+  <%= subindex_header note_type, {title: 'Albaranes de compra', dom_id: "#{note_type}_product_#{@product.id}"} %>
+    <% for note in @notes %>
+      <%= render partial: 'note', locals: {note_type: note_type, note: note} %>
+    <% end %>
+  <%= subindex_footer @notes %>
+<% end %>

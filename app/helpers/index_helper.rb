@@ -62,7 +62,7 @@ module IndexHelper
       [['Nombre', 'name', '3_2'], ['Caja', 'cash', '1_3 right'], ['Activo', 'active', '1_3 right']]
     when 'products'
       [['Código', 'code', '1'], ['Tipo', 'product_type.name', '2_3'],
-       ['Nombre/Título', 'name', '3'], ['Autores', 'authors_names', '7_2'],
+       ['Nombre/Título', 'name', '3'], ['Autores', 'authors_names', '3'],
        ['Cant.', 'stock', '1_4 right'], ['PVP', 'price', '1_3 right'] ]
     when 'product_types'
       [['Nombre', 'name', '4'], ['IVA', 'vat.name', '1'], ['Defecto', 'default', '1_3 right'],['Activo', 'active', '1_3 right']]
@@ -70,6 +70,12 @@ module IndexHelper
       [['Nombre', 'name', '1'], ['Tipo', 'product_type.name', '1_2'], ['Activo', 'active', '1_3 right']]
     when 'publishers'
       [['Nombre', 'name', '5'], ['Num.Libros', 'products.count', '2_3 right'], ['Activo', 'active', '1_2 right']]
+    when 'purchase_notes'
+      [['Fecha', 'date.to_date', '1'], ['Proveedor', 'supplier.name', '3'],
+       ['Cod.Albarán', 'code', '3_2'], ['Cod.Factura', 'invoice.code', '3_2']]
+    when 'sale_notes'
+      [['Fecha', 'date.to_date', '1'], ['Cliente', 'client.name', '3'],
+       ['Cod.Albarán', 'code', '3_2'], ['Cod.Factura', 'invoice.code', '3_2']]
     when 'suppliers'
       [['CIF', 'code_id', '2_3'], ['Nombre', 'name', '3'],
        ['Teléfono', 'contact_info.phone', '3_2'], ['Email', 'contact_info.email', '3_2'],

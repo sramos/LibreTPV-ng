@@ -8,6 +8,8 @@ class Product < ApplicationRecord
   has_many :authors, through: :product_authors
   has_many :note_lines
   has_many :notes, through: :note_lines
+  has_many :client_notes, -> { where(type: 'ClientNote') }, source: :note, through: :note_lines
+  has_many :supplier_notes, -> { where(type: 'SupplierNote') }, source: :note, through: :note_lines
   belongs_to :product_type
   belongs_to :product_subtype, optional: true
   belongs_to :publisher, optional: true

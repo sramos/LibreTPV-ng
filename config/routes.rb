@@ -16,6 +16,10 @@ Rails.application.routes.draw do
   #root 'home#index'
 
   root to: 'home#index', section: "inicio", controller: "home", action: "index"
+
+  #
+  # SALES SECTION
+  #
   namespace :sales, section: :sales do
     #resources :client_notes, path: :notes do
     #  get :show_lines, on: :member
@@ -47,18 +51,28 @@ Rails.application.routes.draw do
     get 'products/search_by_code', to: 'products#search_by_code'
     get 'products/search_by_name', to: 'products#search_by_name'
   end
+  #
+  # PRODUCTS SECTION
+  #
   namespace :products, section: :products do
     resources :products, path: :products do
       collection do
         post :filter
         post :search_by_code
         post :search_by_name
-      end 
+      end
+      member do
+        get :purchases
+        get :sales
+      end
     end
     resources :suppliers, path: :suppliers do
       collection { post :filter }
     end
   end
+  #
+  # ADMIN SECTION
+  #
   namespace :admin, section: :admin do
     resources :authors, path: :authors do
       collection { post :filter }
