@@ -143,6 +143,17 @@ i.fa-2x {
   height: 16px;
 }
 
+/* Index elements */
+.form_field {
+  float: left;
+  font-size:11px;
+  text-align: left;
+}
+
+.input_form_field {
+  height: 21px;
+}
+
 .element_1_5 { width:24px;   }
 .element_1_4 { width:30px;   }
 .element_1_3 { width:40px;   }

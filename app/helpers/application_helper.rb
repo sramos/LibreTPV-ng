@@ -39,7 +39,6 @@ module ApplicationHelper
 
     for field in fields 
       html_id = 'listado_campo_valor_' + field[1]
-      #html_class = 'listado_campo_' + field[2] 
       html_class = 'index_field element_' + field[2]
       if object.class.name == 'Array'
         value = object[0]
@@ -174,60 +173,6 @@ module ApplicationHelper
     classes << size_class if size_class
     classes << attrs[:class] if attrs[:class]
     content_tag(:i, '', class: classes.compact.join(' '), title: attrs[:title], aria: { hidden: true })
-  end
-
-  # Form helpers
-  def index_form_beginning attrs={}
-    output  = ''
-    output += form_tag( attrs[:url], multipart: true, id: attrs[:id]||'index_form', class: 'formulario' )
-    output += '<div class="fila"></div>'
-    return output.html_safe
-  end
-  def index_form_end attrs={}
-    output  = '<div class="fila"><div class="elemento_derecha">'
-    output += submit_tag attrs[:send_label]||'Guardar', class: 'boton', 'data-disable-with' => attrs[:send_label]||'Guardando...'
-    output += '</div></div>'
-    output += '</form>'
-    return output.html_safe
-  end
-  # Generic beginning of a form, wrapping form_with and yielding the builder
-  def form_beginning attrs={}
-    attrs[:model] ||= '#'
-    attrs[:header] ||= 'Formulario'
-    attrs[:turbo_frame] ||= '_top'
-    attrs[:html_class] ||= 'form-box'
-    output  = '<div class="modal-overlay" onclick="document.getElementById(\'modal\').innerHTML=\'\'"></div>'
-    output += '<div class="modal-panel" onclick="event.stopPropagation()">'
-    output += '<div class="modal-header">'
-    output += '<h3>' + attrs[:header]+ '</h3>'
-    output += link_to '✕', '#', onclick: "document.getElementById('modal').innerHTML=''; return false;", class: 'modal-close'
-    output += '</div>'
-    output += '<div class="modal-body"><div class="linea"></div>' 
-    output += form_with model: attrs[:model], local: false,
-                        data: { turbo_frame: attrs[:turbo_frame] }, html_class: attrs[:html_class] 
-    return turbo_frame_tag('modal') { output.html_safe }
-  end
-  def form_errors object
-    output = ''
-    if object.errors.any?
-      output += '<div id="error_explanation"><h2>'
-      output += pluralize(object.errors.count, 'error') + ' impiden guardar el objeto:</h2><ul>'
-      object.errors.each do |error|
-        output += "<li>#{error.full_message}</li>"
-      end
-      output += '</ul></div>'
-    end
-    return output.html_safe
-  end
-  def form_end attrs={}
-    attrs[:send_label] ||= 'Guardar'
-    attrs[:cancel_label] ||= 'Cancelar'
-    output  = '<br><div class="linea elemento_derecha actions">'
-    output += submit_tag attrs[:send_label]
-    output += '</div></form>'
-    output += '<div class="linea"></div>'
-    output += '</div></div><!--- Caja completa --->'
-    return output.html_safe
   end
 
   # Other helpers

@@ -1,6 +1,10 @@
 <% header ||= 'Formulario' unless defined?(header) %>
 <%= form_beginning model: [:products, @product], header: header %>
   <%= form_errors @product %>
-  <%= texto 'Nombre', 'product', 'name' %>
-  <%= _checkbox 'Activo', 'product', 'active', {elemento: 'elemento_x05', izquierda: true, abajo: true, checked: @product.active} %>
-<%= form_end %>
+
+  <%= render partial: 'item_properties', locals: {item: @product} %>
+  <div class="linea">
+    <%= _text_field "Cantidad", 'product', 'stock' %>
+    <%= _checkbox 'Activo', 'product', 'active', '2', {down: true, checked: @product.active} %>
+  </div>
+  <%= form_end %>

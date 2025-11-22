@@ -192,7 +192,7 @@ module OldApplicationHelper
   end
 
   # check_box
-  def _checkbox rotulo, objeto, atributo, otros={}
+  def old_checkbox rotulo, objeto, atributo, otros={}
     clase = otros[:clase]||'elemento'
     title = otros[:title] ? "title = '#{otros[:title]}'" : ""
     checked = otros[:checked]
