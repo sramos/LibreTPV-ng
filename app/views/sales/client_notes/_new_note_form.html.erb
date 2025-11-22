@@ -2,9 +2,9 @@
   <%= form_tag( new_sales_client_note_path, method: :get, multipart: true, class: 'index_form' ) %>
     <div class="fila"></div>
     <div class="linea">
-      <%= fecha 'Fecha', 'note', 'date' %>
-      <div class="elemento_x01">&nbsp;</div>
-      <%= selector 'Cliente', 'note', 'client_id', Client.active.map{|c| [c.name,c.id]}, enriquecido: true %>
+      <%= _date_field 'Fecha', 'note', 'date', class: 'input_filter_field' %>
+      <div class="form_field element_1_5">&nbsp;</div>
+      <%= _select_field 'Cliente', 'note', 'client_id', Client.active.map{|c| [c.name,c.id]}, '2', enriquecido: true %>
     </div>
     <div class="elemento_derecha" id='boton_filtrado'><br/>
       <%= submit_tag 'Nueva venta', class: 'boton', 'data-disable-with' => 'Filtrando...' %>

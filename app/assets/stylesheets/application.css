@@ -164,6 +164,10 @@ div.checkbox_field {
   height: 21px;
 }
 
+.input_filter_field {
+  height: 28px;
+}
+
 .textarea_modal {
   width:788px;
 }

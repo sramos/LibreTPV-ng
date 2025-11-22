@@ -2,7 +2,6 @@
 
   <head>
     <title>TPV: Terminal Punto de Venta - <%= content_for(:title) || 'TPV' %></title>
-    <%= stylesheet_link_tag 'application', :media => "all" %>
 
     <!--<link rel="icon" type="image/ico" href="/images/favicon.ico" />-->
 
@@ -24,13 +23,17 @@
 
     <!-- Font Awesome 6.5.0 (load first so our app CSS can override) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <%# Includes all stylesheet files in app/assets/stylesheets %>
-    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <!-- jQuery + Select2 (CSS/JS) for enhanced selects -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/css/select2.min.css" rel="stylesheet"  crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <%# Includes all stylesheet files in app/assets/stylesheets %>
+    <%= stylesheet_link_tag :app, media: :all, "data-turbo-track": "reload" %>
+    
+    <!-- jQuery + Select2 (JS) for enhanced selects -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/js/select2.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/js/i18n/es.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     <%= javascript_importmap_tags %>
   </head>
 

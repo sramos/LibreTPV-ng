@@ -3,7 +3,8 @@
   <%= form_tag( {action: 'filter'}, multipart: true, class: 'index_form' ) %>
     <div class="fila"></div>
     <div class="linea">
-      <%= selector 'Criterio de Filtrado', 'filter', 'type', @filter_fields.map {|u| [u[0],u[1]]} %>
+      <%#= selector 'Criterio de Filtrado', 'filter', 'type', @filter_fields.map {|u| [u[0],u[1]]} %>
+      <%= _select_field 'Criterio de Filtrado', 'filter', 'type', @filter_fields.map {|u| [u[0],u[1]]}, '2' %>
       <div id="filter_options_number" style="display: none;">
         <%= selector '', 'filter', 'condition', [["igual a","="], ["mayor que",">"], ["menor que","<"]] %>
       </div>
@@ -11,7 +12,7 @@
         <%= selector '', 'filter', 'value', [['Sí','Sí'], ['No','No']], id: 'filter_options_boolean_field' %>
       </div>
       <div id="filter_options_value" style="display: block;">
-        <%= texto '', 'filter', 'value', nil, id: 'filter_options_value_field' %>
+        <%= _text_field '', 'filter', 'value', '2', class: 'input_filter_field', id: 'filter_options_value_field' %>
       </div>
       <div class='elemento_derecha' id='boton_filtrado'><br/>
         <%= submit_tag 'Filtrar', class: 'boton', 'data-disable-with' => 'Filtrando...' %>
