@@ -148,10 +148,24 @@ i.fa-2x {
   float: left;
   font-size:11px;
   text-align: left;
+  margin-right: 5px;
+}
+
+div.form_field {
+  margin-bottom: 5px;
 }
 
 .input_form_field {
   height: 21px;
+}
+
+.textarea_modal {
+  width:788px;
+}
+
+form .actions {
+  float: right;
+  margin-top: 10px;
 }
 
 .element_1_5 { width:24px;   }

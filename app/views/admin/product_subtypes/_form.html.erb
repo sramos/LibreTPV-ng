@@ -2,10 +2,10 @@
 <%= form_beginning model: [:admin, @product_type, @product_subtype], header: header %>
   <%= form_errors @product_subtype %>
   <div class="linea">
-    <%= texto 'Nombre', 'product_subtype', 'name' %>
-    <%= _checkbox 'Activo', 'product_subtype', 'active', {elemento: 'elemento_x05', izquierda: true, abajo: true, checked: @product_subtype.active} %>
+    <%= _text_field 'Nombre', 'product_subtype', 'name', '5_2' %>
+    <%= _checkbox_field 'Activo', 'product_subtype', 'active', '1', {right: true, checked: @product_subtype.active} %>
   </div>
   <div class="linea">
-    <%= texto_area 'Descripción', 'product_subtype', 'description' %>
+    <%= _text_area_field 'Descripción', 'product_subtype', 'description' %>
   </div>
 <%= form_end %>

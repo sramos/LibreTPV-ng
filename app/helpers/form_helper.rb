@@ -44,42 +44,63 @@ module FormHelper
 
   # Input helpers for forms
   def _text_field label, object, field, element_type='1', attrs={}
-    dom_id = "form_field_#{object}_#{field}"
+    dom_id = "form_field_#{object}_#{field}_text"
     dom_class = "form_field element_#{element_type}"
+    attrs[:id] ||= "#{dom_id}_input"
     attrs[:name]  ||= "#{object}_#{field}_text"
     attrs[:type]  ||= 'd'
     attrs[:class] ||= (dom_class + ' input_form_field')
+
     output  = "<div id='#{dom_id}' class='#{dom_class}'><span class='form_field_label'>#{label}</span><br>"
     output += text_field(object, field, attrs)
     output += '</div>'
     return output.html_safe
   end
 
-  # check_box
-  def _checkbox label, object, field, element_type='2', attrs={}
-    dom_id = "form_field_#{object}_#{field}"
+  def _select_field label, object, field, values, element_type='3',attrs={}
+    dom_id = "form_field_#{object}_#{field}_select"
     dom_class = "form_field element_#{element_type}"
-    attrs[:name]  ||= "#{object}_#{field}_checkbox"
-    attrs[:class] = "form_field #{attrs[:class]}"
-    output  = "<div id='#{dom_id}' class='#{dom_class}'>"
-    output += "<br>" if attrs[:down]
-    label = "<span class='form_field_label #{attrs[:left] ? 'left' : 'right'}'>#{label}</span>".html_safe
-    output += check_box(object, field, attrs) + label if attrs[:left]
-    output += label + check_box(object, field, attrs) unless attrs[:left]
+    attrs[:id] ||= "#{dom_id}_input"
+    attrs[:name]  ||= "#{object}_#{field}_select"
+    attrs[:class] ||= (dom_class + ' input_form_field chosen_select')
+    select_options = {include_blank: attrs[:vacio], disabled: attrs[:disabled]}
+    select_options[:selected] = attrs[:value] if attrs[:value]
+
+    output  = "<div id='#{dom_id}' class='#{dom_class}'><span class='form_field_label'>#{label}</span><br>"
+    output += select(object, field, values, select_options, attrs)
     output += '</div>'
     return output.html_safe
   end
 
   # check_box
-  def old_checkbox rotulo, objeto, atributo, otros={}
-    clase = otros[:clase]||'elemento'
-    title = otros[:title] ? "title = '#{otros[:title]}'" : ""
-    checked = otros[:checked]
-    if otros[:izquierda]
-      ('<div class="' + clase + '" ' + title + '>' + ( ("<br>" if otros[:abajo]) || "")).html_safe +  check_box( objeto, atributo, {checked: checked, disabled: otros[:disabled]} ) + rotulo + "</div>".html_safe
-    else
-      ('<div class="' + clase + '" ' + title + '>' + ( ("<br>" if otros[:abajo]) || "")).html_safe + rotulo + check_box( objeto, atributo, {checked: checked, disabled: otros[:disabled]} ) + "</div>".html_safe
-    end
+  def _checkbox_field label, object, field, element_type='2', attrs={}
+    dom_id = "form_field_#{object}_#{field}_checkbox"
+    dom_class = "form_field element_#{element_type}"
+    attrs[:id] ||= "#{dom_id}_input"
+    attrs[:name]  ||= "#{object}_#{field}_checkbox"
+    attrs[:class] = "form_field #{attrs[:class]}"
+
+    output  = "<div id='#{dom_id}' class='#{dom_class}'><br><span class='form_field_content'>"
+    label = "<span class='form_field_label #{attrs[:left] ? 'left' : 'right'}'>#{label}</span>".html_safe
+    output += check_box(object, field, attrs) + label if attrs[:left]
+    output += label + check_box(object, field, attrs) unless attrs[:left]
+    output += '</span></div>'
+    return output.html_safe
+  end
+
+  # Text area
+  def _text_area_field label, object, field, attrs={}
+    dom_id = "form_field_#{object}_#{field}_area"
+    dom_class = "form_field #{attrs[:class] || 'textarea_modal'}"
+    attrs[:id] ||= "#{dom_id}_input"
+    attrs[:name]  ||= "#{object}_#{field}_area"
+    attrs[:class] = dom_class
+    attrs[:rows]  ||= 3
+
+    output  = "<div id='#{dom_id}' class='#{dom_class}'><span class='form_field_label'>#{label}</span><br>"
+    output += text_area(object, field, attrs)
+    output += '</div>'
+    return output.html_safe
   end
 
 end

@@ -1,5 +1,5 @@
 <% header ||= 'Formulario' unless defined?(header) %>
 <%= form_beginning model: [:admin, @config], header: header %>
   <%= form_errors @config %>
-  <%= texto 'Valor', 'config', 'value' %>
+  <%= _text_field 'Valor', 'config', 'value', '3' %>
 <%= form_end %>

@@ -5,6 +5,6 @@
   <%= render partial: 'item_properties', locals: {item: @product} %>
   <div class="linea">
     <%= _text_field "Cantidad", 'product', 'stock' %>
-    <%= _checkbox 'Activo', 'product', 'active', '2', {down: true, checked: @product.active} %>
+    <%= _checkbox_field 'Activo', 'product', 'active', '2', {checked: @product.active} %>
   </div>
   <%= form_end %>
