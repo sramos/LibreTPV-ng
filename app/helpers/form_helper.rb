@@ -61,7 +61,6 @@ module FormHelper
     dom_id = "form_field_#{object}_#{field}_select"
     dom_class = "form_field element_#{element_type}"
     attrs[:id] ||= "#{dom_id}_input"
-    attrs[:name]  ||= "#{object}_#{field}_select"
     attrs[:class] ||= (dom_class + ' input_form_field chosen_select')
     select_options = {include_blank: attrs[:vacio], disabled: attrs[:disabled]}
     select_options[:selected] = attrs[:value] if attrs[:value]
@@ -75,9 +74,8 @@ module FormHelper
   # check_box
   def _checkbox_field label, object, field, element_type='2', attrs={}
     dom_id = "form_field_#{object}_#{field}_checkbox"
-    dom_class = "form_field element_#{element_type}"
+    dom_class = "form_field checkbox_field element_#{element_type}"
     attrs[:id] ||= "#{dom_id}_input"
-    attrs[:name]  ||= "#{object}_#{field}_checkbox"
     attrs[:class] = "form_field #{attrs[:class]}"
 
     output  = "<div id='#{dom_id}' class='#{dom_class}'><br><span class='form_field_content'>"
@@ -93,9 +91,8 @@ module FormHelper
     dom_id = "form_field_#{object}_#{field}_area"
     dom_class = "form_field #{attrs[:class] || 'textarea_modal'}"
     attrs[:id] ||= "#{dom_id}_input"
-    attrs[:name]  ||= "#{object}_#{field}_area"
     attrs[:class] = dom_class
-    attrs[:rows]  ||= 3
+    attrs[:rows] ||= 3
 
     output  = "<div id='#{dom_id}' class='#{dom_class}'><span class='form_field_label'>#{label}</span><br>"
     output += text_area(object, field, attrs)
