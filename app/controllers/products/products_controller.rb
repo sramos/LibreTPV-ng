@@ -142,6 +142,14 @@ module Products
       end
     end
 
+    def product_subtypes
+      product_type = ProductType.find_by(id: params[:product_type_id])
+      @product_subtypes = product_type&.product_subtypes.order(:name).collect { |ps| [ps.name, ps.id] }
+      @product = Product.new(product_type: product_type, product_subtype: product_type&.product_subtypes.default)
+
+      render partial: 'products/products/form_product_subtype'
+    end
+
     private
 
     def index_filtered

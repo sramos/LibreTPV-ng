@@ -1,0 +1,27 @@
+<script>
+  (function () {
+    var typeSelect = document.getElementById('<%= dom_type_id %>');
+    var container  = document.getElementById('<%= dom_subtype_container %>');
+
+    if (!typeSelect || !container) return;
+    typeSelect.addEventListener('change', function () {
+      var productTypeId = this.value;
+      if (!productTypeId) {
+        container.innerHTML = ''; // o mantener lo que hubiera
+        return;
+      }
+
+      var url = '<%= product_subtypes_products_products_path %>?product_type_id=' +
+                encodeURIComponent(productTypeId);
+
+      fetch(url, { headers: { 'Accept': 'text/html' } })
+        .then(function (response) { return response.text(); })
+        .then(function (html) {
+          container.innerHTML = html;
+        })
+        .catch(function (error) {
+          console.error('Error cargando subtipos:', error);
+        });
+    });
+  })();
+</script>
