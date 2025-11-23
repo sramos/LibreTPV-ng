@@ -1,4 +1,5 @@
 class ProductSubtype < ApplicationRecord
+  include ::Deactivatable
   include ::Sanitizable
   stripable :name
 

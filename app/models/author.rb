@@ -1,4 +1,5 @@
 class Author < ApplicationRecord
+  include ::Deactivatable
   include ::Sanitizable
   stripable :name
   upcaseable :name

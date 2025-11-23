@@ -1,4 +1,5 @@
 class Vat < ApplicationRecord
+  include ::Deactivatable
   include ::Sanitizable
   stripable :name
 
@@ -9,8 +10,6 @@ class Vat < ApplicationRecord
   validates :rate, presence: true, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 1 }
 
   before_destroy :validate_destroy, prepend: true
-
-  scope :active, -> { where(active: true).order(:name) }
 
   def rate_value
     100.0 * rate.to_f

@@ -1,4 +1,5 @@
 class Publisher < ApplicationRecord
+  include ::Deactivatable
   include ::Sanitizable
   stripable :name
   upcaseable :name

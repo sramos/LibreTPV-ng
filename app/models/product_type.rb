@@ -1,4 +1,5 @@
 class ProductType < ApplicationRecord
+  include ::Deactivatable
   include ::Sanitizable
   stripable :name
 
@@ -10,8 +11,6 @@ class ProductType < ApplicationRecord
   validates :vat, presence: true
 
   before_destroy :validate_destroy, prepend: true
-
-  scope :active, -> { where(active: true).order(:name) }
 
   def self.default
     find_by(active: true, default: true)

@@ -1,4 +1,5 @@
 class Client < ApplicationRecord
+  include ::Deactivatable
   include ::Sanitizable
   stripable :name
 
@@ -13,8 +14,6 @@ class Client < ApplicationRecord
   validates :discount, presence: true, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 1 }
 
   before_destroy :validate_destroy, prepend: true
-
-  scope :active, -> { where(active: true).order(:name) }
 
   def discount_value
     discount * 100
