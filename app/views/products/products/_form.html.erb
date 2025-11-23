@@ -3,16 +3,15 @@
   <%= form_errors @product %>
 
   <div class="linea">
-    <%= _text_field 'Código', 'product', 'code', '3' %>
+    <%= _text_field 'Código', 'product', 'code', '3_2' %>
   </div>
   <div class="linea">
     <%= _select_field 'Tipo', 'product', 'product_type_id', @product_types, '3_2' %>
-    <%= _select_field 'Subtipo', 'product', 'product_subtype_id', @product_subtypes, '3_2' %>
+    <%= render partial: 'products/products/form_product_subtype' %>
   </div>
   <div class="linea">
-    <%= _text_field 'Nombre', 'product', 'name', '2' %>
+    <%= _text_field 'Nombre', 'product', 'name', '3' %>
   </div>
-  <%#= render partial: 'item_properties', locals: {item: @product} %>
   <div class="linea">
     <%= _text_field "Cantidad", 'product', 'stock' %>
     <%= _checkbox_field 'Activo', 'product', 'active', '2', {checked: @product.active} %>
