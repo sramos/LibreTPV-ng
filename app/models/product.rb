@@ -36,24 +36,34 @@ class Product < ApplicationRecord
     authors.collect{|a| a.name}.join('; ')
   end
 
-  def self.create_from_json(json)
+  def self.new_from_json(json)
+    Rails.logger.info "[Product.new_from_json] Called with json: #{json.inspect}"
     return if json.blank?
 
     attrs = json.respond_to?(:deep_symbolize_keys) ? json.deep_symbolize_keys : json
-    Rails.logger.info "[Product.create_from_json] Called with json: #{attrs.inspect}"
-
-    product = Product.create(
+    default_product_type = ProductType.default
+    return Product.new(
       name: attrs[:title],
       code: attrs[:code],
       price: attrs[:price],
       stock: 0,
       description: attrs[:synopsis],
       image_url: attrs[:image],
-      product_type: default_product_type = ProductType.default || ProductType.first
+      product_type: default_product_type || ProductType.first,
+      product_subtype: default_product_type&.product_subtypes.default
     )
+  end
+
+  def self.create_from_json(json)
+    Rails.logger.info "[Product.create_from_json] Called with json: #{json.inspect}"
+    return if json.blank?
+
+    product = Product.new_from_json(json)
+    product.save
 
     return product if product.errors.present?
 
+    attrs = json.respond_to?(:deep_symbolize_keys) ? json.deep_symbolize_keys : json
     product.attach_remote_image(attrs[:image]) if attrs[:image].present?
 
     Array(attrs[:authors]).each do |author|

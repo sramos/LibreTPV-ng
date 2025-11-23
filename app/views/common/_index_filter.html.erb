@@ -8,10 +8,10 @@
         <%= _select_field '', 'filter', 'condition', [["igual a","="], ["mayor que",">"], ["menor que","<"]], '2', id: 'filter_field_number' %>
       </div>
       <div id="filter_options_boolean" style="display: none;">
-        <%= _select_field '', 'filter', 'value', [['Sí','Sí'], ['No','No']], '2', id: 'filter_field_boolean' %>
+        <%= _select_field '', 'filter', 'value', [['Sí','Sí'], ['No','No']], '2', id: 'filter_field_boolean', name: 'filter[value]' %>
       </div>
       <div id="filter_options_value" style="display: block;">
-        <%= _text_field '', 'filter', 'value', '2', id: 'filter_field_value' %>
+        <%= _text_field '', 'filter', 'value', '2', id: 'filter_field_value', name: 'filter[value]' %>
       </div>
       <div class='elemento_derecha' id='boton_filtrado'><br/>
         <%= submit_tag 'Filtrar', class: 'boton', 'data-disable-with' => 'Filtrando...' %>

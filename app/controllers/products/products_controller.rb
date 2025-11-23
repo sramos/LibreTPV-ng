@@ -24,7 +24,6 @@ module Products
         session[filter_scope]['type'] = params[:filter][:type].blank? ? nil : params[:filter][:type]
         session[filter_scope]['value'] = params[:filter][:value].blank? ? nil : params[:filter][:value]
         session[filter_scope]['condition'] = params[:filter][:condition].blank? ? nil : params[:filter][:condition]
-        puts "session[filter_scope]: #{session[filter_scope]}"
       end
       redirect_to products_products_path
     end
@@ -150,6 +149,16 @@ module Products
       render partial: 'products/products/form_product_subtype'
     end
 
+    def code_changed
+      product_code = params[:product][:code].delete('-') if params[:product].present?
+      if Product.find_by(code: params[:code]).blank? && product_code.present?
+        result = FindProductService.call(product_code)
+        if result.success?
+          @product = Product.new_from_json(result.payload)
+        end
+      end
+    end
+
     private
 
     def index_filtered
@@ -163,7 +172,9 @@ module Products
 
       @products = Product.order(:name)
       
-      session[filter_scope] ||= {}
+      session[filter_scope] ||= {'type' => 'stock', 'value' => '0', 'condition' => '>'}
+      #session[filter_scope] ||= {}
+      puts "****** " + session[filter_scope].inspect
       value = session[filter_scope]['value'] if session[filter_scope]
       if value.present?
         case session[filter_scope]['type']

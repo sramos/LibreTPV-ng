@@ -85,7 +85,7 @@ module Sales
       else
         # TODO: Check if product exists and has no errors
         # TODO: Check product service response
-        result = FindProduct::TodosTusLibrosService.new.call(product_code)
+        result = FindProductService.call(product_code)
         respond_to do |format|
           format.turbo_stream do
             render turbo_stream: helpers.update_object_turbo_stream(
