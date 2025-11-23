@@ -11,6 +11,7 @@ class ProductType < ApplicationRecord
   validates :vat, presence: true
 
   before_destroy :validate_destroy, prepend: true
+  after_commit :update_default_type, if: Proc.new { |record| record.active? && record.default? }
 
   def self.default
     find_by(active: true, default: true)
@@ -18,6 +19,10 @@ class ProductType < ApplicationRecord
 
   private
 
+  def update_default_type
+    ProductType.where(default: true).where.not(id: id).update_all(default: false)
+  end
+  
   def validate_destroy
     if products.any?
       errors.add(:base, 'No se puede eliminar un tipo de producto que tenga productos asociados')

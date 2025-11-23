@@ -2,7 +2,19 @@
 <%= form_beginning model: [:products, @product], header: header %>
   <%= form_errors @product %>
 
-  <%= render partial: 'item_properties', locals: {item: @product} %>
+  <div class="linea">
+    <%= _text_field 'Código', 'product', 'code', '2' %>
+  </div>
+  <div class="linea">
+    <%= _select_field 'Tipo', 'product', 'product_type_id', @product_types, '2' %>
+  </div>
+  <div class="linea">
+    <%= _select_field 'Subtipo', 'product', 'product_subtype_id', @product_subtypes, '2' %>
+  </div>
+  <div class="linea">
+    <%= _text_field 'Nombre', 'product', 'name', '2' %>
+  </div>
+  <%#= render partial: 'item_properties', locals: {item: @product} %>
   <div class="linea">
     <%= _text_field "Cantidad", 'product', 'stock' %>
     <%= _checkbox_field 'Activo', 'product', 'active', '2', {checked: @product.active} %>
