@@ -3,13 +3,11 @@
   <%= form_errors @product %>
 
   <div class="linea">
-    <%= _text_field 'Código', 'product', 'code', '2' %>
+    <%= _text_field 'Código', 'product', 'code', '3' %>
   </div>
   <div class="linea">
-    <%= _select_field 'Tipo', 'product', 'product_type_id', @product_types, '2' %>
-  </div>
-  <div class="linea">
-    <%= _select_field 'Subtipo', 'product', 'product_subtype_id', @product_subtypes, '2' %>
+    <%= _select_field 'Tipo', 'product', 'product_type_id', @product_types, '3_2' %>
+    <%= _select_field 'Subtipo', 'product', 'product_subtype_id', @product_subtypes, '3_2' %>
   </div>
   <div class="linea">
     <%= _text_field 'Nombre', 'product', 'name', '2' %>

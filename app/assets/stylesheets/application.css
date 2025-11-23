@@ -148,11 +148,11 @@ i.fa-2x {
   float: left;
   font-size:11px;
   text-align: left;
-  margin-right: 5px;
 }
 
 div.form_field {
   margin-bottom: 5px;
+  padding-right: 5px;
 }
 
 div.checkbox_field {
@@ -197,6 +197,8 @@ form .actions {
 .element_7   { width:840px;  }
 .element_8   { width:960px;  }
 .element_9   { width:1080px; }
+
+select.element_3_2 { width:175px;  }
 
 .left {
   text-align: left;

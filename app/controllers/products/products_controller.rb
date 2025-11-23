@@ -192,8 +192,6 @@ module Products
       @product_subtypes += [ [ @product.product_subtype.name, @product.product_subtype_id ] ] if @product&.product_subtype&.inactive?
       @product_publishers  = Publisher.active.order(:name).collect { |p| [p.name, p.id] }
       @product_publishers += [ [ @product.publisher.name, @product.publisher_id ] ] if @product&.publisher&.inactive?
-      #@product_authors  = Author.active.order(:name).collect { |a| [a.name, a.id] }
-      #@product_authors += [ [ @product.author.name, @product.author_id ] ] if @product&.author&.inactive?
     end
 
     def product_params
