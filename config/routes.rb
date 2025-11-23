@@ -60,7 +60,7 @@ Rails.application.routes.draw do
         post :filter
         post :search_by_code
         post :search_by_name
-        get :product_subtypes
+        get :product_type_changed
       end
       member do
         get :purchases
