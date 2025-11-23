@@ -3,6 +3,7 @@
   <%= form_errors @product_subtype %>
   <div class="linea">
     <%= _text_field 'Nombre', 'product_subtype', 'name', '5_2' %>
+    <%= _checkbox_field 'Por defecto', 'product_subtype', 'default', '1', {right: true, checked: @product_subtype.default} %>
     <%= _checkbox_field 'Activo', 'product_subtype', 'active', '1', {right: true, checked: @product_subtype.active} %>
   </div>
   <div class="linea">

@@ -1,6 +1,7 @@
 module Products 
   class ProductsController < ::ProductsController
     before_action :set_product, only: [:edit, :update, :destroy, :purchases, :sales]
+    before_action :set_new_product, only: [:new, :create]
     before_action :form_options, only: [:new, :edit]
 
     def index
@@ -29,7 +30,6 @@ module Products
     end
     
     def new
-      @product = Product.new
       respond_to do |format|
         format.html { render layout: false }
         format.turbo_stream
@@ -37,8 +37,7 @@ module Products
     end
 
     def create
-      @product = Product.new(product_params)
-      if @product.save
+      if @product.update(product_params)
         respond_to do |format|
           format.turbo_stream do
             render turbo_stream: helpers.update_object_turbo_stream(
@@ -185,6 +184,13 @@ module Products
       @product = Product.find(params[:id])
     end
 
+    def set_new_product
+      default_product_type = ProductType.default
+      default_product_subtype = default_product_type&.product_subtypes.default
+      @product = Product.new(product_type: default_product_type,
+                             product_subtype: default_product_subtype)
+    end
+    
     def form_options
       @product_types  = ProductType.active.order(:name).collect { |pt| [pt.name, pt.id] }
       @product_types += [ [ @product.product_type.name, @product.product_type_id ] ] if @product&.product_type&.inactive?

@@ -19,6 +19,10 @@ class Vat < ApplicationRecord
     self.rate = new_value.to_f / 100.0
   end
 
+  def name_value
+    "#{name} (#{rate_value}%)"
+  end
+
   private
 
   def validate_destroy

@@ -1,6 +1,7 @@
 <div id="product_subtype_<%= product_subtype.id %>" class="listadofila<%= ' flash-highlight' if local_assigns[:highlight] %>">
   <%= index_line product_subtype, 'product_subtypes' %>
   <div class="listado_derecha">
+    <%= icon('star', title: 'Valor por defecto', fa: 'fa-regular') if product_subtype.default? %>
     <%= object_edition url: edit_admin_product_type_product_subtype_path(@product_type.id, product_subtype.id), title: "Editar subtipo de producto '#{product_subtype.name}'" %>
     <%= object_destroy url: admin_product_type_product_subtype_path(@product_type.id, product_subtype.id),
                        title: "Eliminar subtipo de producto '#{product_subtype.name}'",

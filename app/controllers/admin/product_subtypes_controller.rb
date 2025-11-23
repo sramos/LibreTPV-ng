@@ -104,7 +104,7 @@ module Admin
     end
 
     def product_subtype_params
-      params.require(:product_subtype).permit(:name, :description, :active)
+      params.require(:product_subtype).permit(:name, :description, :active, :default)
     end
   end
 end

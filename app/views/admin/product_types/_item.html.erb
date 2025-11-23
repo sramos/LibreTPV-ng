@@ -1,6 +1,7 @@
 <div id="product_type_<%= product_type.id %>" class="listadofila<%= ' flash-highlight' if local_assigns[:highlight] %>">
   <%= index_line product_type, 'product_types' %>
   <div class="listado_derecha">
+    <%= icon('star', title: 'Valor por defecto', fa: 'fa-regular') if product_type.default? %>
     <%= object_action icon: icon('list', title: 'Subtipos/Materias'),
                           turbo_frame: "product_subtype_sub_#{product_type.id}",
                           url: admin_product_type_product_subtypes_path(product_type.id) %>

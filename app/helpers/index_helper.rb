@@ -65,9 +65,9 @@ module IndexHelper
        ['Nombre/Título', 'name', '3'], ['Autores', 'authors_names', '3'],
        ['Cant.', 'stock', '1_4 right'], ['PVP', 'price', '1_3 right'] ]
     when 'product_types'
-      [['Nombre', 'name', '4'], ['IVA', 'vat.name', '1'], ['Defecto', 'default', '1_3 right'],['Activo', 'active', '1_3 right']]
+      [['Nombre', 'name', '4'], ['IVA', 'vat.name_value', '1'], ['Activo', 'active', '1 right']]
     when 'product_subtypes'
-      [['Nombre', 'name', '1'], ['Tipo', 'product_type.name', '1_2'], ['Activo', 'active', '1_3 right']]
+      [['Nombre', 'name', '1'], ['Tipo', 'product_type.name', '1_2'], ['Activo', 'active', '1 right']]
     when 'publishers'
       [['Nombre', 'name', '5'], ['Num.Libros', 'products.count', '2_3 right'], ['Activo', 'active', '1_2 right']]
     when 'purchase_notes'
