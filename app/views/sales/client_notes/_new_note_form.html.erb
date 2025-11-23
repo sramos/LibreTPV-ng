@@ -4,7 +4,7 @@
     <div class="linea">
       <%= _date_field 'Fecha', 'note', 'date', class: 'input_filter_field' %>
       <div class="form_field element_1_5">&nbsp;</div>
-      <%= _select_field 'Cliente', 'note', 'client_id', Client.active.map{|c| [c.name,c.id]}, '2', enriquecido: true %>
+      <%= _select_field 'Cliente', 'note', 'client_id', Client.active.map{|c| [c.name,c.id]}, '2', enchanced: true %>
     </div>
     <div class="elemento_derecha" id='boton_filtrado'><br/>
       <%= submit_tag 'Nueva venta', class: 'boton', 'data-disable-with' => 'Filtrando...' %>

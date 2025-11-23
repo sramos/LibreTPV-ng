@@ -61,9 +61,9 @@ module FormHelper
     dom_id = "form_field_#{object}_#{field}_select"
     dom_class = "form_field element_#{element_type}"
     attrs[:id] ||= "#{dom_id}_input"
-    attrs[:class] ||= (dom_class + ' input_form_field chosen_select')
+    attrs[:class] ||= (dom_class + ' input_form_field')
     attrs[:class] += ' chosen_select' if attrs[:enchanced]
-    select_options = {include_blank: attrs[:vacio], disabled: attrs[:disabled]}
+    select_options = {include_blank: attrs[:include_blank], disabled: attrs[:disabled]}
     select_options[:selected] = attrs[:value] if attrs[:value]
 
     output  = "<div id='#{dom_id}' class='#{dom_class}'><span class='form_field_label'>#{label}</span><br>"

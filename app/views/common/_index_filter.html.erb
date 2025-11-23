@@ -3,16 +3,15 @@
   <%= form_tag( {action: 'filter'}, multipart: true, class: 'index_form' ) %>
     <div class="fila"></div>
     <div class="linea">
-      <%#= selector 'Criterio de Filtrado', 'filter', 'type', @filter_fields.map {|u| [u[0],u[1]]} %>
-      <%= _select_field 'Criterio de Filtrado', 'filter', 'type', @filter_fields.map {|u| [u[0],u[1]]}, '2' %>
+      <%= _select_field 'Criterio de Filtrado', 'filter', 'type', @filter_fields.map {|u| [u[0],u[1]]}, '2', id: 'selector_filter_type', include_blank: false %>
       <div id="filter_options_number" style="display: none;">
-        <%= selector '', 'filter', 'condition', [["igual a","="], ["mayor que",">"], ["menor que","<"]] %>
+        <%= _select_field '', 'filter', 'condition', [["igual a","="], ["mayor que",">"], ["menor que","<"]], '2', id: 'filter_field_number' %>
       </div>
       <div id="filter_options_boolean" style="display: none;">
-        <%= selector '', 'filter', 'value', [['Sí','Sí'], ['No','No']], id: 'filter_options_boolean_field' %>
+        <%= _select_field '', 'filter', 'value', [['Sí','Sí'], ['No','No']], '2', id: 'filter_field_boolean' %>
       </div>
       <div id="filter_options_value" style="display: block;">
-        <%= _text_field '', 'filter', 'value', '2', class: 'input_filter_field', id: 'filter_options_value_field' %>
+        <%= _text_field '', 'filter', 'value', '2', id: 'filter_field_value' %>
       </div>
       <div class='elemento_derecha' id='boton_filtrado'><br/>
         <%= submit_tag 'Filtrar', class: 'boton', 'data-disable-with' => 'Filtrando...' %>
@@ -28,50 +27,62 @@
   <% end %>
 </fieldset>
 
+<% 
+   # When filter_type selector changes, following divs must be hided/showed:
+   #   * When filter_type is number, show filter_options_number and filter_options_value and hide filter_options_boolean
+   #   * When filter_type is boolean, show filter_options_boolean and hide filter_options_number and filter_options_value
+   #   * When filter_type is string, show filter_options_value and hide filter_options_number and filter_options_boolean
+%>
+
 <script>
-  (function(){
-    var map = <%= raw(@filter_fields.map{|u| [u[1], u[2]]}.to_h.to_json) %>;
-    function setup(){
-      var sel = document.querySelector("select[name='filter[type]']") || document.getElementById('formulario_campo_filter_type');
-      var filter_options_number = document.getElementById('filter_options_number');
-      var filter_options_boolean = document.getElementById('filter_options_boolean');
-      var filter_options_boolean_field = document.getElementById('filter_options_boolean_field');
-      var filter_options_value = document.getElementById('filter_options_value');
-      var filter_options_value_field = document.getElementById('filter_options_value_field');
-      if(!sel) return;
-      function isNumber(){
+  (function() {
+    // Mapa: clave = valor del select (2º elemento de cada array), valor = tipo (3er elemento)
+    var map = <%= raw(@filter_fields.map { |u| [u[1], u[2]] }.to_h.to_json) %>;
+
+    function setupIndexFilter() {
+      var sel = document.querySelector('select[name="filter[type]"]');
+      if (!sel) return;
+
+      var divNumber   = document.getElementById('filter_options_number');
+      var divBoolean  = document.getElementById('filter_options_boolean');
+      var divValue    = document.getElementById('filter_options_value');
+
+      function currentType() {
         var key = sel.value;
-        if (map && map[key]) return map[key] === 'number';
+        if (map && Object.prototype.hasOwnProperty.call(map, key)) {
+          return map[key];
+        }
+        return null;
       }
-      function isBoolean(){
-        var key = sel.value;
-        if (map && map[key]) return map[key] === 'boolean';
-      }
-      function update(){
-        if (isNumber()) {
-          filter_options_number.style.display = 'block';
-          filter_options_boolean.style.display = 'none';
-          filter_options_boolean_field.disabled = true;
-          filter_options_value.style.display = 'block';
-          filter_options_value_field.disabled = false;
-        } else if (isBoolean()) {
-          filter_options_number.style.display = 'none';
-          filter_options_boolean.style.display = 'block';
-          filter_options_boolean_field.disabled = false;
-          filter_options_value.style.display = 'none';
-          filter_options_value_field.disabled = true;
-        } else {
-          filter_options_number.style.display = 'none';
-          filter_options_boolean.style.display = 'none';
-          filter_options_boolean_field.disabled = true;
-          filter_options_value.style.display = 'block';
-          filter_options_value_field.disabled = false;
+
+      function update() {
+        var t = currentType();
+
+        if (t === 'boolean') {
+          if (divBoolean) divBoolean.style.display = 'block';
+          if (divNumber)  divNumber.style.display  = 'none';
+          if (divValue)   divValue.style.display   = 'none';
+        } else if (t === 'number') {
+          if (divNumber)  divNumber.style.display  = 'block';
+          if (divValue)   divValue.style.display   = 'block';
+          if (divBoolean) divBoolean.style.display = 'none';
+        } else { // string u otros
+          if (divValue)   divValue.style.display   = 'block';
+          if (divNumber)  divNumber.style.display  = 'none';
+          if (divBoolean) divBoolean.style.display = 'none';
         }
       }
+
       sel.addEventListener('change', update);
       update();
     }
-    document.addEventListener('DOMContentLoaded', setup);
-    document.addEventListener('turbo:load', setup);
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', setupIndexFilter);
+    } else {
+      setupIndexFilter();
+    }
+
+    document.addEventListener('turbo:load', setupIndexFilter);
   })();
 </script>
