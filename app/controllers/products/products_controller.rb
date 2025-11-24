@@ -173,8 +173,6 @@ module Products
       @products = Product.order(:name)
       
       session[filter_scope] ||= {'type' => 'stock', 'value' => '0', 'condition' => '>'}
-      #session[filter_scope] ||= {}
-      puts "****** " + session[filter_scope].inspect
       value = session[filter_scope]['value'] if session[filter_scope]
       if value.present?
         case session[filter_scope]['type']

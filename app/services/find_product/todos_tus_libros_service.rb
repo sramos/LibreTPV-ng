@@ -54,6 +54,7 @@ class FindProduct::TodosTusLibrosService < ApplicationService
       data[:synopsis] = synopsis_text if synopsis_text.present?
 
       return_data = data unless data.empty?
+      Rails.logger.debug "DATA: #{data.inspect}"
     end
 
     success(return_data)
