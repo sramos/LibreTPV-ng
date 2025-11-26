@@ -9,7 +9,7 @@ module FormHelper
     output  = '<div class="modal-overlay" onclick="document.getElementById(\'modal\').innerHTML=\'\'"></div>'
     output += '<div class="modal-panel" onclick="event.stopPropagation()">'
     output += '<div class="modal-header">'
-    output += '<h3>' + attrs[:header]+ '</h3>'
+    output += '<h3 id="modal-form-header">' + attrs[:header]+ '</h3>'
     output += link_to '✕', '#', onclick: "document.getElementById('modal').innerHTML=''; return false;", class: 'modal-close'
     output += '</div>'
     output += '<div class="modal-body"><div class="linea"></div>' 

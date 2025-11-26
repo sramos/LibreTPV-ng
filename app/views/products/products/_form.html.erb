@@ -1,4 +1,4 @@
-<% header ||= 'Formulario' unless defined?(header) %>
+<% header = @product.new_record? ? "Nuevo Producto" : "Editar Producto: #{@product.name}" %>
 <% dom_type_id = 'product_type_id' %>
 <% dom_subtype_container = 'product_subtype_container' %>
 <%= form_beginning model: [:products, @product], header: header %>

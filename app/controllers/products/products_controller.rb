@@ -151,17 +151,36 @@ module Products
 
     def find_by_isbn
       product_code = params[:product][:code].delete('-') if params[:product].present?
-      if Product.find_by(code: product_code).blank? && product_code.present?
+      
+      if @product = Product.find_by(code: product_code)
+        # Actualizar el header del modal con el nombre del producto encontrado
+        modal_header = "Editar Producto: #{@product.name}"
+      elsif product_code.present?
         result = FindProductService.call(product_code)
         if result.success?
           @product = Product.new_from_json(result.payload)
-          # Cargar las variables necesarias para el formulario
-          form_options
+        else
+          @product = Product.new(code: product_code)
         end
       end
+
+      # Cargar las variables necesarias para el formulario
+      form_options if @product.present?
+
+      # Actualizar el header del formulario con el nombre del producto
+      modal_header = @product.new_record? ? "Nuevo Producto" : "Editar Producto: #{@product.name}"
       
-      # Renderizar el formulario completo
-      render partial: 'products/products/form_content', locals: { product: @product }
+      # Usar TurboStream para actualizar el modal completo con el header correcto
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.update('modal', 
+            partial: 'products/products/form', 
+            locals: { header: modal_header, product: @product })
+        end
+        format.html {
+          render partial: 'products/products/form', locals: { product: @product }
+        }
+      end
     end
 
     private

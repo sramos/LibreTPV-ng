@@ -44,17 +44,11 @@
     btn.textContent = 'Buscando...';
     btn.disabled = true;
 
-    fetch(url, { headers: { 'Accept': 'text/html' } })
+    fetch(url, { headers: { 'Accept': 'text/vnd.turbo-stream.html' } })
       .then(function (response) { return response.text(); })
       .then(function (html) {
-        // Actualizar solo el contenido del formulario
-        var formContainer = document.getElementById('product_form_container');
-        if (formContainer) {
-          formContainer.innerHTML = html;
-          
-          // Re-inicializar los event listeners
-          initializeProductForm();
-        }
+        // Procesar TurboStream manualmente
+        Turbo.renderStreamMessage(html);
       })
       .catch(function (error) {
         console.error('Error buscando producto:', error);
