@@ -149,14 +149,19 @@ module Products
       render partial: 'products/products/form_product_subtype'
     end
 
-    def code_changed
+    def find_by_isbn
       product_code = params[:product][:code].delete('-') if params[:product].present?
-      if Product.find_by(code: params[:code]).blank? && product_code.present?
+      if Product.find_by(code: product_code).blank? && product_code.present?
         result = FindProductService.call(product_code)
         if result.success?
           @product = Product.new_from_json(result.payload)
+          # Cargar las variables necesarias para el formulario
+          form_options
         end
       end
+      
+      # Renderizar el formulario completo
+      render partial: 'products/products/form_content', locals: { product: @product }
     end
 
     private
@@ -213,8 +218,8 @@ module Products
       @product_types += [ [ @product.product_type.name, @product.product_type_id ] ] if @product&.product_type&.inactive?
       @product_subtypes  = @product.product_type.product_subtypes.order(:name).collect { |ps| [ps.name, ps.id] } if @product&.product_type
       @product_subtypes += [ [ @product.product_subtype.name, @product.product_subtype_id ] ] if @product&.product_subtype&.inactive?
-      @product_publishers  = Publisher.active.order(:name).collect { |p| [p.name, p.id] }
-      @product_publishers += [ [ @product.publisher.name, @product.publisher_id ] ] if @product&.publisher&.inactive?
+      @publishers  = Publisher.active.order(:name).collect { |p| [p.name, p.id] }
+      @publishers += [ [ @product.publisher.name, @product.publisher_id ] ] if @product&.publisher&.inactive?
     end
 
     def product_params

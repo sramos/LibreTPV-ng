@@ -169,8 +169,19 @@ div.checkbox_field {
 }
 
 .textarea_modal {
-  width:788px;
+  clear: both;
+  width:100%;
 }
+
+textarea.textarea_modal {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  min-height: 80px;
+  resize: vertical;
+  box-sizing: border-box;
+}
+
 
 form .actions {
   float: right;
@@ -199,6 +210,59 @@ form .actions {
 .element_9   { width:1080px; }
 
 select.element_3_2 { width:175px;  }
+select.elemento_2  { width:235px;  }
+select.elemento_3  { width:355px;  }
+select.elemento_4  { width:475px;  }
+select.elemento_5  { width:595px;  }
+select.elemento_6  { width:715px;  }
+select.elemento_7  { width:835px;  }
+select.elemento_8  { width:955px;  }
+select.elemento_9  { width:1075px; }
+
+/* Product form layout */
+#product_form_container {
+  display: flex;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.left_form {
+  flex: 1; /* 50% del ancho */
+  min-width: 0;
+    border-right: 1px solid #e5e7eb;
+}
+
+.right_form {
+  flex: 1; /* 50% del ancho */
+  min-width: 0;
+  max-width: 50%; /* Forzar límite máximo */
+  display: flex;
+  flex-direction: row; /* división horizontal */
+}
+
+.product_image_container {
+  flex: 0 0 40%; /* 35% del right_form, no crece ni se encoge */
+  min-width: 0;
+  max-width: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.product_description_container {
+  flex: 0 0 60%; /* 65% del right_form, no crece ni se encoge */
+  min-width: 0;
+  max-width: 60%;
+}
+
+.product_image {
+  max-width: 90%;
+  height: auto;
+  max-height: 200px;
+  object-fit: contain;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
 
 .left {
   text-align: left;

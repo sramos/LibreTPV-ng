@@ -1,0 +1,40 @@
+<% dom_type_id = 'product_type_id' %>
+<% dom_subtype_container = 'product_subtype_container' %>
+<div class="left_form">
+  <div class="linea">
+    <%= _text_field 'Código', 'product', 'code', '3_2' %>
+    <% if product.new_record? %>
+      <%= button_tag 'Buscar por ISBN', type: 'button', 
+                     id: 'search_by_isbn_btn', 
+                     class: 'boton',
+                     onclick: 'searchByIsbn();' %>
+    <% end %>
+  </div>
+  <div class="linea">
+    <%= _select_field 'Tipo', 'product', 'product_type_id', @product_types, '3_2', id: dom_type_id %>
+    <div id="<%= dom_subtype_container %>">
+      <%= render partial: 'products/products/form_product_subtype' %>
+    </div>
+  </div>
+  <%= render partial: 'products/products/form_product_properties' %>
+  <div class="linea">
+    <%= _text_field "Cantidad", 'product', 'stock', '1' %>
+    <%= _checkbox_field 'Activo', 'product', 'active', '1', {checked: product.active} %>
+  </div>
+</div>
+<div class="right_form">
+  <div id="product_image_container" class="product_image_container">
+    <div class="linea">
+      <% if product.image_url.present? %>
+        <%= image_tag product.image_url, alt: product.name, class: 'product_image' %>
+      <% else %>
+        <%= image_tag 'missing_cover.jpg', alt: 'Sin imagen', class: 'product_image' %>
+      <% end %>
+    </div>
+  </div>
+  <div id="product_description_container" class="product_description_container">
+    <div class="linea">
+      <%= _text_area_field 'Descripción', 'product', 'description' %>
+    </div>
+  </div>
+</div>

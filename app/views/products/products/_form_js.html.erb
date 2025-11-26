@@ -1,4 +1,6 @@
 <script>
+  alert("Script cargado");
+  
   (function () {
     var typeSelect = document.getElementById('<%= dom_type_id %>');
     var container  = document.getElementById('<%= dom_subtype_container %>');
@@ -24,4 +26,53 @@
         });
     });
   })();
+
+  // Función para buscar por ISBN - fuera del IIFE para acceso global
+  window.searchByIsbn = function() {
+    var codeInput = document.querySelector('input[name="product[code]"]');
+    var productCode = codeInput.value.trim().replace(/-/g, '');
+    alert(productCode);
+    
+    if (!productCode) {
+      alert('Por favor, introduce un código de producto');
+      return;
+    }
+
+    var url = '<%= find_by_isbn_products_products_path %>?product[code]=' + 
+              encodeURIComponent(productCode);
+
+    // Mostrar indicador de carga
+    var btn = document.getElementById('search_by_isbn_btn');
+    var originalText = btn.textContent;
+    btn.textContent = 'Buscando...';
+    btn.disabled = true;
+
+    fetch(url, { headers: { 'Accept': 'text/html' } })
+      .then(function (response) { return response.text(); })
+      .then(function (html) {
+        // Actualizar solo el contenido del formulario
+        var formContainer = document.getElementById('product_form_container');
+        if (formContainer) {
+          formContainer.innerHTML = html;
+          
+          // Re-inicializar los event listeners
+          initializeProductForm();
+        }
+      })
+      .catch(function (error) {
+        console.error('Error buscando producto:', error);
+        alert('Error al buscar el producto. Inténtalo de nuevo.');
+      })
+      .finally(function () {
+        // Restaurar botón
+        btn.textContent = originalText;
+        btn.disabled = false;
+      });
+  };
+
+  // Función para re-inicializar el formulario después de la actualización
+  window.initializeProductForm = function() {
+    // Aquí puedes añadir lógica para re-inicializar componentes si es necesario
+    console.log('Formulario de producto re-inicializado');
+  };
 </script>

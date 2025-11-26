@@ -4,21 +4,8 @@
 <%= form_beginning model: [:products, @product], header: header %>
   <%= form_errors @product %>
 
-  <div class="linea">
-    <%= _text_field 'Código', 'product', 'code', '3_2' %>
-  </div>
-  <div class="linea">
-    <%= _select_field 'Tipo', 'product', 'product_type_id', @product_types, '3_2', id: dom_type_id %>
-    <div id="<%= dom_subtype_container %>">
-      <%= render partial: 'products/products/form_product_subtype' %>
-    </div>
-  </div>
-  <div class="linea">
-    <%= _text_field 'Nombre', 'product', 'name', '3' %>
-  </div>
-  <div class="linea">
-    <%= _text_field "Cantidad", 'product', 'stock', '3_2' %>
-    <%= _checkbox_field 'Activo', 'product', 'active', '1', {checked: @product.active} %>
+  <div id="product_form_container">
+    <%= render partial: 'products/products/form_content', locals: { product: @product } %>
   </div>
 <%= form_end %>
 

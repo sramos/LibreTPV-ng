@@ -47,7 +47,6 @@ module FormHelper
     dom_id = "form_field_#{object}_#{field}_text"
     dom_class = "form_field element_#{element_type}"
     attrs[:id] ||= "#{dom_id}_input"
-    attrs[:name]  ||= "#{object}_#{field}_text"
     attrs[:type]  ||= 'd'
     attrs[:class] = "#{dom_class} #{attrs[:class] || 'input_form_field'}"
 
