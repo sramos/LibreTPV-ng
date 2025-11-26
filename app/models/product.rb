@@ -46,6 +46,8 @@ class Product < ApplicationRecord
       name: attrs[:title],
       code: attrs[:code],
       price: attrs[:price],
+      publisher: Publisher.find_or_create_by(name: attrs[:publisher]),
+      edition: attrs[:edition],
       stock: 0,
       description: attrs[:synopsis],
       image_url: attrs[:image],

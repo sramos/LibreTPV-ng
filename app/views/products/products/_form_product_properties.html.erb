@@ -3,7 +3,7 @@
     <%= _text_field 'Nombre', 'product', 'name', '3' %>
   </div>
   <div class="linea">
-    <%= _select_field 'Editorial', 'product', 'publisher_id', @publishers, '2' %>
+    <%= _select_field 'Editorial', 'product', 'publisher_id', @publishers, '2', include_blank: true %>
     <%= _text_field 'Edición', 'product', 'edition', '1' %>
   </div>
   <div class="linea">

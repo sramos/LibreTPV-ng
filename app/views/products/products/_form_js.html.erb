@@ -1,6 +1,4 @@
 <script>
-  alert("Script cargado");
-  
   (function () {
     var typeSelect = document.getElementById('<%= dom_type_id %>');
     var container  = document.getElementById('<%= dom_subtype_container %>');
@@ -31,7 +29,6 @@
   window.searchByIsbn = function() {
     var codeInput = document.querySelector('input[name="product[code]"]');
     var productCode = codeInput.value.trim().replace(/-/g, '');
-    alert(productCode);
     
     if (!productCode) {
       alert('Por favor, introduce un código de producto');

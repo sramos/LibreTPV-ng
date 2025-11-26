@@ -4,10 +4,14 @@
   <div class="linea">
     <%= _text_field 'Código', 'product', 'code', '3_2' %>
     <% if product.new_record? %>
-      <%= button_tag 'Buscar por ISBN', type: 'button', 
-                     id: 'search_by_isbn_btn', 
-                     class: 'boton',
-                     onclick: 'searchByIsbn();' %>
+      <div class="form_field element_1_2"><br>
+        <%= link_to '#', onclick: 'searchByIsbn(); return false;', 
+                    class: 'boton', 
+                    id: 'search_by_isbn_btn',
+                    title: 'Buscar por ISBN' do %>
+          <%= ('Buscar'.html_safe + ' ').html_safe + icon('search', title: 'Buscar por ISBN') %>
+        <% end %>
+      </div>
     <% end %>
   </div>
   <div class="linea">

@@ -210,14 +210,14 @@ form .actions {
 .element_9   { width:1080px; }
 
 select.element_3_2 { width:175px;  }
-select.elemento_2  { width:235px;  }
-select.elemento_3  { width:355px;  }
-select.elemento_4  { width:475px;  }
-select.elemento_5  { width:595px;  }
-select.elemento_6  { width:715px;  }
-select.elemento_7  { width:835px;  }
-select.elemento_8  { width:955px;  }
-select.elemento_9  { width:1075px; }
+select.element_2   { width:235px;  }
+select.element_3   { width:355px;  }
+select.element_4   { width:475px;  }
+select.element_5   { width:595px;  }
+select.element_6   { width:715px;  }
+select.element_7   { width:835px;  }
+select.element_8   { width:955px;  }
+select.element_9   { width:1075px; }
 
 /* Product form layout */
 #product_form_container {
