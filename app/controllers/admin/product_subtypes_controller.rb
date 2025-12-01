@@ -31,7 +31,7 @@ module Admin
               highlight_dom_id: "product_subtype_#{@product_subtype.id}",
             )
           end
-          format.html { redirect_to admin_product_subtypes_path, notice: 'Materia/subtipo de producto creado correctamente' }
+          format.html { redirect_to admin_product_type_product_subtypes_path(@product_type), notice: 'Materia/subtipo de producto creado correctamente' }
         end
       else
         respond_to do |format|
@@ -61,7 +61,7 @@ module Admin
               stream_locals: { product_subtype: @product_subtype },
             )
           end
-          format.html { redirect_to admin_product_subtypes_path, notice: 'Materia/subtipo de producto actualizado correctamente' }
+          format.html { redirect_to admin_product_type_product_subtypes_path(@product_type), notice: 'Materia/subtipo de producto actualizado correctamente' }
         end
       else
         respond_to do |format|
@@ -87,10 +87,10 @@ module Admin
             container_dom_id: "product_subtype_#{@product_subtype.id}", message: msg
           )
         end
-        format.html { redirect_to admin_product_subtypes_path, notice: msg }
+        format.html { redirect_to admin_product_type_product_subtypes_path(@product_type), notice: msg }
       end
     rescue => e
-      redirect_to admin_product_subtypes_path, alert: "Error al eliminar la materia/subtipo de producto: #{e.message}"
+      redirect_to admin_product_type_product_subtypes_path(@product_type), alert: "Error al eliminar la materia/subtipo de producto: #{e.message}"
     end
 
     private

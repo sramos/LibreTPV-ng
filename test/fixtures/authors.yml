@@ -5,3 +5,7 @@ one:
 two:
   name: MARÍA GARCÍA
   active: true
+
+deletable_author:
+  name: AUTOR SIN PRODUCTOS
+  active: true

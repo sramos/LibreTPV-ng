@@ -1,10 +1,17 @@
-
 user_one:
-  email: admin@libreriaejemplo.com
-  name: Admin
-  encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
+  name: Juan Pérez
+  email: juan@example.com
+  encrypted_password: "$2a$12$K1ZQ4VZQZQZQZQZQZQZQZOZQZQZQZQZQZQZQZQZQZQZQZQZQZQZQZQZQZQ"
+  active: true
 
 user_two:
-  email: user@example.com
-  name: Regular User
-  encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
+  name: María García
+  email: maria@example.com
+  encrypted_password: "$2a$12$K1ZQ4VZQZQZQZQZQZQZQZOZQZQZQZQZQZQZQZQZQZQZQZQZQZQZQZQZQZQ"
+  active: true
+
+deletable_user:
+  name: Usuario Temporal
+  email: temp@example.com
+  encrypted_password: "$2a$12$K1ZQ4VZQZQZQZQZQZQZQZOZQZQZQZQZQZQZQZQZQZQZQZQZQZQZQZQZQZQ"
+  active: true

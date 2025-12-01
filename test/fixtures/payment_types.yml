@@ -5,3 +5,7 @@ card:
 cash:
   name: Efectivo
   cash: true
+
+deletable_payment_type:
+  name: Temporal
+  cash: false

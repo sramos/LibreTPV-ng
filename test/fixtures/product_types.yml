@@ -9,3 +9,7 @@ product_type_two:
 product_type_three:
   name: Utensilios
   vat: vat_two
+
+deletable_product_type:
+  name: Tipo Temporal
+  vat: deletable_vat

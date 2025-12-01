@@ -10,3 +10,7 @@ publisher_empty:
   name: Editorial Antigua
   active: true
 
+deletable_publisher:
+  name: Editorial Sin Productos
+  active: true
+
