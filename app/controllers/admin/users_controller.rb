@@ -49,7 +49,7 @@ module Admin
     end
 
     def update
-      if @user.update(user_params)
+      if @user.update_without_password(user_params_update)
         respond_to do |format|
           format.turbo_stream do
             render turbo_stream: helpers.update_object_turbo_stream(
@@ -96,6 +96,10 @@ module Admin
     end
 
     def user_params
+      params.require(:user).permit(:name, :email, :password, :active)
+    end
+
+    def user_params_update
       params.require(:user).permit(:name, :email, :active)
     end
   end

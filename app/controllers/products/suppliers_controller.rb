@@ -108,8 +108,8 @@ module Products
                          ['NIF','code_id','string'] ]
       @suppliers = Supplier.order(:name)
 
-      puts "****** #{filter_scope}"
-      puts "****** session[filter_scope]: #{session[filter_scope]}"
+      #puts "****** #{filter_scope}"
+      #puts "****** session[filter_scope]: #{session[filter_scope]}"
       session[filter_scope] ||= {}
       value = session[filter_scope]['value'] if session[filter_scope]
       if value.present?

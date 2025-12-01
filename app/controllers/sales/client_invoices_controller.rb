@@ -27,7 +27,7 @@ module Sales
     end
 
     def create
-      puts "**** Tenemos los parámetros: #{params.inspect}"
+      #puts "**** Tenemos los parámetros: #{params.inspect}"
       @note = ClientNote.find(params[:client_note_id])
       @invoice = @note.create_and_pay_invoice(params[:payment_type_id])
       if @invoice && @invoice.errors.blank?
@@ -35,7 +35,7 @@ module Sales
         PrintTicketService.call(@invoice) if params[:print_ticket] == '1'
         redirect_to sales_client_notes_path
       else
-        puts "**** Parece que algo ha ido mal: #{@invoice.errors.inspect}"
+        #puts "**** Parece que algo ha ido mal: #{@invoice.errors.inspect}"
         respond_to do |format|
           format.turbo_stream do
             render turbo_stream: [
