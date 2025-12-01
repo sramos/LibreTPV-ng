@@ -46,6 +46,7 @@ class Admin::ProductTypesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should not create product_type without name" do
+    @vat = Vat.create!(name: 'VAT TEMPORAL PT', rate: 0.35, active: true)
     assert_no_difference('ProductType.count') do
       post admin_product_types_path, params: { product_type: { name: '', vat_id: @vat.id, description: 'Test description', default: false, active: true } }
     end

@@ -66,7 +66,7 @@ module FormHelper
     select_options[:selected] = attrs[:value] if attrs[:value]
 
     output  = "<div id='#{dom_id}' class='#{dom_class}'><span class='form_field_label'>#{label}</span><br>"
-    output += select(object, field, values, select_options, attrs)
+    output += select(object, field, values||[], select_options, attrs)
     output += '</div>'
     return output.html_safe
   end
