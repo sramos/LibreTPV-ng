@@ -156,8 +156,11 @@ div.form_field {
 }
 
 div.checkbox_field {
-  float: right;
   height: 37px;
+}
+
+span .checkbox_field {
+  float: right;
 }
 
 .input_form_field {

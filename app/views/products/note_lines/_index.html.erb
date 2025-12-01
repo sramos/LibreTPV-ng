@@ -1,0 +1,17 @@
+<%= turbo_frame_tag "supplier_note_#{@note.id}_sub" do %>
+  <!--- Note lines --->
+  <div id="note_lines">
+    <% read_only = @note.invoice.present? %>  
+    <% fieldset_class ||= 'sublistado' %>
+    <% disable_close_button ||= false %>
+    <%= subindex_header 'note_lines', {title: 'Lineas de albarán',
+                                       disable_close_button: disable_close_button,
+                                       dom_id: "supplier_note_#{@note.id}_sub_lines",
+                                       fieldset_class: fieldset_class} %>
+      <div id="note_<%= @note.id %>_new_note_line_tag"></div>
+      <% for note_line in @note_lines %>
+        <%= render partial: 'products/note_lines/item', locals: {note_line: note_line, read_only: read_only} %>
+      <% end %>
+    <%= subindex_footer @note_lines %>
+  </div>
+<% end %>

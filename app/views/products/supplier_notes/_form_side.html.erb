@@ -1,0 +1,11 @@
+  <div id="note_<%= @note.id %>_side" class='lateral'>
+    <div class='caja_lateral'>
+      <%= render partial: 'products/supplier_notes/total_cost' %>
+    </div>
+    <% unless @note.closed %>
+      <div class='caja_lateral'>
+        <%= render partial: 'products/note_lines/form_by_code' %>
+        <%= render partial: 'products/note_lines/form_by_concept' %>
+      </div>
+    <% end %>
+  </div>

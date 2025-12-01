@@ -6,9 +6,6 @@ class ClientNote < Note
   validates :deposit, presence: false
   validates :devolution_date, presence: false
 
-  scope :open, -> { where(closed: false) }
-  scope :closed, -> { where(closed: true) }
-
   def total_amount
     note_lines.sum('product_price * quantity * (1 - discount)')
   end

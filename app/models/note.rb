@@ -13,6 +13,9 @@ class Note < ApplicationRecord
   after_commit :update_products_stock
   before_destroy :validate_destroy, prepend: true
 
+  scope :open, -> { where(closed: false) }
+  scope :closed, -> { where(closed: true) }
+
   def close!
     update(closed: true)
   end

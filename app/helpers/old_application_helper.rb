@@ -280,7 +280,7 @@ module OldApplicationHelper
         controladores = [ #{ label: 'Facturas Proveedores', controlador: 'factura' },
                           #{ label: 'Depósitos', controlador: 'deposito' },
                           #{ label: 'Albaranes aceptados', controlador: 'albaranes_cerrados' },
-                          #{ label: 'Albaranes de entrada', controlador: 'albarans' },
+                          { label: 'Albaranes de entrada', controlador: 'products/supplier_notes' },
                           { label: 'Proveedores', controlador: 'products/suppliers' },
                           { label: 'Inventario', controlador: 'products/products' } ]
       when :accounting

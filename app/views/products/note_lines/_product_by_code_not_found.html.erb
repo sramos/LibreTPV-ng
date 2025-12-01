@@ -1,0 +1,35 @@
+  <div id="product_by_code_not_found" class="linea">
+    <% if payload %>
+      <div class="linea center">
+        <p>
+          <br><%= 'El libro no existe en el inventario' %>
+          <br>
+          --- <%= link_to 'Incluirlo en la venta', '#', class: 'btn include-payload-button',
+                      data: { include_payload: true, product_data: payload.to_json } %> ---
+        </p>
+      </div>
+      <div class="not_found_product" style="overflow-wrap:break-word;">
+        <% if payload[:title].present? %>
+          <div class="linea"><strong><%= payload[:title] %></strong></div>
+        <% end %>
+
+        <% if payload[:author].present? %>
+          <div class="linea">Autor: <%= payload[:author] %></div>
+        <% end %>
+
+        <% if payload[:price] %>
+          <div class="linea">Precio: <%= number_to_currency(payload[:price]) %></div>
+        <% end %>
+
+        <% if payload[:image].present? %>
+          <br>
+          <div class="linea image_cover" style="text-align:center;">
+            <img src="<%= payload[:image] %>" alt="Portada" style="max-width:100%; height:auto;" />
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p>Producto no encontrado</p>
+    <% end %>
+    <div class="linea"><br></div>
+  </div>

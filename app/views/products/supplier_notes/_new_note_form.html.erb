@@ -1,0 +1,18 @@
+<fieldset class="filtrado" id="fieldset_new_supplier_note">
+  <%= form_tag( new_products_supplier_note_path, method: :get, multipart: true, class: 'index_form' ) %>
+    <div class="fila"></div>
+    <div class="linea">
+      <%= _date_field 'Fecha', 'note', 'date', class: 'input_filter_field' %>
+      <div class="form_field element_1_5">&nbsp;</div>
+      <%= _text_field 'Código', 'note', 'code', '1', class: 'input_filter_field' %>
+      <div class="form_field element_1_5">&nbsp;</div>
+      <%= _select_field 'Proveedor', 'note', 'supplier_id', Supplier.order(:name).active.map{|c| [c.name,c.id]}, '2', enchanced: true, include_blank: true %>
+      <div class="form_field element_1_5">&nbsp;</div>
+      <%= _checkbox_field 'Depósito', 'note', 'deposit', '2' %>
+    </div>
+    <div class="elemento_derecha" id='boton_filtrado'><br/>
+      <%= submit_tag 'Nuevo albarán', class: 'boton', 'data-disable-with' => 'Filtrando...' %>
+    </div>
+  </form>
+  <br/>
+</fieldset>

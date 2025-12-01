@@ -1,0 +1,19 @@
+<div id="importe_total">
+  <div class="importe_grande">
+    Total<br/><%= format('%0.2f',@note.total_amount) %> €
+  </div>
+  <div class='elemento_derecha'>
+    <% unless @note.closed %>
+      <% disabled = @note.total_amount.zero? %>
+      <%= object_edition icon: icon('check', size: '2x', title: 'Cerrar albarán'),
+                         url: new_products_supplier_note_path(@note.id),
+                         disabled: disabled %>
+    <% end %>
+    <br/>
+    <% confirmation_text = "¿Estás seguro de eliminar el albarán?" %>
+    <%= object_destroy icon: icon('trash-can', size: '2x', title: 'Eliminar albarán'),
+                       url: products_supplier_note_path(@note.id, redirect: 1),
+                       confirmation: confirmation_text,
+                       disable_turbo_frame: true %>
+  </div>
+</div>

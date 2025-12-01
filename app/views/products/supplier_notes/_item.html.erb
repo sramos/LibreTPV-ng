@@ -1,0 +1,15 @@
+<div id="supplier_note_<%= note.id %>" class="listadofila<%= ' flash-highlight' if local_assigns[:highlight] %>">
+  <%= index_line note, 'supplier_notes' %>
+  <div class="listado_derecha">
+    <%= object_action icon: icon('dolly', title: 'Productos'),
+                        turbo_frame: "supplier_note_#{note.id}_sub",
+                        object_type: 'note_lines_wide',
+                        url: products_supplier_note_note_lines_path(note.id) %>
+    <%= object_edition icon: icon('magnifying-glass', title: 'Editar compra'),
+                       url: edit_products_supplier_note_path(note.id), disable_turbo_frame: true, title: 'Editar compra' %>
+    <%= object_destroy url: products_supplier_note_path(note.id),
+                       title: 'Eliminar compra',
+                       confirmation: '¿Está seguro de querer eliminar la compra?' %>
+  </div>
+  <%= turbo_frame_tag "supplier_note_#{note.id}_sub" %>
+</div>

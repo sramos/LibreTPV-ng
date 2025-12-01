@@ -21,10 +21,6 @@ Rails.application.routes.draw do
   # SALES SECTION
   #
   namespace :sales, section: :sales do
-    #resources :client_notes, path: :notes do
-    #  get :show_lines, on: :member
-    #  resources :note_lines, path: :lines
-    #end
     resources :client_notes, path: :notes do
       collection { post :filter }
       resources :note_lines, path: :note_lines, only: [:index, :edit, :update, :destroy] do
@@ -67,6 +63,17 @@ Rails.application.routes.draw do
         get :purchases
         get :sales
       end
+    end
+    resources :supplier_notes, path: :notes do
+      collection { post :filter }
+      resources :note_lines, path: :note_lines, only: [:index, :edit, :update, :destroy] do
+        collection do
+          post :create_by_concept
+          post :create_by_code
+          post :create_by_name
+        end
+      end
+      resources :supplier_invoices, path: :invoices, only: [:new, :create]
     end
     resources :suppliers, path: :suppliers do
       collection { post :filter }

@@ -76,6 +76,9 @@ module IndexHelper
     when 'sale_notes'
       [['Fecha', 'date.to_date', '1'], ['Cliente', 'client.name', '3'],
        ['Cod.Albarán', 'code', '3_2'], ['Cod.Factura', 'invoice.code', '3_2']]
+    when 'supplier_notes'
+      [['Fecha', 'date.to_date', '1'], ['Proveedor', 'supplier.name', '3'],
+       ['Código', 'code', '3_2']]
     when 'suppliers'
       [['CIF', 'code_id', '2_3'], ['Nombre', 'name', '3'],
        ['Teléfono', 'contact_info.phone', '3_2'], ['Email', 'contact_info.email', '3_2'],

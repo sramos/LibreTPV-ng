@@ -1,0 +1,10 @@
+<!--- Supplier Notes --->
+<%= render partial: 'new_note_form' %>
+
+<div id="supplier_notes">
+  <%= index_header 'supplier_notes' %>
+    <% for note in @notes %>
+      <%= render partial: 'item', locals: {note: note} %>
+    <% end %>
+  <%= index_footer @notes %>
+</div>
