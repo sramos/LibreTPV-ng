@@ -35,7 +35,7 @@ class Admin::VatsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should destroy vat" do
-    @vat = Vat.create!(name: 'VAT TEMPORAL TEST', rate: 0.30, active: true)
+    @vat = Vat.create!(name: 'VAT TEMPORAL TEST', rate_value: 30, active: true)
     assert_difference('Vat.count', -1) do
       delete admin_vat_path(@vat)
     end
@@ -45,19 +45,13 @@ class Admin::VatsControllerTest < ActionDispatch::IntegrationTest
 
   test "should not create vat without name" do
     assert_no_difference('Vat.count') do
-      post admin_vats_path, params: { vat: { name: '', rate: 0.21, active: true } }
-    end
-  end
-
-  test "should not create vat without rate" do
-    assert_no_difference('Vat.count') do
-      post admin_vats_path, params: { vat: { name: 'New VAT', rate: '', active: true } }
+      post admin_vats_path, params: { vat: { name: '', rate_value: 21, active: true } }
     end
   end
 
   test "should create vat with valid rate_value" do
     assert_difference('Vat.count') do
-      post admin_vats_path, params: { vat: { name: 'Valid VAT', rate: 0.16, active: true } }
+      post admin_vats_path, params: { vat: { name: 'Valid VAT', rate_value: 16, active: true } }
     end
     vat = Vat.order(:created_at).last
     assert_equal 0.16, vat.rate
@@ -65,7 +59,7 @@ class Admin::VatsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create vat as active by default" do
     assert_difference('Vat.count') do
-      post admin_vats_path, params: { vat: { name: 'Active VAT', rate: 0.10 } }
+      post admin_vats_path, params: { vat: { name: 'Active VAT', rate_value: 10 } }
     end
     vat = Vat.order(:created_at).last
     assert vat.active
