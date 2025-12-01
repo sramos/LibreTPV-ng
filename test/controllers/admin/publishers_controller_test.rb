@@ -58,8 +58,7 @@ class Admin::PublishersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should filter publishers by name" do
-    session[:admin_publishers_filter] = { type: 'name', value: 'test' }
-    get admin_publishers_path
-    assert_response :success
+    post filter_admin_publishers_path, params: { filter: { type: 'name', value: 'test' } }
+    assert_redirected_to admin_publishers_path
   end
 end
