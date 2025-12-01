@@ -4,13 +4,14 @@ en:
     authors:
       removal_with_existing_products: Cannot remove an author with products in the catalog
     client_invoices:
+      removal_with_code: Client invoice cannot be removed
       vat_or_income_retention: vat or income_retention cannot be present at client invoice
     clients:
       removal_with_existing_notes: Cannot remove a client with existing invoices
     global:
       must_be_unique: must be unique
     invoices:
-      removal_with_payments: Cannot remove an invoice with payments made
+      removal_with_payments: Cannot remove an invoice with payments
     notes:
       closed_note: Cannot modify a closed note
       removal_closed_note: Cannot remove a closed note

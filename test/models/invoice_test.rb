@@ -29,8 +29,17 @@ class InvoiceTest < ActiveSupport::TestCase
     assert invoice.valid?
   end
 
-  test "should prevent destroying invoice with payments" do
+  test "should prevent destroying client invoices" do
     invoice = invoices(:one)
+    assert invoice.payments.any?
+
+    assert_not invoice.destroy
+    assert_equal [I18n.t('errors.client_invoices.removal_with_code')], invoice.errors[:base]
+    assert Invoice.exists?(invoice.id)
+  end
+
+  test "should prevent destroying invoice with payments" do
+    invoice = invoices(:two)
     assert invoice.payments.any?
 
     assert_not invoice.destroy
@@ -39,7 +48,7 @@ class InvoiceTest < ActiveSupport::TestCase
   end
 
   test "should allow destroying invoice without payments" do
-    invoice = invoices(:one)
+    invoice = invoices(:two)
 
     # Remove all payments from the invoice
     invoice.payments.destroy_all

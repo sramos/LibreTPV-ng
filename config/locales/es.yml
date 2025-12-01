@@ -4,6 +4,7 @@ es:
     authors:
       removal_with_existing_products: No se puede eliminar un autor que tenga productos en el catálogo
     client_invoices:
+      removal_with_code: No es posible eliminar una factura de cliente con código
       vat_or_income_retention: Una factura de cliente no puede tener campos de IVA o de retención de IRPF
     clients:
       removal_with_existing_notes: No se puede eliminar un cliente que tenga creados albaranes
