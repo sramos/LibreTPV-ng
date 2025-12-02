@@ -4,6 +4,7 @@ class OldModels::FormaPago < OldModels
   def self.migrate
     all.each do |obj|
       new_obj = PaymentType.create(
+        id: obj.id,
         name: obj.nombre,
         cash: obj.caja,
         active: true,

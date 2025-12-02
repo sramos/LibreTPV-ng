@@ -7,6 +7,7 @@ class OldModels::Caja < OldModels
 
   def migrate_object
     new_obj = Cash.create(
+      id: self.id,
       amount: self.importe,
       date: self.fecha_hora,
       cash_count: self.cierre_caja||false,

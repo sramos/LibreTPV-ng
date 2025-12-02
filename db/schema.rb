@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_23_173839) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_10_231918) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -59,11 +59,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_23_173839) do
     t.string "name", default: "", null: false
     t.string "code_id", default: "", null: false
     t.decimal "credit", precision: 8, scale: 2, default: "0.0", null: false
-    t.decimal "discount", precision: 4, scale: 2, default: "0.0", null: false
+    t.decimal "accumulated_credit", precision: 8, scale: 2, default: "0.0", null: false
+    t.decimal "discount", precision: 4, scale: 3, default: "0.0", null: false
     t.boolean "active", default: true, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.decimal "acumulated_credit", precision: 8, scale: 2, default: "0.0", null: false
   end
 
   create_table "configs", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
@@ -183,10 +183,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_23_173839) do
     t.string "name", default: "", null: false
     t.string "description"
     t.boolean "active", default: true, null: false
+    t.boolean "default", default: false, null: false
     t.bigint "product_type_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "default", default: false, null: false
     t.index ["product_type_id"], name: "index_product_subtypes_on_product_type_id"
   end
 
@@ -194,10 +194,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_23_173839) do
     t.string "name", default: "", null: false
     t.string "description"
     t.boolean "active", default: true, null: false
+    t.boolean "default", default: false, null: false
     t.bigint "vat_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "default", default: false, null: false
     t.index ["vat_id"], name: "index_product_types_on_vat_id"
   end
 

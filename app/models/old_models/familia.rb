@@ -8,6 +8,7 @@ class OldModels::Familia < OldModels
     all.each do |obj|
       vat = OldModelsMap.find_by(old_object: obj.iva)
       new_obj = ProductType.create(
+        id: obj.id,
         name: obj.nombre,
         vat_id: vat.new_object_id,
         active: true,

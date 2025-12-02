@@ -13,6 +13,7 @@ class OldModels::Albaran < OldModels
         next
       end
       new_obj_data = {
+        id: obj.id,
         code: obj.codigo,
         date: obj.fecha||obj.created_at,
         closed: obj.cerrado,

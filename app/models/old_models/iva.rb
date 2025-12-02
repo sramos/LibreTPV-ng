@@ -4,6 +4,7 @@ class OldModels::Iva < OldModels
   def self.migrate
     all.each do |obj|
       new_obj = Vat.create(
+        id: obj.id,
         name: obj.nombre,
         rate: obj.valor/100.0,
         active: true,

@@ -16,6 +16,7 @@ class OldModels::Pago < OldModels
         next
       end
       new_obj = Payment.create(
+        id: obj.id,
         invoice_id: invoice.new_object_id,
         payment_type_id: payment_type.new_object_id,
         amount: obj.importe,

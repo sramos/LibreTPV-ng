@@ -10,6 +10,7 @@ class OldModels::Autor < OldModels
 
   def migrate_object
     new_obj = Author.create(
+      id: self.id,
       name: self.nombre,
       active: true,
       created_at: self.created_at,

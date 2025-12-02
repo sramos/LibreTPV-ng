@@ -8,7 +8,7 @@ class NoteLine < ApplicationRecord
   validates :quantity, presence: true
   validates :note, presence: true
   # Remove next comment after old data migration
-  validate :avoid_changes_on_disabled_note
+  #validate :avoid_changes_on_closed_note
 
   before_validation :set_product_values
   before_destroy :validate_destroy, prepend: true
@@ -53,7 +53,7 @@ class NoteLine < ApplicationRecord
     end
   end
 
-  def avoid_changes_on_disabled_note
+  def avoid_changes_on_closed_note
     if note&.closed
       errors.add(:base, I18n.t('errors.notes.closed_note'))
     end

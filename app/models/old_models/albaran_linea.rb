@@ -16,6 +16,7 @@ class OldModels::AlbaranLinea < OldModels
         Rails.logger.warn "No se ha encontrado el producto #{obj.producto_id} - #{obj.producto&.codigo}"
       end
       new_obj = NoteLine.create(
+        id: obj.id,
         note_id: note.new_object_id,
         product_id: product ? product.new_object_id : nil,
         quantity: obj.cantidad,

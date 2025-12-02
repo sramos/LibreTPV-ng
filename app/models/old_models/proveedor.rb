@@ -9,6 +9,7 @@ class OldModels::Proveedor < OldModels
   end
   def migrate_object
     new_obj = Supplier.create(
+      id: id,
       name: nombre,
       code_id: cif || '',
       discount: [(descuento || 0)/100.0, 1.0].min,

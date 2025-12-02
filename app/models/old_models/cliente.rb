@@ -8,11 +8,12 @@ class OldModels::Cliente < OldModels
   end
   def migrate_object
     new_obj = Client.create(
+      id: id,
       name: nombre,
       code_id: cif || '',
       discount: (descuento || 0)/100.0,
       credit: credito || 0.0,
-      acumulated_credit: credito_acumulado || 0.0,
+      accumulated_credit: credito_acumulado || 0.0,
       active: true,
       created_at: created_at,
       updated_at: updated_at

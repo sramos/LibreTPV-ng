@@ -10,6 +10,7 @@ class OldModels::Materia < OldModels
         next
       end
       new_obj = ProductSubtype.create(
+        id: obj.id,
         name: obj.nombre,
         product_type_id: product_type.new_object_id,
         active: true,

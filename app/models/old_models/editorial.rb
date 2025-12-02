@@ -9,6 +9,7 @@ class OldModels::Editorial < OldModels
 
   def migrate_object
     new_obj = Publisher.create(
+      id: self.id,
       name: self.nombre.blank? ? 'N/A' : self.nombre,
       active: true,
       created_at: self.created_at,

@@ -39,7 +39,7 @@ module IndexHelper
       [['NIF', 'code_id', '2_3'], ['Nombre', 'name', '3'],
        ['Email', 'contact_info.email', '2'],
        ['% Dto.', 'discount_value', '1_3 right'],
-       ['Crédito', 'credit', '2_3 right'], ['Acumulado', 'acumulated_credit', '2_3 right'],
+       ['Crédito', 'credit', '2_3 right'], ['Acumulado', 'accumulated_credit', '2_3 right'],
        ['Activo', 'active', '1_3 right']]
     when 'client_notes'
       [['Fecha', 'date.to_date', '1'], ['Cliente', 'client.name', '4'],

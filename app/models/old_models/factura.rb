@@ -12,6 +12,7 @@ class OldModels::Factura < OldModels
   def migrate_object
     default_client_id = Client.first.id
     new_obj_data = {
+      id: id,
       code: codigo,
       date: fecha || created_at,
       paid: pagado,
@@ -34,7 +35,7 @@ class OldModels::Factura < OldModels
       new_obj_data[:type] = 'ClientInvoice'
       client = OldModelsMap.find_by(old_object: albarans.first&.cliente)
       if client.nil?
-        Rails.logger.warn "No se ha encontrado el cliente #{albarans.first&.cliente_id} - #{albarans.first&.cliente&.nombre}"
+        Rails.logger.warn "Usando cliente por defecto... No se ha encontrado el cliente #{albarans.first&.cliente_id} - #{albarans.first&.cliente&.nombre}"
         new_obj_data[:client_id] = default_client_id
       else
         new_obj_data[:client_id] = client&.new_object_id
@@ -42,6 +43,7 @@ class OldModels::Factura < OldModels
     end
     new_obj = Invoice.create(new_obj_data)
     if new_obj.errors[:code].present?
+      Rails.logger.info "Código de factura duplicado: #{new_obj.errors[:code]}. Usando código alternativo."
       new_obj.code += " (D/#{id})"
       new_obj.save
     end
