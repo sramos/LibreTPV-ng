@@ -6,29 +6,33 @@ class OldModels::AlbaranLinea < OldModels
 
   def self.migrate
     all.each do |obj|
-      note = OldModelsMap.find_by(old_object: obj.albaran)
-      if note.nil?
-        OldModels.log_error(obj, "No se ha encontrado el albaran #{obj.albaran_id} - #{obj.albaran&.codigo}")
-        next
-      end
-      product = OldModelsMap.find_by(old_object: obj.producto)
-      if product.nil?
-        Rails.logger.warn "No se ha encontrado el producto #{obj.producto_id} - #{obj.producto&.codigo}"
-      end
-      new_obj = NoteLine.create(
-        id: obj.id,
-        note_id: note.new_object_id,
-        product_id: product ? product.new_object_id : nil,
-        quantity: obj.cantidad,
-        discount: (obj.descuento||0.0)/100,
-        product_name: obj.nombre_producto || obj.producto&.nombre || 'N/A',
-        product_price: obj.precio_compra || obj.precio_venta,
-        product_vat: (obj.iva||0.0)/100,
-        created_at: obj.created_at,
-        updated_at: obj.updated_at
-      )
-      OldModels.log_migration(obj, new_obj)
+      obj.migrate_object
     end
+  end
+
+  def migrate_object
+    note = OldModelsMap.find_by(old_object: albaran)
+    if note.nil?
+      OldModels.log_error(self, "No se ha encontrado el albaran #{albaran_id} - #{albaran&.codigo}")
+      return
+    end
+    product = OldModelsMap.find_by(old_object: producto)
+    if product.nil?
+      Rails.logger.warn "No se ha encontrado el producto #{producto_id} - #{producto&.codigo}"
+    end
+    new_obj = NoteLine.create(
+      id: id,
+      note_id: note.new_object_id,
+      product_id: product ? product.new_object_id : nil,
+      quantity: cantidad,
+      discount: (descuento||0.0)/100.0,
+      product_name: nombre_producto || producto&.nombre || 'N/A',
+      product_price: precio_compra || precio_venta,
+      product_vat: (iva||0.0)/100.0,
+      created_at: created_at,
+      updated_at: updated_at
+    )
+    OldModels.log_migration(self, new_obj)
   end
 
   # devuelve el subtotal (sin iva)

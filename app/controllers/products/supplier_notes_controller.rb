@@ -23,6 +23,8 @@ module Products
       @note_lines = @note.note_lines
     end
 
+    # For supplier notes, purchase product price of a book is sell price without vat
+    # and discount is applied to this base price, not full price.
     def create
       @note = SupplierNote.new(note_params)
       if @note.save

@@ -24,8 +24,8 @@ class OldModels::Factura < OldModels
     }
     if proveedor_id
       new_obj_data[:type] = 'SupplierInvoice'
-      new_obj_data[:vat] = (valor_iva||0.0)/100
-      new_obj_data[:income_retention] = (valor_irpf||0.0)/100
+      new_obj_data[:vat] = (valor_iva||0.0)/100.0
+      new_obj_data[:income_retention] = (valor_irpf||0.0)/100.0
       supplier = OldModelsMap.find_by(old_object: proveedor)
       if supplier.nil?
         OldModels.log_error(self, "No se ha encontrado el proveedor #{proveedor_id} - #{proveedor&.nombre}")

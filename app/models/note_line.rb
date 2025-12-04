@@ -43,14 +43,20 @@ class NoteLine < ApplicationRecord
 
   private
 
+  # Set product values if there is no previously defined
   def set_product_values
     if product
-      self.product_name = product.name
-      self.product_price = product.price
-      self.product_vat = product.vat.rate
-    else
-      self.product_name = 'N/A' if product_name.blank?
+      self.product_name ||= product.name
+      self.product_vat ||= product.vat.rate
+      # For supplier note lines, product_price is the purchase price
+      # and should be calculated by discounting vat from selling price
+      if note&.class == SupplierNote
+        self.product_price ||= product.price / (1 + self.product_rate)
+      else
+        self.product_price ||= product.price
+      end
     end
+    self.product_name ||= 'N/A'
   end
 
   def avoid_changes_on_closed_note
