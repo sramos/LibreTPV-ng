@@ -21,7 +21,7 @@ module Products
     end
 
     def create_by_concept
-      note_line = NoteLine.new(note_id: @note.id)
+      note_line = ClientNoteLine.new(note_id: @note.id)
       if note_line.update(note_line_params)
         respond_to do |format|
           format.turbo_stream do
@@ -37,7 +37,7 @@ module Products
           end
         end
       else
-        Rails.logger.error "[Sales::NoteLinesController#create_by_concept] Error al crear la linea de albarán: #{note_line.errors.inspect}"
+        Rails.logger.error "[Products::NoteLinesController#create_by_concept] Error al crear la linea de albarán: #{note_line.errors.inspect}"
         respond_to do |format|
           format.turbo_stream do
             render turbo_stream: [
@@ -56,7 +56,7 @@ module Products
       end
 
       if product && product.errors.blank?
-        note_line = NoteLine.new(note_id: @note.id, product: product)
+        note_line = ClientNoteLine.new(note_id: @note.id, product: product)
         if note_line.update(note_line_params)
           respond_to do |format|
             format.turbo_stream do
@@ -72,7 +72,9 @@ module Products
             end
           end
         else
-          Rails.logger.error "[Sales::NoteLinesController#create_by_code] Error al crear la linea de albarán: #{note_line.errors.inspect}"
+          puts "***** Partimos del producto #{product.inspect}"
+          puts "***** y vamos a actualizar con los parámetros #{note_line_params.inspect}"
+          Rails.logger.error "[Products::NoteLinesController#create_by_code] Error al crear la linea de albarán: #{note_line.errors.inspect}"
           respond_to do |format|
             format.turbo_stream do
               render turbo_stream: [
@@ -101,7 +103,7 @@ module Products
 
     def create_by_name
       product = Product.find_by(name: params[:note_line][:product_name]) if params[:note_line].present?
-      note_line = NoteLine.new(note_id: @note.id, product: product)
+      note_line = ClientNoteLine.new(note_id: @note.id, product: product)
       if product && note_line.update(note_line_params)
         respond_to do |format|
           format.turbo_stream do
@@ -117,7 +119,7 @@ module Products
           end
         end
       else
-        Rails.logger.error "[Sales::NoteLinesController#create_by_name] Error al crear la linea de albarán: #{note_line.errors.inspect}"
+        Rails.logger.error "[Products::NoteLinesController#create_by_name] Error al crear la linea de albarán: #{note_line.errors.inspect}"
         respond_to do |format|
           format.turbo_stream do
             render turbo_stream: [

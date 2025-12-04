@@ -52,7 +52,7 @@ class Product < ApplicationRecord
       description: attrs[:synopsis],
       image_url: attrs[:image],
       product_type: default_product_type || ProductType.first,
-      product_subtype: default_product_type&.product_subtypes.default
+      product_subtype: default_product_type&.product_subtypes&.default
     )
   end
 
