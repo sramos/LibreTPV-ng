@@ -1,6 +1,6 @@
+# Methods used in both sales and products sections
 class ProductsController < ApplicationController
 
-  # Methos used in both sales and products sections
   def search_by_name
     term = params[:q].to_s.strip
     @products = Product.where("name LIKE ?", "%#{term}%").order(stock: :desc, name: :asc).limit(10) if term.present?
@@ -13,4 +13,18 @@ class ProductsController < ApplicationController
 
     render json: @product.as_json(only: [:id, :name, :code, :stock, :price])
   end
+
+  private
+
+  def set_product
+    @product = Product.find(params[:id])
+  end
+
+  def set_new_product
+    default_product_type = ProductType.default
+    default_product_subtype = default_product_type&.product_subtypes.default
+    @product = Product.new( product_type: default_product_type,
+                            product_subtype: default_product_subtype )
+  end
+  
 end

@@ -221,17 +221,6 @@ module Products
       @products = @products.page(params[:page]).per(session[:per_page])
     end
     
-    def set_product
-      @product = Product.find(params[:id])
-    end
-
-    def set_new_product
-      default_product_type = ProductType.default
-      default_product_subtype = default_product_type&.product_subtypes.default
-      @product = Product.new(product_type: default_product_type,
-                             product_subtype: default_product_subtype)
-    end
-    
     def form_options
       @product_types  = ProductType.active.order(:name).collect { |pt| [pt.name, pt.id] }
       @product_types += [ [ @product.product_type.name, @product.product_type_id ] ] if @product&.product_type&.inactive?
