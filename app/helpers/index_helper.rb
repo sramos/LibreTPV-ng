@@ -82,8 +82,8 @@ module IndexHelper
        ['% Desc.', 'discount_value', '2_3 right'], ['Subtotal', 'tax_base', '2_3 right'],
        ['% IVA', 'product_vat_value', '2_3 right'], ['Total', 'total_amount', '2_3 right']]
     when 'supplier_notes'
-      [['Fecha', 'date.to_date', '1'], ['Proveedor', 'supplier.name', '3'],
-       ['Código', 'code', '3_2']]
+      [['Fecha', 'date.to_date', '1'], ['Proveedor', 'supplier.name', '4'],
+       ['Código', 'code', '2'], ['Items', 'note_lines_count', '1_3 right'], ['Importe', 'total_amount', '2_3 right']]
     when 'suppliers'
       [['CIF', 'code_id', '2_3'], ['Nombre', 'name', '3'],
        ['Teléfono', 'contact_info.phone', '3_2'], ['Email', 'contact_info.email', '3_2'],
