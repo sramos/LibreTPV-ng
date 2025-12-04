@@ -20,6 +20,7 @@ module Products
 
     def new
       @note = SupplierNote.create(note_params)
+      puts "***** Manejando el objeto @note: #{@note.errors.inspect}"
       @note_lines = @note.note_lines
     end
 
@@ -112,7 +113,7 @@ module Products
     end
 
     def note_params
-      params.require(:note).permit(:date, :supplier_id)
+      params.require(:note).permit(:date, :code, :deposit, :supplier_id)
     end
   end
 end

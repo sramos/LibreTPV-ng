@@ -4,7 +4,7 @@
     <div class="linea">
       <%= _date_field 'Fecha', 'note', 'date', class: 'input_filter_field', required: true %>
       <div class="form_field element_1_5">&nbsp;</div>
-      <%= _text_field 'Código', 'note', 'code', '1', class: 'input_filter_field' %>
+      <%= _text_field 'Código', 'note', 'code', '1', class: 'input_filter_field', required: true %>
       <div class="form_field element_1_5">&nbsp;</div>
       <%= _select_field 'Proveedor', 'note', 'supplier_id', Supplier.order(:name).active.map{|c| [c.name,c.id]}, '2', enchanced: true, include_blank: true, required: true %>
       <div class="form_field element_1_5">&nbsp;</div>
