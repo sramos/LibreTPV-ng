@@ -76,6 +76,11 @@ module IndexHelper
     when 'sale_notes'
       [['Fecha', 'date.to_date', '1'], ['Cliente', 'client.name', '3'],
        ['Cod.Albarán', 'code', '3_2'], ['Cod.Factura', 'invoice.code', '3_2']]
+    when 'supplier_note_lines'
+      [['Cant.', 'quantity', '1_3 right'], ['Código', 'product.code', '3_4'],
+       ['Nombre/Título', 'product_name', '2'], ['Precio Prov.', 'product_price', '2_3 right'],
+       ['% Desc.', 'discount_value', '2_3 right'], ['Subtotal', 'tax_base', '2_3 right'],
+       ['% IVA', 'product_vat_value', '2_3 right'], ['Total', 'total_amount', '2_3 right']]
     when 'supplier_notes'
       [['Fecha', 'date.to_date', '1'], ['Proveedor', 'supplier.name', '3'],
        ['Código', 'code', '3_2']]

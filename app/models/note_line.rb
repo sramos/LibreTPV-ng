@@ -50,13 +50,13 @@ class NoteLine < ApplicationRecord
       self.product_vat ||= product.vat.rate
       # For supplier note lines, product_price is the purchase price
       # and should be calculated by discounting vat from selling price
-      if note&.class == SupplierNote
-        self.product_price ||= product.price / (1 + self.product_rate)
-      else
-        self.product_price ||= product.price
-      end
+      self.product_price ||= product_price_from_product
     end
     self.product_name ||= 'N/A'
+  end
+
+  def product_price_from_product
+    product.price||0.0
   end
 
   def avoid_changes_on_closed_note

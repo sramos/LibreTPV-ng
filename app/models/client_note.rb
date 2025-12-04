@@ -1,6 +1,6 @@
 class ClientNote < Note
   belongs_to :client
-  belongs_to :invoice, optional: true
+  has_many :note_lines, class_name: 'ClientNoteLine', foreign_key: 'note_id', dependent: :destroy
 
   validates :client, presence: true
   validates :deposit, presence: false
