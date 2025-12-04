@@ -166,9 +166,16 @@ module Sales
       end
       respond_to do |format|
         format.turbo_stream do
-          render turbo_stream: helpers.remove_object_turbo_stream(
-            container_dom_id: "note_line_#{@note_line.id}", message: msg
-          )
+          render turbo_stream:
+            helpers.remove_object_turbo_stream(
+              container_dom_id: "note_line_#{@note_line.id}", message: msg
+            ) + [
+              turbo_stream.replace(
+                'importe_total',
+                partial: 'sales/client_notes/total_cost',
+                locals: { note: @note }
+              )
+            ]
         end
         format.html { redirect_to sales_note_path(@note), notice: msg }
       end
