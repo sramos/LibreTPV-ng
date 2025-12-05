@@ -3,7 +3,7 @@
   <div class="listado_derecha">
     <%= object_action icon: icon('cart-shopping', title: 'Productos'),
                         turbo_frame: "client_note_#{invoice.client_note.id}_sub",
-                        url: sales_client_note_note_lines_path(invoice.client_note.id) if invoice.client_note %>
+                        url: sales_client_note_client_note_lines_path(invoice.client_note.id) if invoice.client_note %>
     <%= object_edition url: edit_sales_client_invoice_path(invoice.id), title: 'Editar factura' %>
     <%= object_destroy url: sales_client_invoice_path(invoice.id),
                        title: 'Eliminar factura',

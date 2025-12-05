@@ -23,7 +23,7 @@ Rails.application.routes.draw do
   namespace :sales, section: :sales do
     resources :client_notes, path: :notes do
       collection { post :filter }
-      resources :note_lines, path: :note_lines, only: [:index, :edit, :update, :destroy] do
+      resources :client_note_lines, path: :note_lines, only: [:index, :edit, :update, :destroy] do
         collection do
           post :create_by_concept
           post :create_by_code
@@ -66,7 +66,7 @@ Rails.application.routes.draw do
     end
     resources :supplier_notes, path: :notes do
       collection { post :filter }
-      resources :note_lines, path: :note_lines, only: [:index, :edit, :update, :destroy] do
+      resources :supplier_note_lines, path: :note_lines, only: [:index, :edit, :update, :destroy] do
         collection do
           post :create_by_concept
           post :create_by_code

@@ -2,8 +2,8 @@
 <div id="client_note_<%= @note.id %>" class="linea">
   <%= render partial: 'sales/client_notes/form_side' %>
   <div class='contenido'>
-    <%= render partial: 'sales/note_lines/index', locals: {allow_modify: true,
-                                                           disable_close_button: true,
-                                                           fieldset_class: 'sublistado_entradas'} %>
+    <%= render partial: 'sales/client_note_lines/index', locals: {allow_modify: true,
+                                                                  disable_close_button: true,
+                                                                  fieldset_class: 'sublistado_entradas'} %>
   <div>
 </div>

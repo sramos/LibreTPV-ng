@@ -1,6 +1,6 @@
 <!--- Code product note line form --->
 <div id="product_by_code_div" class="formulario_dcha" style="display:block;">
-  <%= form_with url: create_by_code_sales_client_note_note_lines_path(@note), local: false,
+  <%= form_with url: create_by_code_products_supplier_note_supplier_note_lines_path(@note), local: false,
                 data: { turbo_frame: 'modal' }, html_class: 'formulario' %>
     <% code_label = link_to 'Código/ISBN', '#', id: 'change_to_name_label',
                              onclick: "document.getElementById('product_code_field').style.display='none'; document.getElementById('product_name_field').style.display='block'; return false;" %>
@@ -30,4 +30,4 @@
   <div id="product_by_code_not_found" class="linea"></div>
 </div>
 
-<%= render partial: 'sales/note_lines/form_by_code_js' %>
+<%= render partial: 'products/supplier_note_lines/form_by_code_js' %>

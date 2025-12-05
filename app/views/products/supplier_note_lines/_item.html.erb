@@ -1,9 +1,9 @@
 <div id="note_line_<%= note_line.id %>" class="listadofila<%= ' flash-highlight' if local_assigns[:highlight] %>">
-  <%= index_line note_line, 'client_note_lines' %>
+  <%= index_line note_line, 'supplier_note_lines' %>
   <% unless local_assigns[:read_only] %>
     <div class="listado_derecha">
-      <%= object_edition url: edit_sales_client_note_note_line_path(@note.id, note_line.id), title: 'Editar linea de albarán' %>
-      <%= object_destroy url: sales_client_note_note_line_path(@note.id, note_line.id),
+      <%= object_edition url: edit_products_supplier_note_supplier_note_line_path(@note.id, note_line.id), title: 'Editar linea de albarán' %>
+      <%= object_destroy url: products_supplier_note_supplier_note_line_path(@note.id, note_line.id),
                          title: 'Eliminar linea de albarán',
                          confirmation: '¿Está seguro de querer eliminar la linea de albarán?' %>
     </div>

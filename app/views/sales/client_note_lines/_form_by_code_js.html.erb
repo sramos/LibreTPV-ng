@@ -45,7 +45,7 @@
 
           var form = input.closest('form');
           if (form) {
-            form.action = '<%= create_by_name_sales_client_note_note_lines_path(@note) %>';
+            form.action = '<%= create_by_name_sales_client_note_client_note_lines_path(@note) %>';
             if (form.requestSubmit) {
               form.requestSubmit();
             } else {
@@ -111,7 +111,7 @@
 
       ensureProductDataInput(payload);
 
-      form.action = '<%= create_by_code_sales_client_note_note_lines_path(@note) %>';
+      form.action = '<%= create_by_code_sales_client_note_client_note_lines_path(@note) %>';
       if (form.requestSubmit) {
         form.requestSubmit();
       } else {

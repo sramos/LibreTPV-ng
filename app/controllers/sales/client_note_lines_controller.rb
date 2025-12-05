@@ -1,5 +1,5 @@
 module Sales
-  class NoteLinesController < ApplicationController
+  class ClientNoteLinesController < ApplicationController
     before_action :set_note
     before_action :set_note_line, only: [:edit, :update, :destroy]
     before_action :form_values, only: [:edit]

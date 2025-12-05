@@ -1,5 +1,5 @@
 <% header ||= 'Formulario' unless defined?(header) %>
-<%= form_beginning model: [:sales, @note, @note_line], header: header %>
+<%= form_beginning model: [:products, @note, @note_line], header: header %>
   <div class="fila">
     <div class="index_field linea"><b><%= 'Nombre/ISBN' %>:&nbsp;</b><%= @note_line.product_name %></div>
     <div class="index_field linea"><b><%= 'Precio venta' %>:&nbsp;</b><%= @note_line.product_price %></div>

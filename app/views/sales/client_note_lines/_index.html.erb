@@ -10,7 +10,7 @@
                                               fieldset_class: fieldset_class} %>
       <div id="note_<%= @note.id %>_new_note_line_tag"></div>
       <% for note_line in @note_lines %>
-        <%= render partial: 'sales/note_lines/item', locals: {note_line: note_line, read_only: read_only} %>
+        <%= render partial: 'sales/client_note_lines/item', locals: {note_line: note_line, read_only: read_only} %>
       <% end %>
     <%= subindex_footer @note_lines %>
   </div>
