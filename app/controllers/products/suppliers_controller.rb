@@ -19,6 +19,7 @@ module Products
 
     def new
       @supplier = Supplier.new
+      @supplier.build_contact_info
       respond_to do |format|
         format.html { render layout: false }
         format.turbo_stream
@@ -53,6 +54,7 @@ module Products
     end
 
     def edit
+      @supplier.build_contact_info unless @supplier.contact_info
       respond_to do |format|
         format.html { render layout: false }
         format.turbo_stream
@@ -108,8 +110,6 @@ module Products
                          ['NIF','code_id','string'] ]
       @suppliers = Supplier.order(:name)
 
-      #puts "****** #{filter_scope}"
-      #puts "****** session[filter_scope]: #{session[filter_scope]}"
       session[filter_scope] ||= {}
       value = session[filter_scope]['value'] if session[filter_scope]
       if value.present?
@@ -130,7 +130,10 @@ module Products
     end
 
     def supplier_params
-      params.require(:supplier).permit(:name, :active)
+      params.require(:supplier).permit(:name, :code_id, :discount_value, :active,
+                                       contact_info_attributes: [:id, :address, :postal_code,
+                                                                 :city, :province, :country,
+                                                                 :phone, :contact, :email, :web])
     end
   end
 end

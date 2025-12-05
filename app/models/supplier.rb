@@ -4,6 +4,7 @@ class Supplier < ApplicationRecord
   stripable :name
 
   has_one :contact_info, as: :contactable, required: false
+  accepts_nested_attributes_for :contact_info, update_only: true
   has_many :notes
 
   validates :name, presence: true
@@ -13,6 +14,10 @@ class Supplier < ApplicationRecord
 
   def discount_value
     discount * 100
+  end
+
+  def discount_value=(value)
+    self.discount = value.to_f / 100.0
   end
 
   private

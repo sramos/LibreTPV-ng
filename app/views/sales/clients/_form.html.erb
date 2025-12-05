@@ -2,8 +2,8 @@
 <%= form_beginning model: [:sales, @client], header: header %>
   <%= form_errors @client %>
   <div class="linea">
-    <%= _text_field 'Nombre', 'client', 'name', '3', required: true %>
-    <%= _text_field 'NIF', 'client', 'code_id', '1', required: true %>
+    <%= _text_field 'Nombre', 'client', 'name', '4', required: true %>
+    <%= _text_field 'NIF', 'client', 'code_id', '1' %>
     <div class="elemento_derecha">
       <%= _checkbox_field 'Activo', 'client', 'active', '1', {checked: @client.active} %>
     </div>
@@ -13,4 +13,5 @@
     <%= _text_field 'Acumulado', 'client', 'accumulated_credit', '1' %>
     <%= _text_field 'Crédito', 'client', 'credit', '1' %>
   </div>
+  <%= render partial: 'sales/clients/form_contact_info' %>
 <%= form_end %>

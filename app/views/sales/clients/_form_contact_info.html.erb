@@ -1,0 +1,19 @@
+<% contact_info = @client.contact_info || @client.build_contact_info %>
+<div id="contact_info">
+  <%= hidden_field_tag 'client[contact_info_attributes][id]', contact_info.id if contact_info&.id %>
+  <div class="linea"><br></div>
+  <div class="linea">
+    <%= _text_field 'Dirección', 'client[contact_info_attributes]', 'address', '4', value: contact_info.address %>
+    <%= _text_field 'Código Postal', 'client[contact_info_attributes]', 'postal_code', '1', value: contact_info.postal_code %>
+  </div>
+  <div class="linea">
+    <%= _text_field 'Ciudad', 'client[contact_info_attributes]', 'city', '2', value: contact_info.city %>
+    <%= _text_field 'Provincia', 'client[contact_info_attributes]', 'province', '2', value: contact_info.province %>
+    <%= _text_field 'País', 'client[contact_info_attributes]', 'country', '1', value: contact_info.country %>
+  </div>
+
+  <div class="linea">
+    <%= _text_field 'Teléfono', 'client[contact_info_attributes]', 'phone', '1', value: contact_info.phone %>
+    <%= _text_field 'Email', 'client[contact_info_attributes]', 'email', '4', value: contact_info.email %>
+  </div>
+</div>
