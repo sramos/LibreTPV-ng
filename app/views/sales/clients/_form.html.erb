@@ -1,6 +1,16 @@
 <% header ||= 'Formulario' unless defined?(header) %>
 <%= form_beginning model: [:sales, @client], header: header %>
   <%= form_errors @client %>
-  <%= texto 'Nombre', 'client', 'name' %>
-  <%= _checkbox 'Activo', 'client', 'active', {elemento: 'elemento_x05', izquierda: true, abajo: true, checked: @client.active} %>
+  <div class="linea">
+    <%= _text_field 'Nombre', 'client', 'name', '3', required: true %>
+    <%= _text_field 'NIF', 'client', 'code_id', '1', required: true %>
+    <div class="elemento_derecha">
+      <%= _checkbox_field 'Activo', 'client', 'active', '1', {checked: @client.active} %>
+    </div>
+  </div>
+  <div class="linea">
+    <%= _text_field '% Descuento', 'client', 'discount_value', '1' %>
+    <%= _text_field 'Acumulado', 'client', 'accumulated_credit', '1' %>
+    <%= _text_field 'Crédito', 'client', 'credit', '1' %>
+  </div>
 <%= form_end %>

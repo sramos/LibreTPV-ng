@@ -1,6 +1,14 @@
 <% header ||= 'Formulario' unless defined?(header) %>
 <%= form_beginning model: [:products, @supplier], header: header %>
   <%= form_errors @supplier %>
-  <%= _text_field 'Nombre', 'supplier', 'name', '3' %>
-  <%= _checkbox_field 'Activo', 'supplier', 'active', '1', {checked: @supplier.active} %>
+  <div class="linea">
+    <%= _text_field 'Nombre', 'supplier', 'name', '3' %>
+    <%= _text_field 'CIF', 'supplier', 'code_id', '1' %>
+    <div class="elemento_derecha">
+      <%= _checkbox_field 'Activo', 'supplier', 'active', '1', {checked: @supplier.active} %>
+    </div>
+  </div>
+  <div class="linea">
+    <%= _text_field '% Descuento', 'supplier', 'discount_value', '1' %>
+  </div>
 <%= form_end %>
