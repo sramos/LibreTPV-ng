@@ -21,7 +21,7 @@ module Sales
     end
 
     def create_by_concept
-      note_line = NoteLine.new(note_id: @note.id)
+      note_line = ClientNoteLine.new(note_id: @note.id)
       if note_line.update(note_line_params)
         respond_to do |format|
           format.turbo_stream do
@@ -56,7 +56,7 @@ module Sales
       end
 
       if product && product.errors.blank?
-        note_line = NoteLine.new(note_id: @note.id, product: product)
+        note_line = ClientNoteLine.new(note_id: @note.id, product: product)
         if note_line.update(note_line_params)
           respond_to do |format|
             format.turbo_stream do
@@ -101,7 +101,7 @@ module Sales
 
     def create_by_name
       product = Product.find_by(name: params[:note_line][:product_name]) if params[:note_line].present?
-      note_line = NoteLine.new(note_id: @note.id, product: product)
+      note_line = ClientNoteLine.new(note_id: @note.id, product: product)
       if product && note_line.update(note_line_params)
         respond_to do |format|
           format.turbo_stream do
@@ -160,9 +160,9 @@ module Sales
 
     def destroy
       if @note_line.destroy
-        msg = 'Linea de albarán eliminada correctamente'
+        msg = 'Producto eliminado de la cesta correctamente'
       else
-        msg = 'Se han producido errores eliminando la linea de albarán: ' + @note_line.errors.inspect
+        msg = 'Se han producido errores eliminando el producto de la cesta' + ': ' + @note_line.errors.inspect
       end
       respond_to do |format|
         format.turbo_stream do
@@ -180,7 +180,7 @@ module Sales
         format.html { redirect_to sales_note_path(@note), notice: msg }
       end
     rescue => e
-      redirect_to sales_note_path(@note), alert: "Error al eliminar la linea de albarán: #{e.message}"
+      redirect_to sales_note_path(@note), alert: 'Se han producido errores eliminando el producto de la cesta' + ': ' + e.message
     end
 
     private

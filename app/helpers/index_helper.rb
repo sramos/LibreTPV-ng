@@ -41,6 +41,11 @@ module IndexHelper
        ['% Dto.', 'discount_value', '1_3 right'],
        ['Crédito', 'credit', '2_3 right'], ['Acumulado', 'accumulated_credit', '2_3 right'],
        ['Activo', 'active', '1_3 right']]
+    when 'client_note_lines'
+      [['Cant.', 'quantity', '1_3 right'], ['Código', 'product.code', '3_4'],
+       ['Nombre/Título', 'product_name', '2'], ['PVP', 'product_price', '2_3 right'],
+       ['% Desc.', 'discount_value', '2_3 right'], ['Subtotal', 'tax_base', '2_3 right'],
+       ['% IVA', 'product_vat_value', '2_3 right'], ['Total', 'total_amount', '2_3 right']]
     when 'client_notes'
       [['Fecha', 'date.to_date', '1'], ['Cliente', 'client.name', '4'],
        ['Items', 'note_lines_count', '1_3 right'], ['Importe', 'total_amount', '2_3 right']]
@@ -53,11 +58,6 @@ module IndexHelper
     when 'invoice_products'
       [['Fecha', 'note.date.to_date', '1'], ['Cant.', 'quantity', '1_3 right'], ['Código', 'product.code', '4_3'],
        ['Nombre/Título', 'product_name', '3'], ['Factura', 'note.invoice.code', '4_3']]
-    when 'note_lines'
-      [['Cant.', 'quantity', '1_3 right'], ['Código', 'product.code', '3_4'],
-       ['Nombre/Título', 'product_name', '2'], ['Precio', 'product_price', '2_3 right'],
-       ['% Desc.', 'discount_value', '2_3 right'], ['Subtotal', 'tax_base', '2_3 right'],
-       ['% IVA', 'product_vat_value', '2_3 right'], ['Total', 'total_amount', '2_3 right']]
     when 'payment_types'
       [['Nombre', 'name', '3_2'], ['Caja', 'cash', '1_3 right'], ['Activo', 'active', '1_3 right']]
     when 'products'
