@@ -191,26 +191,29 @@ form .actions {
   margin-top: 10px;
 }
 
-.element_1_5 { width:24px;   }
-.element_1_4 { width:30px;   }
-.element_1_3 { width:40px;   }
-.element_1_2 { width:60px;   }
-.element_2_3 { width:80px;   }
-.element_3_4 { width:90px;   }
-.element_1   { width:120px;  }
-.element_4_3 { width:160px;  }
-.element_3_2 { width:180px;  }
-.element_5_3 { width:200px;  }
-.element_2   { width:240px;  }
-.element_5_2 { width:300px;  }
-.element_3   { width:360px;  }
-.element_7_2 { width:420px;  }
-.element_4   { width:480px;  }
-.element_5   { width:600px;  }
-.element_6   { width:720px;  }
-.element_7   { width:840px;  }
-.element_8   { width:960px;  }
-.element_9   { width:1080px; }
+/* Base width is 120px for element_1 */
+/* and all elements are relative to it */
+/* All sizes must be reduced by 5px due to border */
+.element_1_5 { width:19px;   }
+.element_1_4 { width:25px;   }
+.element_1_3 { width:35px;   }
+.element_1_2 { width:55px;   }
+.element_2_3 { width:75px;   }
+.element_3_4 { width:85px;   }
+.element_1   { width:115px;  }
+.element_4_3 { width:155px;  }
+.element_3_2 { width:175px;  }
+.element_5_3 { width:195px;  }
+.element_2   { width:235px;  }
+.element_5_2 { width:295px;  }
+.element_3   { width:355px;  }
+.element_7_2 { width:415px;  }
+.element_4   { width:475px;  }
+.element_5   { width:595px;  }
+.element_6   { width:715px;  }
+.element_7   { width:835px;  }
+.element_8   { width:955px;  }
+.element_9   { width:1075px; }
 
 select.element_3_2 { width:175px;  }
 select.element_2   { width:235px;  }

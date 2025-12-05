@@ -1,8 +1,11 @@
 <% header ||= 'Formulario' unless defined?(header) %>
 <%= form_beginning model: [:admin, @payment_type], header: header %>
   <%= form_errors @payment_type %>
-  <%= _text_field 'Nombre', 'payment_type', 'name', '3' %>
-  <div class="form_field element_1"><br></div>
-  <%= _checkbox_field 'Caja', 'payment_type', 'cash', '1', {checked: @payment_type.cash} %>
-  <%= _checkbox_field 'Activo', 'payment_type', 'active', '1', {checked: @payment_type.active} %>
+  <div class="linea">
+    <%= _text_field 'Nombre', 'payment_type', 'name', '3', required: true %>
+    <div class="elemento_derecha">
+      <%= _checkbox_field 'Caja', 'payment_type', 'cash', '1', {checked: @payment_type.cash} %>
+      <%= _checkbox_field 'Activo', 'payment_type', 'active', '1', {checked: @payment_type.active} %>
+    </div>
+  </div>
 <%= form_end %>

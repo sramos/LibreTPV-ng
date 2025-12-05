@@ -1,6 +1,10 @@
 <% header ||= 'Formulario' unless defined?(header) %>
 <%= form_beginning model: [:admin, @publisher], header: header %>
   <%= form_errors @publisher %>
-  <%= _text_field 'Nombre', 'publisher', 'name', '3' %>
-  <%= _checkbox_field 'Activo', 'publisher', 'active', '1', {checked: @publisher.active} %>
+  <div class="linea">
+    <%= _text_field 'Nombre', 'publisher', 'name', '3', required: true %>
+    <div class="elemento_derecha">
+      <%= _checkbox_field 'Activo', 'publisher', 'active', '1', {checked: @publisher.active} %>
+    </div>
+  </div>
 <%= form_end %>

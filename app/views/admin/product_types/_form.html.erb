@@ -2,10 +2,12 @@
 <%= form_beginning model: [:admin, @product_type], header: header %>
   <%= form_errors @product_type %>
   <div class="linea">
-    <%= _text_field 'Nombre', 'product_type', 'name', '5_2' %>
-    <%= _select_field 'IVA', 'product_type', 'vat_id', @vats, '3_2' %>
-    <%= _checkbox_field 'Por defecto', 'product_type', 'default', '1', {right: true, checked: @product_type.default} %>
-    <%= _checkbox_field 'Activo', 'product_type', 'active', '1', {right: true, checked: @product_type.active} %>
+    <%= _text_field 'Nombre', 'product_type', 'name', '5_2', required: true %>
+    <%= _select_field 'IVA aplicado', 'product_type', 'vat_id', @vats, '3_2' %>
+    <div class="elemento_derecha">
+      <%= _checkbox_field 'Por defecto', 'product_type', 'default', '1', {right: true, checked: @product_type.default} %>
+      <%= _checkbox_field 'Activo', 'product_type', 'active', '1', {right: true, checked: @product_type.active} %>
+    </div>
   </div>
   <div class="linea">
     <%= _text_area_field 'Descripción', 'product_type', 'description' %>
