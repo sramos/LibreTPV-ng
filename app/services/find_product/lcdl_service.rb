@@ -1,6 +1,6 @@
 require 'open-uri'
 
-class FindProduct::CasadellibroService < ApplicationService
+class FindProduct::LcdlService < ApplicationService
   def call(isbn)
     return_data = nil
     protocol = "https"
@@ -24,6 +24,10 @@ class FindProduct::CasadellibroService < ApplicationService
       data = {code: properties['ean'], authors: []}
       data[:title]  = properties['name'] if properties['name']
       data[:authors] = [ properties['author1'] ] if properties['author1']
+      data[:authors] << properties['author2'] if properties['author2']
+      data[:authors] << properties['author3'] if properties['author3']
+      data[:authors] << properties['author4'] if properties['author4']
+      data[:authors] << properties['author5'] if properties['author5']
       data[:publisher] = properties['editorial'] if properties['editorial']
       data[:edition] = properties['yearPublication'] if properties['yearPublication']
       data[:price] = price_value if price_value
@@ -32,7 +36,7 @@ class FindProduct::CasadellibroService < ApplicationService
       Rails.logger.debug "DATA: #{data.inspect}"
     end
 
-    return_data = data unless data.empty?
+    return_data = data unless data.empty? || data[:title].blank?
 
     success(return_data)
   rescue => e

@@ -1,6 +1,6 @@
 require 'open-uri'
 
-class FindProduct::TodostuslibrosService < ApplicationService
+class FindProduct::TtlService < ApplicationService
   def call(isbn)
     return_data = nil
     protocol = "https"
@@ -12,21 +12,17 @@ class FindProduct::TodostuslibrosService < ApplicationService
     # Descargamos la página de resultados
     html = URI.open("#{protocol}://#{host}/#{search}").read
 
-    # 1) Página de resultados: localizar el primer enlace al detalle del libro
+    # 1) Página de resultados: localizar el enlace cuyo bloque contenga el ISBN buscado
     doc = Nokogiri::HTML(html)
-    result_link = doc.at('div.book-details h2.title a')
 
-    if result_link && result_link['href'].present?
-      detail_url = result_link['href']
+    # Info div has some fields (title, author, price, cover)
+    # and info_all others (description, publisher)
+    if info = doc.css('div#info')
+      title_text  = info.at('h1.title')&.text&.strip
 
-      # 2) Página de detalle: extraer título, autor, precio e imagen de portada
-      detail_html = URI.open(detail_url).read
-      detail_doc  = Nokogiri::HTML(detail_html)
+      authors = info.at('h2.author')&.css('a')&.collect{ |a| a.text&.to_s.strip }
 
-      title_text  = detail_doc.at('h1.title')&.text&.strip
-      author_text = detail_doc.at('h2.author a')&.text&.strip
-
-      price_text  = detail_doc.at('div.total-book-price strong')&.text&.strip
+      price_text  = info.at('div.total-book-price strong')&.text&.strip
       price_value = nil
       if price_text.present?
         # Eliminar símbolos de moneda y espacios, quedándonos con dígitos y separador decimal
@@ -35,20 +31,22 @@ class FindProduct::TodostuslibrosService < ApplicationService
       end
 
       cover_image = nil
-      detail_doc.css('img.portada').each do |img|
+      info.css('img.portada').each do |img|
         src = img['src'].to_s
         next if src.blank? || src == '/img/nodisponible.gif'
         cover_image = src
         break
       end
 
-      # Sinopsis: todos los párrafos dentro del div collapseSynopsis (id o clase)
-      synopsis_paragraphs = detail_doc.css('div#collapseSynopsis p, div.collapseSynopsis p')
-      synopsis_text = synopsis_paragraphs.map { |p| p.text.to_s.strip }.reject(&:blank?).join("\n\n")
+      if detail_doc = doc.css('div#info_all')
+        # Sinopsis: todos los párrafos dentro del div collapseSynopsis (id o clase)
+        synopsis_paragraphs = detail_doc.css('div#collapseSynopsis p, div.collapseSynopsis p')
+        synopsis_text = synopsis_paragraphs.map { |p| p.text.to_s.strip }.reject(&:blank?).join("\n\n")
+      end
 
       data = {code: isbn}
       data[:title]  = title_text  if title_text.present?
-      data[:authors] = [ author_text ] if author_text.present?
+      data[:authors] = authors if authors.any?
       data[:price]  = price_value if price_value
       data[:image]  = cover_image if cover_image.present?
       data[:synopsis] = synopsis_text if synopsis_text.present?
