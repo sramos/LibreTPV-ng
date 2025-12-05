@@ -12,7 +12,7 @@ module Products
         format.html { render layout: false }
         format.xlsx do
           @xlsx_output = {type: 'note_lines', objects: @note_lines.except(:limit, :offset),
-                          title: 'Productos del albaran', filter_scope: filter_scope }
+                          title: 'Productos en el albaran', filter_scope: filter_scope }
           nom_fich = 'productos_albaran_' + Time.now.strftime("%Y-%m-%d")
           render 'common_xlsx/index', xlsx: nom_fich, layout: false
         end
@@ -21,7 +21,7 @@ module Products
     end
 
     def create_by_concept
-      note_line = ClientNoteLine.new(note_id: @note.id)
+      note_line = SupplierNoteLine.new(note_id: @note.id)
       if note_line.update(note_line_params)
         respond_to do |format|
           format.turbo_stream do
@@ -32,12 +32,12 @@ module Products
                 stream_locals: { note: @note, note_line: note_line },
                 highlight_dom_id: "note_line_#{note_line.id}") +
               [
-                turbo_stream.replace("note_#{@note.id}_side", partial: 'sales/client_notes/form_side')
+                turbo_stream.replace("note_#{@note.id}_side", partial: 'products/supplier_notes/form_side')
               ]
           end
         end
       else
-        Rails.logger.error "[Products::NoteLinesController#create_by_concept] Error al crear la linea de albarán: #{note_line.errors.inspect}"
+        Rails.logger.error "[Products::SupplierNoteLinesController#create_by_concept] Error al crear la linea de albarán: #{note_line.errors.inspect}"
         respond_to do |format|
           format.turbo_stream do
             render turbo_stream: [
@@ -56,7 +56,7 @@ module Products
       end
 
       if product && product.errors.blank?
-        note_line = ClientNoteLine.new(note_id: @note.id, product: product)
+        note_line = SupplierNoteLine.new(note_id: @note.id, product: product)
         if note_line.update(note_line_params)
           respond_to do |format|
             format.turbo_stream do
@@ -67,14 +67,12 @@ module Products
                   stream_locals: { note: @note, note_line: note_line },
                   highlight_dom_id: "note_line_#{note_line.id}") +
                 [
-                  turbo_stream.replace("note_#{@note.id}_side", partial: 'sales/client_notes/form_side')
+                  turbo_stream.replace("note_#{@note.id}_side", partial: 'products/supplier_notes/form_side')
                 ]
             end
           end
         else
-          puts "***** Partimos del producto #{product.inspect}"
-          puts "***** y vamos a actualizar con los parámetros #{note_line_params.inspect}"
-          Rails.logger.error "[Products::NoteLinesController#create_by_code] Error al crear la linea de albarán: #{note_line.errors.inspect}"
+          Rails.logger.error "[Products::SupplierNoteLinesController#create_by_code] Error al crear la linea de albarán: #{note_line.errors.inspect}"
           respond_to do |format|
             format.turbo_stream do
               render turbo_stream: [
@@ -103,7 +101,7 @@ module Products
 
     def create_by_name
       product = Product.find_by(name: params[:note_line][:product_name]) if params[:note_line].present?
-      note_line = ClientNoteLine.new(note_id: @note.id, product: product)
+      note_line = SupplierNoteLine.new(note_id: @note.id, product: product)
       if product && note_line.update(note_line_params)
         respond_to do |format|
           format.turbo_stream do
@@ -114,12 +112,12 @@ module Products
                 stream_locals: { note: @note, note_line: note_line },
                 highlight_dom_id: "note_line_#{note_line.id}") +
               [
-                turbo_stream.replace("note_#{@note.id}_side", partial: 'sales/client_notes/form_side')
+                turbo_stream.replace("note_#{@note.id}_side", partial: 'products/supplier_notes/form_side')
               ]
           end
         end
       else
-        Rails.logger.error "[Products::NoteLinesController#create_by_name] Error al crear la linea de albarán: #{note_line.errors.inspect}"
+        Rails.logger.error "[Products::SupplierNoteLinesController#create_by_name] Error al crear la linea de albarán: #{note_line.errors.inspect}"
         respond_to do |format|
           format.turbo_stream do
             render turbo_stream: [
@@ -146,7 +144,7 @@ module Products
               stream_locals: { note_line: @note_line },
             )
           end
-          format.html { redirect_to sales_note_path(@note), notice: 'Linea de albarán actualizada correctamente' }
+          format.html { redirect_to products_supplier_note_path(@note), notice: 'Linea de albarán actualizada correctamente' }
         end
       else
         respond_to do |format|
@@ -179,10 +177,10 @@ module Products
               )
             ]
         end
-        format.html { redirect_to sales_note_path(@note), notice: msg }
+        format.html { redirect_to products_supplier_note_path(@note), notice: msg }
       end
     rescue => e
-      redirect_to sales_note_path(@note), alert: "Error al eliminar la linea de albarán: #{e.message}"
+      redirect_to products_supplier_note_path(@note), alert: "Error al eliminar la linea de albarán: #{e.message}"
     end
 
     private

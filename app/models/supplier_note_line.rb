@@ -12,6 +12,6 @@ class SupplierNoteLine < NoteLine
   private
 
   def product_price_from_product
-    (product.price.to_f) / (1 + self.product_rate.to_f)
+    (product.price.to_f) / (1 + product_vat.to_f)
   end
 end
