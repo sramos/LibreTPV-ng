@@ -19,7 +19,7 @@
     <div class="linea"><br></div>
     <%= texto 'Cantidad', 'note_line', 'quantity', 1 %>
     <div class="linea"></div>
-    <%= texto '% descuento', 'note_line', 'discount_value', 0.0  %>
+    <%= texto '% descuento', 'note_line', 'discount_value', @note.supplier&.discount_value || 0.0  %>
     <div class="linea"></div>
   </form>
   <div class='linea'><br>
