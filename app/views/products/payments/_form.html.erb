@@ -1,7 +1,7 @@
 <% header ||= 'Formulario' unless defined?(header) %>
-<%= form_beginning model: [:sales, @invoice, @payment], header: header %>
+<%= form_beginning model: [:products, @invoice, @payment], header: header %>
   <div class="fila">
-    <div class="index_field linea"><b><%= 'Factura' %>:&nbsp;</b><%= @invoice.code %> (<%= @invoice.client&.name %>)</div>
+    <div class="index_field linea"><b><%= 'Factura' %>:&nbsp;</b><%= @invoice.code %> (<%= @invoice.supplier&.name %>)</div>
     <% if @payment.new_record? %>
       <div class="index_field linea"><b><%= 'Importe pendiente' %>:&nbsp;</b><%= @invoice.pending_payment %></div>
     <% end %>
