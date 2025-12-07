@@ -3,6 +3,7 @@ class SupplierInvoice < Invoice
   stripable :code
   upcaseable :code
 
+  has_many :supplier_notes, class_name: 'SupplierNote', foreign_key: 'invoice_id'
   belongs_to :supplier
   # Supplier invoices could have many supplier_notes
   
