@@ -11,6 +11,14 @@ class Invoice < ApplicationRecord
 
   before_destroy :validate_destroy, prepend: true
 
+  def paid_amount
+    payments.sum(:amount)
+  end
+
+  def pending_payment
+    total_amount - paid_amount
+  end
+  
   private
 
   def validate_destroy

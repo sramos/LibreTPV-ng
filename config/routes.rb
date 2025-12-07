@@ -34,6 +34,7 @@ Rails.application.routes.draw do
     end
     resources :client_invoices, path: :invoices, except: [:new, :create] do
       collection { post :filter }
+      resources :payments, path: :payments
     end
     resources :clients, path: :clients do
       collection { post :filter }
@@ -63,6 +64,10 @@ Rails.application.routes.draw do
         get :purchases
         get :sales
       end
+    end
+    resources :supplier_invoices, path: :invoices, except: [:new, :create] do
+      collection { post :filter }
+      resources :payments, path: :payments
     end
     resources :supplier_notes, path: :notes do
       collection { post :filter }

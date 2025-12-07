@@ -1,0 +1,16 @@
+<% header ||= 'Formulario' unless defined?(header) %>
+<%= form_beginning model: [:sales, @invoice, @payment], header: header %>
+  <div class="fila">
+    <div class="index_field linea"><b><%= 'Factura' %>:&nbsp;</b><%= @invoice.code %> (<%= @invoice.client&.name %>)</div>
+    <% if @payment.new_record? %>
+      <div class="index_field linea"><b><%= 'Importe pendiente' %>:&nbsp;</b><%= @invoice.pending_payment %></div>
+    <% end %>
+  </div>
+ <div class="linea"><br></div>
+  <%= form_errors @payment %>
+  <div class="linea">
+    <%= _text_field 'Importe', 'payment', 'amount', '1', required: true %>
+    <%= _date_field 'Fecha', 'payment', 'date', required: true %>
+    <%= _select_field 'Forma de pago', 'payment', 'payment_type_id', PaymentType.options_for_select, '2', required: true, allow_blank: true %>
+  </div>
+<%= form_end %>

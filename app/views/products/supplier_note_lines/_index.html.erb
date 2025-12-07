@@ -1,6 +1,6 @@
 <%= turbo_frame_tag "supplier_note_#{@note.id}_sub" do %>
   <!--- Note lines --->
-  <div id="note_lines">
+  <div id="supplier_note_#{@note.id}_note_lines">
     <% read_only = @note.invoice.present? %>  
     <% fieldset_class ||= 'sublistado' %>
     <% disable_close_button ||= false %>

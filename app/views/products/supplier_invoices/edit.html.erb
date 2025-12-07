@@ -1,0 +1,2 @@
+<% header = "Editar factura #{@invoice.code} - #{@invoice.date.to_date.strftime('%d/%m/%Y')} - #{@invoice.supplier.name} - #{@invoice.total_amount}€" %>
+<%= render partial: 'form', locals: { header: header, invoice: @invoice } %>

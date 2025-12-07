@@ -1,0 +1,17 @@
+<div id="invoice_<%= invoice.id %>" class="listadofila<%= ' flash-highlight' if local_assigns[:highlight] %>">
+  <%= index_line invoice, 'supplier_invoices' %>
+  <div class="listado_derecha">
+    <%= object_action icon: icon('cart-shopping', title: 'Productos'),
+                        turbo_frame: "supplier_note_#{invoice.supplier_note.id}_sub",
+                        url: products_supplier_note_supplier_note_lines_path(invoice.supplier_note.id) if invoice.supplier_note %>
+    <%= object_action icon: icon('euro-sign', title: 'Pagos'),
+                      turbo_frame: "invoice_#{invoice.id}_sub",
+                      url: products_supplier_invoice_payments_path(invoice.id) %>
+    <%= object_edition url: edit_product_supplier_invoice_path(invoice.id), title: 'Editar factura' %>
+    <%= object_destroy url: products_supplier_invoice_path(invoice.id),
+                       title: 'Eliminar factura',
+                       confirmation: '¿Está seguro de querer eliminar la factura?' %>
+  </div>
+  <%= turbo_frame_tag "invoice_#{invoice.id}_sub" %>
+  <%= turbo_frame_tag "supplier_note_#{invoice.supplier_note.id}_sub" if invoice.supplier_note %>
+</div>

@@ -1,0 +1,8 @@
+<!--- Invoices --->
+<div id="invoices">
+  <%= index_header 'supplier_invoices' %>
+    <% for invoice in @invoices %>
+      <%= render partial: 'item', locals: {invoice: invoice} %>
+    <% end %>
+  <%= index_footer @invoices %>
+</div>

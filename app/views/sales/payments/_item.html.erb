@@ -1,0 +1,11 @@
+<div id="payment_<%= payment.id %>" class="listadofila<%= ' flash-highlight' if local_assigns[:highlight] %>">
+  <%= index_line payment, 'payments' %>
+  <% unless local_assigns[:read_only] %>
+    <div class="listado_derecha">
+      <%= object_edition url: edit_sales_client_invoice_payment_path(@invoice.id, payment.id), title: 'Editar pago' %>
+      <%= object_destroy url: sales_client_invoice_payment_path(@invoice.id, payment.id),
+                         title: 'Eliminar cobro',
+                         confirmation: '¿Está seguro de querer eliminar el cobro?' %>
+    </div>
+  <% end %>
+</div>

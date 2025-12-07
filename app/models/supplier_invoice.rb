@@ -4,9 +4,21 @@ class SupplierInvoice < Invoice
   upcaseable :code
 
   belongs_to :supplier
+  # Supplier invoices could have many supplier_notes
+  
 
   validates :supplier, presence: true
   validate :code_must_be_unique_for_supplier
+
+  def total_vat
+    Rails.logger.error "[SupplierInvoice.total_vat] Could not find supplier_note for invoice #{id}" if supplier_note.nil?
+    supplier_note&.total_vat
+  end
+
+  def tax_base
+    Rails.logger.error "[SupplierInvoice.tax_base] Could not find supplier_note for invoice #{id}" if supplier_note.nil?
+    supplier_note&.tax_base
+  end
 
   private
 

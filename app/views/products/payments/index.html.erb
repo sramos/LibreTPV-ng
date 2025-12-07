@@ -1,0 +1,21 @@
+<%= turbo_frame_tag "invoice_#{@invoice.id}_sub" do %>
+  <!--- Payments --->
+  <div id="invoice_#{@invoice_id}_payments">
+    <% fieldset_class ||= 'sublistado' %>
+    <% disable_close_button ||= false %>
+    <% index_options = { title: 'Pagos',
+                         disable_close_button: disable_close_button,
+                         dom_id: "invoice_#{@invoice.id}_sub_payments",
+                         fieldset_class: fieldset_class} %>
+    <% if @invoice.paid_amount < @invoice.total_amount
+         index_options[:new_url] = new_sales_client_invoice_payment_path(@invoice.id)
+         index_options[:new_object_title] = 'Crear nuevo pago'
+       end %>
+    <%= subindex_header 'payments', index_options %>
+      <div id="invoice_<%= @invoice.id %>_new_payment_tag"></div>
+      <% for payment in @payments %>
+        <%= render partial: 'sales/payments/item', locals: {payment: payment} %>
+      <% end %>
+    <%= subindex_footer @payments %>
+  </div>
+<% end %>

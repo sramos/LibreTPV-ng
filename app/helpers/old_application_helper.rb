@@ -277,7 +277,7 @@ module OldApplicationHelper
                           { label: 'Ventas/Devoluciones', controlador: 'sales/client_notes' }
                         ]
       when :products
-        controladores = [ #{ label: 'Facturas Proveedores', controlador: 'factura' },
+        controladores = [ { label: 'Facturas Proveedores', controlador: 'products/supplier_invoices' },
                           #{ label: 'Depósitos', controlador: 'deposito' },
                           #{ label: 'Albaranes aceptados', controlador: 'albaranes_cerrados' },
                           { label: 'Albaranes de entrada', controlador: 'products/supplier_notes' },

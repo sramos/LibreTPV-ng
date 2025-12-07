@@ -1,5 +1,5 @@
-module Sales
-  class ClientInvoicesController < ApplicationController
+module Products 
+  class SupplierInvoicesController < ApplicationController
     before_action :set_invoice, only: [:edit, :update, :destroy]
 
     def index
@@ -9,8 +9,8 @@ module Sales
       respond_to do |format|
         format.xlsx do
           @xlsx_output = {type: 'invoices', objects: @invoices.except(:limit, :offset),
-                          title: 'Facturas de Venta', filter_scope: filter_scope }
-          nom_fich = 'facturas_venta_' + Time.now.strftime("%Y-%m-%d")
+                          title: 'Facturas de compra', filter_scope: filter_scope }
+          nom_fich = 'facturas_compra_' + Time.now.strftime("%Y-%m-%d")
           render 'common_xlsx/index', xlsx: nom_fich, layout: false
         end
         format.html
@@ -18,8 +18,8 @@ module Sales
     end
 
     def new
-      @note = ClientNote.find(params[:client_note_id])
-      @invoice = ClientInvoice.new(client_id: @note.client_id, date: DateTime.now)
+      @note = SupplierNote.find(params[:supplier_note_id])
+      @invoice = SupplierInvoice.new(supplier_id: @note.supplier_id, date: DateTime.now)
       respond_to do |format|
         format.html { render layout: false }
         format.turbo_stream
@@ -28,11 +28,9 @@ module Sales
 
     def create
       #puts "**** Tenemos los parámetros: #{params.inspect}"
-      @note = ClientNote.find(params[:client_note_id])
+      @note = SupplierNote.find(params[:supplier_note_id])
       @invoice = @note.create_and_pay_invoice(params[:payment_type_id])
       if @invoice && @invoice.errors.blank?
-        flash[:ok_message] = "¡Asegúrese de cobrar la venta!: #{@invoice.total_amount}€"
-        PrintTicketService.call(@invoice) if params[:print_ticket] == '1'
         redirect_to sales_client_notes_path
       else
         #puts "**** Parece que algo ha ido mal: #{@invoice.errors.inspect}"
@@ -63,7 +61,7 @@ module Sales
               stream_locals: { invoice: @invoice },
             )
           end
-          format.html { redirect_to sales_client_invoices_path, notice: 'Factura actualizada correctamente' }
+          format.html { redirect_to products_supplier_invoices_path, notice: 'Factura actualizada correctamente' }
         end
       else
         respond_to do |format|
@@ -89,10 +87,10 @@ module Sales
             container_dom_id: "invoice_#{@invoice.id}", message: msg
           )
         end
-        format.html { redirect_to sales_client_invoices_path, notice: msg }
+        format.html { redirect_to products_client_invoices_path, notice: msg }
       end
     rescue => e
-      redirect_to sales_client_invoices_path, alert: "Error al eliminar la factura: #{e.message}"
+      redirect_to products_client_invoices_path, alert: "Error al eliminar la factura: #{e.message}"
     end
 
     private
@@ -101,7 +99,7 @@ module Sales
       @filter_fields = [ ['Nombre','name','string'],
                          ['Email','email','string'],
                          ['NIF','code_id','string'] ]
-      @invoices = ClientInvoice.order(created_at: :desc)
+      @invoices = SupplierInvoice.order(created_at: :desc)
       
       session[filter_scope] ||= {}
       value = session[filter_scope]['value'] if session[filter_scope]
@@ -119,7 +117,7 @@ module Sales
     end
     
     def set_invoice
-      @invoice = ClientInvoice.find(params[:id])
+      @invoice = SupplierInvoice.find(params[:id])
     end
 
     def invoice_params

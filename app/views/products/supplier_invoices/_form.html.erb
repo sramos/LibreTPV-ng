@@ -1,0 +1,6 @@
+<% header ||= 'Formulario' unless defined?(header) %>
+<%= form_beginning model: [:products, @invoice], header: header %>
+  <%= form_errors @invoice %>
+  <%= fecha 'Fecha', 'invoice', 'date' %>
+  <%= selector 'Proveedor', 'invoice', 'supplier_id', Supplier.active.order(:name).map{|c| [c.name,c.id]}, enriquecido: true %>
+<%= form_end %>
