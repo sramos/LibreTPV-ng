@@ -39,7 +39,7 @@ module Sales
               highlight_dom_id: "payment_#{@payment.id}"
             )
           end
-          format.html { redirect_to admin_suppliers_path, notice: 'Proveedor creado correctamente' }
+          format.html { redirect_to sales_client_invoice_payments_path, notice: 'Proveedor creado correctamente' }
         end
       else
         respond_to do |format|
@@ -69,7 +69,7 @@ module Sales
               stream_locals: { payment: @payment },
             )
           end
-          format.html { redirect_to sales_invoices_path, notice: 'Pago actualizado correctamente' }
+          format.html { redirect_to sales_client_invoice_payments_path, notice: 'Pago actualizado correctamente' }
         end
       else
         respond_to do |format|
@@ -95,7 +95,7 @@ module Sales
             container_dom_id: "payment_#{@payment.id}", message: msg
           )
         end
-        format.html { redirect_to sales_invoices_path, notice: msg }
+        format.html { redirect_to sales_client_invoice_payments_path, notice: msg }
       end
     rescue => e
       redirect_to sales_invoices_path, alert: "Error al eliminar el pago: #{e.message}"
