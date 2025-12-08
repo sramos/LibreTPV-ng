@@ -3,22 +3,22 @@ class SupplierInvoice < Invoice
   stripable :code
   upcaseable :code
 
-  has_many :supplier_notes, class_name: 'SupplierNote', foreign_key: 'invoice_id'
   belongs_to :supplier
-  # Supplier invoices could have many supplier_notes
-  
+  has_many :supplier_notes, class_name: 'SupplierNote', foreign_key: 'invoice_id'
 
   validates :supplier, presence: true
   validate :code_must_be_unique_for_supplier
 
   def total_vat
-    Rails.logger.error "[SupplierInvoice.total_vat] Could not find supplier_note for invoice #{id}" if supplier_note.nil?
-    supplier_note&.total_vat
+    value = 0.0
+    supplier_notes.each{|n| value += n.total_vat}
+    return value
   end
 
   def tax_base
-    Rails.logger.error "[SupplierInvoice.tax_base] Could not find supplier_note for invoice #{id}" if supplier_note.nil?
-    supplier_note&.tax_base
+    value = 0.0
+    supplier_notes.each{|n| value += n.tax_base}
+    return value
   end
 
   private

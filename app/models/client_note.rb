@@ -6,18 +6,6 @@ class ClientNote < Note
   validates :deposit, presence: false
   validates :devolution_date, presence: false
 
-  def total_amount
-    note_lines.sum('product_price * quantity * (1 - discount)')
-  end
-
-  def tax_base
-    note_lines.sum('product_price * quantity * (1 - discount) / (1 + product_vat)')
-  end
-
-  def total_vat
-    total_amount - tax_base
-  end
-
   def create_and_pay_invoice(payment_type_id)
     invoice = nil
     payment_type = PaymentType.find_by(id: payment_type_id, active: true)
