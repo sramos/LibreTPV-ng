@@ -5,6 +5,7 @@ class ClientNote < Note
   validates :client, presence: true
   validates :deposit, presence: false
   validates :devolution_date, presence: false
+  validate :related_invoice_is_from_same_client
 
   def create_and_pay_invoice(payment_type_id)
     invoice = nil
@@ -40,4 +41,10 @@ class ClientNote < Note
     -1
   end
 
+  def related_invoice_is_from_same_client
+    if invoice && invoice.client_id != client_id
+      errors.add(:base, I18n.t('errors.client_notes.wrong_client_invoice'))
+    end
+    throw :abort unless errors.empty?
+  end
 end

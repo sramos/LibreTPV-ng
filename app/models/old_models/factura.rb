@@ -22,14 +22,14 @@ class OldModels::Factura < OldModels
       updated_at: updated_at
     }
 
-    old_provider_id = proveedor_id || albarans.first.proveedor_id
+    old_provider_id = proveedor_id || albarans.first&.proveedor_id
     if old_provider_id
       new_obj_data[:type] = 'SupplierInvoice'
       new_obj_data[:vat] = (valor_iva||0.0)/100.0
       new_obj_data[:income_retention] = (valor_irpf||0.0)/100.0
-      supplier = OldModelsMap.find_by(old_object_class: 'Proveedor', old_object_id: old_provider_id)
+      supplier = OldModelsMap.find_by(old_object_type: 'OldModels::Proveedor', old_object_id: old_provider_id)
       if supplier.nil?
-        OldModels.log_error(self, "No se ha encontrado el proveedor #{proveedor_id} - #{proveedor&.nombre}")
+        OldModels.log_error(self, "No se ha encontrado el proveedor #{old_provider_id}")
       end
       new_obj_data[:supplier_id] = supplier&.new_object_id
     else

@@ -6,6 +6,8 @@ es:
     client_invoices:
       removal_with_code: No es posible eliminar una factura de cliente con código
       vat_or_income_retention: Una factura de cliente no puede tener campos de IVA o de retención de IRPF
+    client_notes:
+      wrong_client_invoice: El cliente del albarán no coincide con el cliente de la factura
     clients:
       removal_with_existing_notes: No se puede eliminar un cliente que tenga creados albaranes
     global:
@@ -21,6 +23,8 @@ es:
       removal_with_stock: No se puede eliminar un producto con stock
     publishers:
       removal_with_existing_products: No se puede eliminar un editor que tenga productos en el catálogo
+    supplier_notes:
+      wrong_supplier_invoice: El proveedor del albarán no coincide con el proveedor de la factura
     supplier_invoices:
       unique_for_supplier: debe ser único para el proveedor
     suppliers:
