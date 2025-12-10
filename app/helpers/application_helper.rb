@@ -142,7 +142,7 @@ module ApplicationHelper
     
     link_to(attrs[:url] || '#',
             data: data_attrs,
-            class: attrs[:class] || 'link-action') do
+            class: attrs[:class] || 'link-edit') do
       attrs[:icon]
     end
   end

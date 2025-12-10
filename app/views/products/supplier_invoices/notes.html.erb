@@ -1,0 +1,13 @@
+<% obj_tag = "invoice_#{@invoice.id}_sub" %>
+<%= turbo_frame_tag obj_tag do %>
+  <!--- Supplier notes for invoice --->
+  <div id="<%= obj_tag %>_notes">
+    <%= subindex_header 'supplier_notes', {title: 'Albaranes asociados', dom_id: "#{obj_tag}_supplier_notes"} %>
+      <% for note in @notes %>
+        <div id="<%= obj_tag %>_note_<%= note.id %>" class="listadofila">
+          <%= index_line note, 'supplier_notes' %>
+        </div>
+      <% end %>
+    <%= subindex_footer @notes %>
+  </div>
+<% end %>

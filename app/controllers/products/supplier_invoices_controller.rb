@@ -1,6 +1,6 @@
 module Products 
   class SupplierInvoicesController < ApplicationController
-    before_action :set_invoice, only: [:edit, :update, :destroy]
+    before_action :set_invoice, only: [:edit, :update, :destroy, :notes, :note_lines]
 
     def index
       index_filtered
@@ -93,13 +93,37 @@ module Products
       redirect_to products_client_invoices_path, alert: "Error al eliminar la factura: #{e.message}"
     end
 
+    def note_lines
+      @note_lines = SupplierNoteLine.joins(:note).where("notes.invoice_id = ?", @invoice.id)
+      @format_xls = true
+
+      respond_to do |format|
+        format.html { render layout: false }
+        format.xlsx do
+          @xlsx_output = {type: 'supplier_invoice_note_lines', objects: @note_lines.except(:limit, :offset),
+                          title: 'Productos en factura ' + @invoice.code, filter_scope: filter_scope }
+          nom_fich = 'productos_factura_' + @invoice.code
+          render 'common_xlsx/index', xlsx: nom_fich, layout: false
+        end
+        format.turbo_stream
+      end
+    end
+
+    def notes
+      @notes = @invoice.supplier_notes.page(params[:page]).per(session[:per_page])
+      respond_to do |format|
+        format.html { render layout: false }
+        format.turbo_stream
+      end
+    end
+
     private
 
     def index_filtered
       @filter_fields = [ ['Nombre','name','string'],
                          ['Email','email','string'],
                          ['NIF','code_id','string'] ]
-      @invoices = SupplierInvoice.order(created_at: :desc)
+      @invoices = SupplierInvoice.order(date: :desc)
       
       session[filter_scope] ||= {}
       value = session[filter_scope]['value'] if session[filter_scope]

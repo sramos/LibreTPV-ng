@@ -1,6 +1,7 @@
 <div id="invoice_<%= invoice.id %>" class="listadofila<%= ' flash-highlight' if local_assigns[:highlight] %>">
   <%= index_line invoice, 'client_invoices' %>
   <div class="listado_derecha">
+    <%= icon('exclamation-triangle', title: 'La venta no está completamente cobrada', class: 'color-red') if invoice.pending_payment > 0 %>
     <%= object_action icon: icon('cart-shopping', title: 'Productos'),
                         turbo_frame: "client_note_#{invoice.client_note.id}_sub",
                         url: sales_client_note_client_note_lines_path(invoice.client_note.id) if invoice.client_note %>

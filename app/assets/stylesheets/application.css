@@ -279,6 +279,10 @@ select.element_9   { width:1075px; }
   text-align: center;
 }
 
+.color-red {
+  color: red;
+}
+
 /* Flash success fade-out */
 .flash-fade {
   transition: opacity 0.5s ease, transform 0.5s ease;

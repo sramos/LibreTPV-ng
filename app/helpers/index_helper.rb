@@ -55,7 +55,7 @@ module IndexHelper
        ['Activo', 'active', '1_3 right']]
     when 'configs'
       [['Nombre', 'name', '3_2'], ['Valor', 'value', '3']]
-    when 'invoice_products'
+    when 'client_invoice_products'
       [['Fecha', 'note.date.to_date', '1'], ['Cant.', 'quantity', '1_3 right'], ['Código', 'product.code', '4_3'],
        ['Nombre/Título', 'product_name', '3'], ['Factura', 'note.invoice.code', '4_3']]
     when 'payments'
@@ -78,6 +78,12 @@ module IndexHelper
     when 'sale_notes'
       [['Fecha', 'date.to_date', '1'], ['Cliente', 'client.name', '3'],
        ['Cod.Albarán', 'code', '3_2'], ['Cod.Factura', 'invoice.code', '3_2']]
+    when 'supplier_invoice_note_lines'
+      [['Cod.Albarán', 'note.code', '1'],
+       ['Cant.', 'quantity', '1_3 right'], ['Código', 'product.code', '3_4'],
+       ['Nombre/Título', 'product_name', '2'], ['Precio Prov.', 'product_price', '2_3 right'],
+       ['% Desc.', 'discount_value', '2_3 right'], ['Subtotal', 'tax_base', '2_3 right'],
+       ['% IVA', 'product_vat_value', '2_3 right'], ['Total', 'total_amount', '2_3 right']]
     when 'supplier_invoices'
       [['Fecha', 'date.to_date', '2_3'], ['Código', 'code', '4_3'], ['Proveedor', 'supplier.name', '4'],
        ['Base Imp.', 'tax_base', '2_3 right'], ['IVA', 'total_vat', '1_2 right'],

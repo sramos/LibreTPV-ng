@@ -67,6 +67,10 @@ Rails.application.routes.draw do
     end
     resources :supplier_invoices, path: :invoices, except: [:new, :create] do
       collection { post :filter }
+      member do
+        get :notes
+        get :note_lines
+      end
       resources :payments, path: :payments
     end
     resources :supplier_notes, path: :notes do

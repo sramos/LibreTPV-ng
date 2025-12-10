@@ -115,7 +115,7 @@ module Sales
 
       respond_to do |format|
         format.xlsx do
-          @xlsx_output = {type: 'invoice_products', objects: @lines.except(:limit, :offset),
+          @xlsx_output = {type: 'client_invoice_products', objects: @lines.except(:limit, :offset),
                           title: 'Productos vendidos' }
           nom_fich = 'productos_vendidos_' + Time.now.strftime("%Y-%m-%d")
           render 'common_xlsx/index', xlsx: nom_fich, layout: false
