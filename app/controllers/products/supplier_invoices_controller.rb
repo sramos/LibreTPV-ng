@@ -1,6 +1,6 @@
 module Products 
   class SupplierInvoicesController < ApplicationController
-    before_action :set_invoice, only: [:edit, :update, :destroy, :notes, :note_lines]
+    before_action :set_invoice, only: [:edit, :update, :destroy, :copy, :notes, :note_lines]
 
     def index
       index_filtered
@@ -87,14 +87,23 @@ module Products
             container_dom_id: "invoice_#{@invoice.id}", message: msg
           )
         end
-        format.html { redirect_to products_client_invoices_path, notice: msg }
+        format.html { redirect_to products_supplier_invoices_path, notice: msg }
       end
     rescue => e
-      redirect_to products_client_invoices_path, alert: "Error al eliminar la factura: #{e.message}"
+      redirect_to products_supplier_invoices_path, alert: "Error al eliminar la factura: #{e.message}"
+    end
+
+    def copy
+      new_note = @invoice.supplier_note_copy
+      if new_note.persisted? && new_note.errors.blank?
+        redirect_to edit_products_supplier_note_path(new_note.id)
+      else
+        redirect_to products_supplier_invoices_path, alert: "Error al copiar la factura: #{new_note.errors.inspect}"
+      end
     end
 
     def note_lines
-      @note_lines = SupplierNoteLine.joins(:note).where("notes.invoice_id = ?", @invoice.id)
+      @note_lines = @invoice.note_lines.page(params[:page]).per(session[:per_page])
       @format_xls = true
 
       respond_to do |format|

@@ -6,12 +6,17 @@
                       turbo_frame: "invoice_#{invoice.id}_sub",
                       url: products_supplier_invoice_payments_path(invoice.id) %>
     <%= object_action icon: icon('dolly', title: 'Productos'),
-                        turbo_frame: "invoice_#{invoice.id}_sub",
-                        url: note_lines_products_supplier_invoice_path(invoice.id) %>
-    <%= object_action icon: icon('clipboard-list', title: 'Productos'),
-                        turbo_frame: "invoice_#{invoice.id}_sub",
-                        url: notes_products_supplier_invoice_path(invoice.id) %>
+                      turbo_frame: "invoice_#{invoice.id}_sub",
+                      url: note_lines_products_supplier_invoice_path(invoice.id) %>
+    <%= object_action icon: icon('clipboard-list', title: 'Albaranes'),
+                      turbo_frame: "invoice_#{invoice.id}_sub",
+                      url: notes_products_supplier_invoice_path(invoice.id) %>
     <%= object_edition url: edit_products_supplier_invoice_path(invoice.id), title: 'Editar factura' %>
+    <% confirmation_copy_text = "¿Estás seguro de querer generar un nuevo albarán a partir de esta factura?" %>
+    <%= object_action icon: icon('copy', title: 'Copiar a nuevo albarán'),
+                      confirmation: confirmation_copy_text,
+                      disable_turbo_frame: true, method: :post,
+                      url: copy_products_supplier_invoice_path(invoice.id) %>
     <%= object_destroy url: products_supplier_invoice_path(invoice.id),
                        title: 'Eliminar factura',
                        confirmation: '¿Está seguro de querer eliminar la factura?' %>

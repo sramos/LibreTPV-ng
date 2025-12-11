@@ -70,6 +70,7 @@ Rails.application.routes.draw do
       member do
         get :notes
         get :note_lines
+        post :copy
       end
       resources :payments, path: :payments
     end
