@@ -9,8 +9,6 @@ class PaymentType < ApplicationRecord
 
   before_destroy :validate_destroy, prepend: true
 
-  scope :active, -> { where(active: true) }
-  
   def self.options_for_select
     active.collect { |pt| [pt.name, pt.id] }  
   end

@@ -1,5 +1,6 @@
 class Invoice < ApplicationRecord
   include ::Sanitizable
+  include ::Auditable
   stripable :code
 
   has_many :payments

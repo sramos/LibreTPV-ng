@@ -9,7 +9,7 @@ class ClientNote < Note
 
   def create_and_pay_invoice(payment_type_id)
     invoice = nil
-    payment_type = PaymentType.find_by(id: payment_type_id, active: true)
+    payment_type = PaymentType.active.find_by(id: payment_type_id)
     invoice = ClientInvoice.new(date: DateTime.now)
     if payment_type && invoice_id.blank? && !closed?
       Invoice.transaction do

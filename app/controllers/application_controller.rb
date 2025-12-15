@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   allow_browser versions: :modern
   # Authentication
   before_action :authenticate_user!
+  before_action :set_current_user
   # Define global pagination
   before_action :set_pagination
   # Locales
@@ -36,5 +37,9 @@ class ApplicationController < ActionController::Base
   
   def filter_scope
     "#{params[:controller]}_filter"
+  end
+
+  def set_current_user
+    Current.user = current_user
   end
 end
