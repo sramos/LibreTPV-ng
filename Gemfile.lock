@@ -103,6 +103,7 @@ GEM
     caxlsx_rails (0.6.4)
       actionpack (>= 3.1)
       caxlsx (>= 3.0)
+    chunky_png (1.4.0)
     concurrent-ruby (1.3.5)
     connection_pool (2.5.4)
     crass (1.0.6)
@@ -125,6 +126,9 @@ GEM
     ed25519 (1.4.0)
     erb (5.1.1)
     erubi (1.13.1)
+    escpos (0.0.10)
+    escpos-image (0.0.12)
+      escpos (>= 0.0.10)
     et-orbi (1.4.0)
       tzinfo
     fugit (1.11.2)
@@ -184,6 +188,8 @@ GEM
       net-smtp
     marcel (1.1.0)
     matrix (0.4.3)
+    mini_magick (5.3.1)
+      logger
     mini_mime (1.1.5)
     minitest (5.26.0)
     msgpack (1.8.0)
@@ -216,6 +222,7 @@ GEM
       racc (~> 1.4)
     nokogiri (1.18.10-x86_64-linux-musl)
       racc (~> 1.4)
+    open3 (0.2.1)
     orm_adapter (0.5.0)
     ostruct (0.6.3)
     parallel (1.27.0)
@@ -292,6 +299,10 @@ GEM
       actionpack (>= 7.0)
       railties (>= 7.0)
     rexml (3.4.4)
+    rqrcode (3.1.1)
+      chunky_png (~> 1.0)
+      rqrcode_core (~> 2.0)
+    rqrcode_core (2.0.1)
     rubocop (1.81.1)
       json (~> 2.3)
       language_server-protocol (~> 3.17.0.2)
@@ -417,15 +428,20 @@ DEPENDENCIES
   debug
   devise (~> 4.9.4)
   devise-i18n
+  escpos
+  escpos-image
   importmap-rails
   jbuilder
   kamal
   kaminari
+  mini_magick
   mysql2 (~> 0.5)
+  open3
   propshaft
   puma (>= 5.0)
   rails (~> 8.0.4)
   rails-i18n
+  rqrcode
   rubocop-rails-omakase
   selenium-webdriver
   simplecov

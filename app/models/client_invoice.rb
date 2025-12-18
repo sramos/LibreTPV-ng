@@ -1,5 +1,6 @@
 class ClientInvoice < Invoice
   has_one :client_note, class_name: 'ClientNote', foreign_key: 'invoice_id'
+  has_many :note_lines, through: :client_note, source: :note_lines
   belongs_to :client
 
   validates :client, presence: true
