@@ -116,6 +116,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_14_214848) do
     t.bigint "supplier_id"
     t.string "type", null: false
     t.date "expiration_date"
+    t.string "validation_hash"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["client_id"], name: "index_invoices_on_client_id"

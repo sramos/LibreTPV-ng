@@ -4,11 +4,12 @@ class ClientInvoice < Invoice
   belongs_to :client
 
   validates :client, presence: true
+  #validates :validation_hash, presence: true
   validate :code_must_be_unique
   validate :avoid_vat_and_retentions
 
-  before_validation :set_invoice_code, on: :create
-  before_destroy :validate_client_invoice_destroy, prepend: true
+  before_validation :set_invoice_code_and_hash, on: :create
+  before_destroy :avoid_client_invoice_destroy, prepend: true
 
   def total_vat
     Rails.logger.error "[ClientInvoice.total_vat] Could not find client_note for invoice #{id}" if client_note.nil?
@@ -34,14 +35,12 @@ class ClientInvoice < Invoice
     end
   end
 
-  def set_invoice_code
+  def set_invoice_code_and_hash
     self.code = Config.next_invoice_code if code.blank?
   end
 
-  def validate_client_invoice_destroy
-    if code.present?
-      errors.add(:base, I18n.t('errors.client_invoices.removal_with_code'))
-      throw :abort
-    end
+  def avoid_client_invoice_destroy
+    errors.add(:base, I18n.t('errors.client_invoices.removal_not_allowed'))
+    throw :abort
   end
 end

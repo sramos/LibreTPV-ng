@@ -54,6 +54,7 @@ class Note < ApplicationRecord
 
   def validate_update
     # If the note is closed, it cannot be modified
+    # unless migration is in progress
     if closed && !closed_changed?
       errors.add(:base, I18n.t('errors.notes.closed_note'))
     # A note can be opened again only if there is no invoice or it is open

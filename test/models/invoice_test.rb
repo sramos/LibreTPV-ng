@@ -34,7 +34,7 @@ class InvoiceTest < ActiveSupport::TestCase
     assert invoice.payments.any?
 
     assert_not invoice.destroy
-    assert_equal [I18n.t('errors.client_invoices.removal_with_code')], invoice.errors[:base]
+    assert_equal [I18n.t('errors.client_invoices.removal_not_allowed')], invoice.errors[:base]
     assert Invoice.exists?(invoice.id)
   end
 
