@@ -54,7 +54,7 @@ module IndexHelper
        ['Crédito', 'credit', '2_3 right'], ['Acumulado', 'accumulated_credit', '2_3 right'],
        ['Activo', 'active', '1_3 right']]
     when 'configs'
-      [['Nombre', 'name', '3_2'], ['Valor', 'value', '3']]
+      [['Nombre', 'name', '3_2'], ['Valor', 'value', '4']]
     when 'client_invoice_products'
       [['Fecha', 'note.date.to_date', '1'], ['Cant.', 'quantity', '1_3 right'], ['Código', 'product.code', '4_3'],
        ['Nombre/Título', 'product_name', '3'], ['Factura', 'note.invoice.code', '4_3']]

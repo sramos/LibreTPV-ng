@@ -7,7 +7,7 @@ class Config < ApplicationRecord
   end
 
   def self.next_invoice_code
-    (Config.value('COMPANY_INVOICES_PREFIX')||'') + format("%010d", Config.next_invoice_number.to_s)
+    (Config.value('COMPANY_INVOICES_PREFIX')||'') + format("%08d", Config.next_invoice_number.to_s)
   end
 
   def self.next_invoice_number

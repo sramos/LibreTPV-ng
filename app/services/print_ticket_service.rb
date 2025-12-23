@@ -59,7 +59,7 @@ class PrintTicketService < ApplicationService
     @printer.write(full_line)
     @printer.write(clear_text('Cliente' + ': ' + invoice.client.name_nif + "\n"))
     @printer.write(clear_text('Fecha' + ': ' + invoice.date.strftime('%d/%m/%Y %H:%M') + "\n"))
-    @printer.write(clear_text('Factura Simpl' + ': ' + invoice.code + "\n"))
+    @printer.write(clear_text('Factura' + ': ' + invoice.code + "\n"))
     @printer.write("\n")
 
     # Invoice lines
@@ -104,6 +104,42 @@ class PrintTicketService < ApplicationService
   end
 
   def ticket_footer invoice
+    if Config.value('VERIFACTU_ENABLED') == 'TRUE'
+      @printer.write("\e\x61\x01")
+      begin
+        nif = Config.value('COMPANY_FISCAL_CODE')
+        invoice_number = Rack::Utils.escape(invoice.code)
+        invoice_date = invoice.date.strftime('%d-%m-%Y')
+        total_amount = invoice.total_amount
+        url_verifactu = "https://www2.agenciatributaria.gob.es/wlpl/TOCP-MUTE/ValidacionQR?nif=#{nif}&num=#{invoice_number}&fecha=#{invoice_date}&total=#{total_amount}"
+        qr_file = 'tmp/temp_qr.png'
+        qr = RQRCode::QRCode.new(url_verifactu)
+        png_qr = qr.as_png(
+          bit_depth: 1,
+          border_modules: 1,
+          color_mode: ChunkyPNG::COLOR_GRAYSCALE,
+          color: 'black',
+          file: nil,
+          fill: 'white',
+          module_px_size: 4, # Tamaño de los puntos (ajustar si sale muy grande/pequeño)
+          resize_exactly_to: false,
+          resize_gte_to: false,
+          size: 350 # Tamaño final en píxeles (ancho)
+        )
+        png_qr.save(qr_file)
+
+        qr_image = Escpos::Image.new(qr_file, {
+          processor: 'MiniMagick',
+          extent: true
+        })
+        @printer.write(qr_image.to_escpos)
+        @printer.write(clear_text("Veri*factu*\n"))
+        @printer.write(clear_text("Factura verificable en sede electrónica.\n"))
+      rescue => e
+        Rails.logger.error "Error QR: #{e.message}"
+        @printer.write("[QR VERIFACTU ERROR]\n")
+      end
+    end
   end
 
   def cut_and_send printer_name

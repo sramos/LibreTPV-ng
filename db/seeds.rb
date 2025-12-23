@@ -75,7 +75,7 @@ if ProductSubtype.count == 0
 end
 
 configs = [
-  { name: 'ALLWAYS_PRINT_TICKET', value: 'FALSE' },
+  { name: 'ALLWAYS_PRINT_TICKET', value: 'TRUE' },
   { name: 'COMPANY_SHORT_NAME', value: 'Librería de ejemplo' },
   { name: 'COMPANY_FULL_NAME', value: 'Librería asociativa de ejemplo' },
   { name: 'COMPANY_ADDRESS', value: 'Calle de ejemplo, 123' },
@@ -89,7 +89,13 @@ configs = [
   { name: 'COMPANY_INVOICES_COUNT', value: '0' },
   { name: 'PAGINATE', value: '25' },
   { name: 'PRINTER_NAME', value: 'TM-T70' },
-  { name: 'PRINT_COMMAND', value: 'lpr -P TM-T70 -o cpi=20', editable: false }
+  { name: 'VERIFACTU_ENABLED', value: 'FALSE' },
+  { name: 'VERIFACTU_API_KEY', value: '' },
+  { name: 'VERIFACTU_API_SECRET', value: '' },
+  # Entorno de produccion
+  #{ name: 'VERIFACTU_API_URL', value: 'https://www1.aeat.es/wlpl/TIKE-CONT/ws/SistemaFacturacion/VerifactuSOAP' },
+  # Entorno de pruebas
+  { name: 'VERIFACTU_API_URL', value: 'https://prewww1.aeat.es/wlpl/TIKE-CONT/ws/SistemaFacturacion/VerifactuSOAP' },
 ]
 
 configs.each do |config|
