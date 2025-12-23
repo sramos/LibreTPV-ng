@@ -231,7 +231,10 @@ module Products
     end
 
     def product_params
-      params.require(:product).permit(:name, :active)
+      params.require(:product).permit(:code, :name, :description,
+                                      :product_type_id,:product_subtype_id,
+                                      :publisher_id, :edition,
+                                      :price, :stock, :active)
     end
   end
 end
