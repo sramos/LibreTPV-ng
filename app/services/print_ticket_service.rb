@@ -30,12 +30,13 @@ class PrintTicketService < ApplicationService
           c.font "DejaVu-Sans-Bold"
           c.fill "black"
           c.pointsize "22"
-          c.draw "text 170,-30 '#{Config.value('COMPANY_SHORT_NAME')}'" if Config.value('COMPANY_SHORT_NAME').present?
+          c.draw "text 170,-55 '#{Config.value('COMPANY_SHORT_NAME')}'" if Config.value('COMPANY_SHORT_NAME').present?
           c.font "DejaVu-Sans"
           c.pointsize "18"
-          c.draw "text 170,05 '#{Config.value('COMPANY_FISCAL_CODE')}'" if Config.value('COMPANY_FISCAL_CODE').present?
-          c.draw "text 170,30 '#{Config.value('COMPANY_ADDRESS')}'" if Config.value('COMPANY_ADDRESS').present?
-          c.draw "text 170,55 '#{Config.value('COMPANY_PHONE')}'" if Config.value('COMPANY_PHONE').present?
+          c.draw "text 170,-20 'NIF: #{Config.value('COMPANY_FISCAL_CODE')}'" if Config.value('COMPANY_FISCAL_CODE').present?
+          c.draw "text 170,05 '#{Config.value('COMPANY_ADDRESS')}'" if Config.value('COMPANY_ADDRESS').present?
+          c.draw "text 170,30 'Tel: #{Config.value('COMPANY_PHONE')}'" if Config.value('COMPANY_PHONE').present?
+          c.draw "text 170,55 '#{Config.value('COMPANY_EMAIL')}'" if Config.value('COMPANY_EMAIL').present?
         end
         img_escpos = Escpos::Image.new(header.path, {
           processor: 'MiniMagick',
@@ -56,49 +57,47 @@ class PrintTicketService < ApplicationService
 
     # Invoice data
     @printer.write(full_line)
-    @printer.write(clear_text('Cliente' + ': ' + invoice.client.name + "\n"))
+    @printer.write(clear_text('Cliente' + ': ' + invoice.client.name_nif + "\n"))
     @printer.write(clear_text('Fecha' + ': ' + invoice.date.strftime('%d/%m/%Y %H:%M') + "\n"))
     @printer.write(clear_text('Factura Simpl' + ': ' + invoice.code + "\n"))
     @printer.write("\n")
 
     # Invoice lines
-    invoice_lines = []
     invoice_vats = {}
-    any_discount = false
+    @printer.write(clear_text( format "%-41s   Imp.\n\n", 'Producto' ))
     invoice.note_lines.each do |line|
       line_name  = line.quantity > 1 ? "#{line.quantity} x " : ''
       line_name += line.product_name
-      discount = line.discount > 0 ? "#{line.discount_value} %" : ''
-      any_discount = true if line.discount > 0
-      invoice_lines << {name: line_name, discount: discount, total: format("%.2f", line.total_amount)}
+      line_price = format("%.2f", line.total_amount_without_discount)
+
+      @printer.write(clear_text( format "%-40s %6s\n", line_name[0..40], line_price ))
+      if line.discount > 0
+        discount_value = format("Descuento %.2f%%", line.discount_value)
+        discounted_amount = format("%.2f", -line.discounted_amount)
+        @printer.write(clear_text( format "      %-35s %6s\n", discount_value, discounted_amount ))
+      end
+
       invoice_vats[line.product_vat_value] ||= {tax_base: 0, total_vat: 0}
       invoice_vats[line.product_vat_value][:tax_base] += line.tax_base
       invoice_vats[line.product_vat_value][:total_vat] += line.total_vat
     end
 
-    # Print lines with or without discount
-    if any_discount
-      @printer.write(clear_text( format "%-36s Dto.   Imp.\n\n", 'Producto' ))
-      invoice_lines.each do |line|
-        @printer.write(clear_text( format "%-36s %4s %6s\n", line[:name][0..36], line[:discount], line[:total] ))
-      end
-    else
-      @printer.write(clear_text( format "%-41s   Imp.\n\n", 'Producto' ))
-      invoice_lines.each do |line|
-        @printer.write(clear_text( format "%-41s %6s\n", line[:name][0..41], line[:total] ))
-      end
-    end
-
     # Invoice VATs
     @printer.write(full_line)
-    #cadena += format " %-41s %6s\n", "Subtotal", format("%.2f",subtotal)
+    @printer.write(clear_text( format "%-18s %-15s %6s\n", '', 'Base', 'C.IVA' ))
     invoice_vats.each do |type, value|
-      @printer.write( clear_text( format " %-40s %6s\n", format("Iva ( %2s%% )",type.to_s), format("%.2f", value[:total_vat]) ))
+      vat_type = format("Iva %2s%%", type.to_s)
+      tax_base = format("%.2f", value[:tax_base])
+      tax_amount = format("%.2f", value[:total_vat])
+      vat_line = format("   %-14s %-16s %6s\n", vat_type, tax_base, tax_amount)
+      @printer.write( clear_text( vat_line ))
     end
 
     # Total amount for invoice
+    @printer.write(full_line)
     @printer.write("\x1d\x21\x11") # Doble tamaño
-    @printer.write(clear_text( format "TOTAL: %9s €\n", invoice.total_amount))
+    total_amount = format("%.2f", invoice.total_amount)
+    @printer.write(clear_text( format "       TOTAL: %9s€\n", total_amount))
     @printer.write("\x1d\x21\x00") # Reset tamaño
     @printer.write(full_line)
     @printer.write("\n")
@@ -109,6 +108,8 @@ class PrintTicketService < ApplicationService
 
   def cut_and_send printer_name
     @printer.write("\x1D\x56\x41\x03") # Cut paper
+
+    Rails.logger.info "Printing ticket to printer: #{printer_name}"
 
     cmd = "lp -d #{printer_name}"
     begin

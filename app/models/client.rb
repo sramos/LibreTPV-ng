@@ -19,6 +19,12 @@ class Client < ApplicationRecord
     discount * 100
   end
 
+  def name_nif
+    output  = name
+    output += ' - NIF: ' + code_id unless code_id.blank? || code_id == 'N/A'
+    return output
+  end
+
   private
 
   def validate_destroy
