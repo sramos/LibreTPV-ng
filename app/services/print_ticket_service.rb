@@ -107,7 +107,7 @@ class PrintTicketService < ApplicationService
     if Config.value('VERIFACTU_ENABLED') == 'TRUE'
       @printer.write("\e\x61\x01")
       begin
-        nif = Config.value('COMPANY_FISCAL_CODE')
+        nif = Rack::Utils.escape(Config.value('COMPANY_FISCAL_CODE'))
         invoice_number = Rack::Utils.escape(invoice.code)
         invoice_date = invoice.date.strftime('%d-%m-%Y')
         total_amount = invoice.total_amount
