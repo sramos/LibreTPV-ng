@@ -13,19 +13,19 @@ class ClientInvoice < Invoice
 
   def total_vat
     Rails.logger.error "[ClientInvoice.total_vat] Could not find client_note for invoice #{id}" if client_note.nil?
-    client_note&.total_vat
+    client_note&.total_vat.round(2)
   end
 
   def tax_base
     Rails.logger.error "[ClientInvoice.tax_base] Could not find client_note for invoice #{id}" if client_note.nil?
-    client_note&.tax_base
+    client_note&.tax_base.round(2)
   end
 
   # Invoice types
   # F1: Fatura completa/ordinaria. Estándar para transacciones B2B y B2C con todos los datos (NIF, etc.)
   # F2: Fatura simplificada. Usada para transacciones B2C de menor importe y con menos datos.
   # R1-R5: Fatura rectificativa. Usada para corregir errores.
-  def type
+  def type_code
     client.is_b2b ? 'F1' : 'F2'
   end
 

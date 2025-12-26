@@ -9,6 +9,7 @@ class PrintTicketService < ApplicationService
       ticket_body(invoice)
       ticket_footer(invoice)
       cut_and_send(printer_name)
+      success
     end
   rescue => e
     Rails.logger.error "Error printing ticket: #{e.message}"
