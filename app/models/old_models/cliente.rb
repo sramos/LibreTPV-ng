@@ -14,6 +14,7 @@ class OldModels::Cliente < OldModels
       discount: (descuento || 0)/100.0,
       credit: credito || 0.0,
       accumulated_credit: credito_acumulado || 0.0,
+      is_b2b: cif.present? && cif != 'N/A',
       active: true,
       created_at: created_at,
       updated_at: updated_at

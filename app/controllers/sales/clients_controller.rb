@@ -153,7 +153,8 @@ module Sales
     end
 
     def client_params
-      params.require(:client).permit(:name, :active, :credit, :code, :discount)
+      params.require(:client).permit(:name, :active, :is_b2b,
+                                     :credit, :code_id, :discount)
     end
   end
 end

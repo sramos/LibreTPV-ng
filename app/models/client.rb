@@ -11,6 +11,7 @@ class Client < ApplicationRecord
   has_many :products, through: :note_lines
 
   validates :name, presence: true
+  validates :code_id, presence: true, if: -> {is_b2b?}
   validates :discount, presence: true, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 1 }
 
   before_destroy :validate_destroy, prepend: true
@@ -21,7 +22,7 @@ class Client < ApplicationRecord
 
   def name_nif
     output  = name
-    output += ' - NIF: ' + code_id unless code_id.blank? || code_id == 'N/A'
+    output += ' - NIF: ' + code_id if is_b2b
     return output
   end
 

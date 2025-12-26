@@ -12,6 +12,9 @@
     <%= _text_field '% Descuento', 'client', 'discount_value', '1' %>
     <%= _text_field 'Acumulado', 'client', 'accumulated_credit', '1' %>
     <%= _text_field 'Crédito', 'client', 'credit', '1' %>
+    <div class="elemento_derecha">
+      <%= _checkbox_field 'Factura completa', 'client', 'is_b2b', '1', {checked: @client.is_b2b} %>
+    </div>
   </div>
   <%= render partial: 'sales/clients/form_contact_info' %>
 <%= form_end %>

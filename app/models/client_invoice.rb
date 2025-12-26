@@ -21,6 +21,14 @@ class ClientInvoice < Invoice
     client_note&.tax_base
   end
 
+  # Invoice types
+  # F1: Fatura completa/ordinaria. Estándar para transacciones B2B y B2C con todos los datos (NIF, etc.)
+  # F2: Fatura simplificada. Usada para transacciones B2C de menor importe y con menos datos.
+  # R1-R5: Fatura rectificativa. Usada para corregir errores.
+  def type
+    client.is_b2b ? 'F1' : 'F2'
+  end
+
   private
 
   def avoid_vat_and_retentions

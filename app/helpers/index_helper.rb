@@ -52,7 +52,8 @@ module IndexHelper
        ['Email', 'contact_info.email', '2'],
        ['% Dto.', 'discount_value', '1_3 right'],
        ['Crédito', 'credit', '2_3 right'], ['Acumulado', 'accumulated_credit', '2_3 right'],
-       ['Activo', 'active', '1_3 right']]
+       ['B2B', 'is_b2b', '1_3 right'],
+       ['Activ.', 'active', '1_3 right']]
     when 'configs'
       [['Nombre', 'name', '3_2'], ['Valor', 'value', '4']]
     when 'client_invoice_products'
