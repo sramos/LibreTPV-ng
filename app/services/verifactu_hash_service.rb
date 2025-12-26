@@ -14,7 +14,7 @@ class VerifactuHashService < ApplicationService
   def generate_code
     included_fields_string = @included_fields.map { |field, value| "#{field}=#{value}" }.join("&")
     Rails.logger.info "[VerifactuHashService.generate_code] Generando codigo para los campos " + included_fields_string
-    output = Digest::SHA256.hexdigest(included_fields_string) unless included_fields_string.blank?
+    output = Digest::SHA256.hexdigest(included_fields_string).upcase unless included_fields_string.blank?
     Rails.logger.info "[VerifactuHashService.generate_code] Hash generado: #{output}"
     return output
   end
