@@ -22,9 +22,14 @@ class ClientInvoice < Invoice
   end
 
   # Invoice types
-  # F1: Fatura completa/ordinaria. Estándar para transacciones B2B y B2C con todos los datos (NIF, etc.)
-  # F2: Fatura simplificada. Usada para transacciones B2C de menor importe y con menos datos.
-  # R1-R5: Fatura rectificativa. Usada para corregir errores.
+  # F1: Fatura completa/ordinaria. Estándar para transacciones B2B y B2C con todos los datos (NIF, etc.). ART. 6, 7.2 Y 7.3 DEL RD 1619/2012
+  # F2: Fatura simplificada. Usada para transacciones B2C de menor importe y sin info destinatario. ART. 6.1.D) RD 1619/2012
+  # R1: Factura rectificativa (Art 80.1 y 80.2 y error fundado en derecho)
+  # R2: Factura rectificativa (Art. 80.3)
+  # R3: Factura rectificativa (Art. 80.4)
+  # R4: Factura rectificativa (Resto)
+  # R5: Factura rectificativa en facturas simplificadas
+  # F3: Factura emitida en sustitución de facturas simplificadas facturadas y declaradas
   def type_code
     client.is_b2b ? 'F1' : 'F2'
   end

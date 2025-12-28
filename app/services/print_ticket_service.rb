@@ -134,7 +134,7 @@ class PrintTicketService < ApplicationService
           extent: true
         })
         @printer.write(qr_image.to_escpos)
-        @printer.write(clear_text("Veri*factu*\n"))
+        @printer.write(clear_text("Veri*factu\n"))
         @printer.write(clear_text("Factura verificable en sede electrónica.\n"))
       rescue => e
         Rails.logger.error "Error QR: #{e.message}"
