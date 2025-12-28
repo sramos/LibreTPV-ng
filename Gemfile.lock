@@ -443,7 +443,7 @@ DEPENDENCIES
   open3
   propshaft
   puma (>= 5.0)
-  rails (~> 8.1.0)
+  rails (~> 8.1.1)
   rails-i18n
   rqrcode
   rubocop-rails-omakase
